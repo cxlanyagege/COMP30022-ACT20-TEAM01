@@ -38,7 +38,7 @@
             <!-- /Logo -->
             <h4 class="mb-2">Welcome to StuRequestHub! 👋</h4>
             <p class="mb-4">Please sign-in to your account</p>
-            <form id="formAuthentication" class="mb-3" action="主页面" method="POST">
+            <form id="formAuthentication" class="mb-3" action="javascript:void(0);" method="POST">
               <div class="mb-3">
                 <label for="email" class="form-label">Email or Username</label>
                 <input type="text" class="form-control" id="email" name="email-username"
@@ -65,7 +65,7 @@
                 </div>
               </div>
               <div class="mb-3">
-                <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                <button class="btn btn-primary d-grid w-100" type="submit" onclick="login()">Sign in</button>
               </div>
             </form>
             <p class="text-center">
@@ -80,6 +80,32 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function login() {
+        const username = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username: username, password: password }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === "Login Successfully") {
+                alert(data.message);
+                localStorage.setItem("username", username);
+                window.location.href = '/profile.html';  // Go to user profile page
+            } else {
+                alert(data.message);
+            }
+        });
+    }
+  </script>
+
 </body>
 
 </html>
