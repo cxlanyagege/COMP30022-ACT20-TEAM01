@@ -16,12 +16,15 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// Spring Boot
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	runtimeOnly 'com.mysql:mysql-connector-j'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	// MyBatis Plus
 	implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.2'
+
+	// MySQL
+	runtimeOnly 'com.mysql:mysql-connector-j'
 }
 
 tasks.named('test') {

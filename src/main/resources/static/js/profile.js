@@ -36,5 +36,5 @@ function logoutUser() {
     // Clear user sessions
     localStorage.removeItem("username");
     // Return to login page
-    window.location.href = 'login-basic.html';
+    window.location.href = 'login.html';
 }
