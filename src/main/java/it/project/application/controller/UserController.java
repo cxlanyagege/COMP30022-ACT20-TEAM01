@@ -19,17 +19,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/register")
-    public ResponseEntity<Map<String, String>> register(@RequestBody User user) {
-        // Record user info into database
-        // TODO: Further valid checking is required
-        userService.register(user);
-
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "Register Successfully");
-        return ResponseEntity.ok(response);
-    }
-
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody User user) {
         User authenticatedUser = userService.authenticate(user.getUsername(),

@@ -16,12 +16,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    // Register user for the very first time
-    public void register(User user) {
-        // TODO: Encrypted password saving
-        userRepository.save(user);
-    }
-
     // Authenticate user for log in purpose
     public User authenticate(String username, String password) {
         Optional<User> userOpt = userRepository.findByUsername(username);
@@ -42,6 +36,5 @@ public class UserService {
                 new RuntimeException("User not found"));
         return user.getSubjects();
     }
-
 
 }
