@@ -1,28 +1,19 @@
 package it.project.application.entity;
 
-import jakarta.persistence.*;
-
 import java.util.List;
 
-@Entity
-@Table(name = "user")
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+@TableName("user")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableId
     private Long id;
     private String username;
     private String password;     // TODO: Encrypted password
 
-    // Enrolled subjects
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "user_subject",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "subject_id"))
     private List<Subject> subjects;
-
-// ... getters and setters ...
-
 
     public Long getId() {
         return id;
