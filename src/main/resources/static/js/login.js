@@ -14,7 +14,7 @@ function login() {
         if (data.message === "Login Successfully") {
             alert(data.message);
             localStorage.setItem("username", username);
-            window.location.href = '/profile.html';  // Go to user profile page
+            window.location.href = 'profile.html';  // Go to user profile page
         } else {
             alert(data.message);
         }
