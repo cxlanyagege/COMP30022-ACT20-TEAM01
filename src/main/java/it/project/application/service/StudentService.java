@@ -18,7 +18,7 @@ public class StudentService {
 
     // Authenticate user for log in purpose
     public Student authenticate(String username, String password) {
-        Student user = userMapper.findByUsername(username);
+        Student user = userMapper.findByName(username);
 
         if (user != null) {
             // TODO: Encrypted password comparison

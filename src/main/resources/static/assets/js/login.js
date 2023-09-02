@@ -9,7 +9,12 @@ function login() {
         },
         body: JSON.stringify({ username: username, password: password }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.message === "Login Successfully") {
             alert(data.message);
@@ -18,5 +23,8 @@ function login() {
         } else {
             alert(data.message);
         }
+    })
+    .catch((error) => {
+        console.error('There was a problem with the fetch operation:', error);
     });
 }

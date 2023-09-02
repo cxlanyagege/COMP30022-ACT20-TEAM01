@@ -6,8 +6,13 @@ import it.project.application.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,11 +26,15 @@ public class StudentController {
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody Student user) {
-        Student authenticatedUser = userService.authenticate(user.getUsername(),
+        Student authenticatedUser = userService.authenticate(user.getName(),
                 user.getPassword());
         Map<String, String> response = new HashMap<>();
 
         if (authenticatedUser != null) {
+            List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("STUDENT"));
+            Authentication authentication = new UsernamePasswordAuthenticationToken(authenticatedUser.getName(), null, authorities);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
             // Login success
             response.put("message", "Login Successfully");
             return ResponseEntity.ok(response);

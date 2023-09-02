@@ -8,5 +8,5 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface StudentMapper extends BaseMapper<Student> {
     @Select("SELECT * FROM student WHERE Name = #{username}")
-    Student findByUsername(String username);
+    Student findByName(String username);
 }
