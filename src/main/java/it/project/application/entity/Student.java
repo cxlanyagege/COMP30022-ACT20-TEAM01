@@ -5,7 +5,7 @@ import java.util.List;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-@TableName("user")
+@TableName("student")
 public class Student {
 
     @TableId
