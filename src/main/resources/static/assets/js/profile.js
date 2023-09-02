@@ -4,10 +4,16 @@ window.onload = async function() {
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
     });
+
+    // Receive response
     const data = await response.json();
+    console.log('Received data:', data);
 
     // Get tbody from table
     const tableBody = document.getElementById("requestTableBody");
+
+    // Initialize requestId counter
+    let requestId = 1;
 
     // Traverse each requests
     for (const request of data) {
@@ -15,13 +21,14 @@ window.onload = async function() {
         // Create a new td in dashboard
         const newRow = document.createElement("tr");
         newRow.innerHTML = `
-            <td>${request.id}</td>
-            <td>${request.subjectCode}</td>
-            <td>${request.taskName}</td>
-            <td>${request.taskType}</td>
-            <td>${request.status}</td>
-            <td>${request.dueDate}</td>
+            <td>${requestId}</td>
+            <td>${request.subjectCode || ''}</td>
+            <td>${request.description || ''}</td>
+            <td>${request.taskType || ''}</td>
+            <td>${request.status || ''}</td>
+            <td>${request.dueDate || ''}</td>
         `;
+        requestId++;
 
         // Add new rows
         tableBody.appendChild(newRow);

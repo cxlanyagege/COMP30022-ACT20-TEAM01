@@ -9,13 +9,13 @@ import com.baomidou.mybatisplus.annotation.TableName;
 public class Student {
 
     @TableId
-    private int studentId;
+    private Long studentId;
     private String name;
     private String password;     // TODO: Encrypted password
 
     private List<Subject> subjects;
 
-    public int getId() {
+    public Long getId() {
         return studentId;
     }
 
@@ -28,7 +28,7 @@ public class Student {
         return password;
     }
 
-    private void setId(int id) {
+    private void setId(Long id) {
         this.studentId = id;
     }
 

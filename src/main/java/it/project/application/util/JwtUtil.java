@@ -31,9 +31,9 @@ public class JwtUtil {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
-    public String generateToken(int studentId) {
+    public String generateToken(Long studentId) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, Integer.toString(studentId));
+        return createToken(claims, studentId.toString());
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
