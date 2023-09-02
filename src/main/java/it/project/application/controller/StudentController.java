@@ -1,8 +1,8 @@
 package it.project.application.controller;
 
 import it.project.application.entity.Subject;
-import it.project.application.entity.User;
-import it.project.application.service.UserService;
+import it.project.application.entity.Student;
+import it.project.application.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +14,14 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-public class UserController {
+public class StudentController {
 
     @Autowired
-    private UserService userService;
+    private StudentService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody User user) {
-        User authenticatedUser = userService.authenticate(user.getUsername(),
+    public ResponseEntity<Map<String, String>> login(@RequestBody Student user) {
+        Student authenticatedUser = userService.authenticate(user.getUsername(),
                 user.getPassword());
         Map<String, String> response = new HashMap<>();
 

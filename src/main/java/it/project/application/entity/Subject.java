@@ -13,7 +13,7 @@ public class Subject {
 
     private String name;
 
-    private List<User> users;
+    private List<Student> users;
 
     // TODO: Regular getter and setter (for future use)
 

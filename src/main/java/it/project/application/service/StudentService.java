@@ -1,8 +1,8 @@
 package it.project.application.service;
 
 import it.project.application.entity.Subject;
-import it.project.application.entity.User;
-import it.project.application.mapper.UserMapper;
+import it.project.application.entity.Student;
+import it.project.application.mapper.StudentMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,14 +11,14 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class UserService {
+public class StudentService {
 
     @Autowired
-    private UserMapper userMapper;
+    private StudentMapper userMapper;
 
     // Authenticate user for log in purpose
-    public User authenticate(String username, String password) {
-        User user = userMapper.findByUsername(username);
+    public Student authenticate(String username, String password) {
+        Student user = userMapper.findByUsername(username);
 
         if (user != null) {
             // TODO: Encrypted password comparison
@@ -31,7 +31,7 @@ public class UserService {
 
     // Get enrolled subjects
     public List<Subject> getSubjectsForUser(Long userId) {
-        User user = userMapper.selectById(userId);
+        Student user = userMapper.selectById(userId);
         if (user == null) {
             throw new RuntimeException("User not found");
         }
