@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>New Request</title>
+  <script src="assets/js/new_request.js"></script>
 </head>
 <body>
-  <form action="/api/saveRequest" method="post">
+  <form id="request-form">
     <label for="description">Description:</label>
     <input type="text" id="description" name="description" required>
     <button type="submit">Submit</button>

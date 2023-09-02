@@ -9,18 +9,18 @@ import com.baomidou.mybatisplus.annotation.TableName;
 public class Student {
 
     @TableId
-    private Long id;
-    private String username;
+    private int studentId;
+    private String name;
     private String password;     // TODO: Encrypted password
 
     private List<Subject> subjects;
 
-    public Long getId() {
-        return id;
+    public int getId() {
+        return studentId;
     }
 
     public String getName() {
-        return username;
+        return name;
     }
 
     // TODO: Need security considers on requesting password
@@ -28,12 +28,12 @@ public class Student {
         return password;
     }
 
-    private void setId(Long id) {
-        this.id = id;
+    private void setId(int id) {
+        this.studentId = id;
     }
 
     private void setUsername(String username) {
-        this.username = username;
+        this.name = username;
     }
 
     // TODO: Encrypted password reset

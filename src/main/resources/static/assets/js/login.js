@@ -11,17 +11,26 @@ function login() {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            console.log('Response:', response);
+        if (response.status === 401) {
+            alert('Incorrect password, or user doesn\'t exist');
+            throw new Error('Unauthorized');
+        } else {
+            return response.json().then(data => {
+                alert('Something went wrong：' + data.message);
+                throw new Error(data.message || 'Network response was not ok');
+            }).catch(() => {
+                alert('There is an unknown issue causing login failed');
+                throw new Error('Unknown error');
+            });
+        }
         }
         return response.json();
     })
     .then(data => {
-        if (data.message === "Login Successfully") {
-            alert(data.message);
-            localStorage.setItem("username", username);
+        if (data.jwt) {
+            localStorage.setItem("jwt", data.jwt);
             window.location.href = 'profile.html';  // Go to user profile page
-        } else {
-            alert(data.message);
         }
     })
     .catch((error) => {

@@ -6,10 +6,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 @TableName("request")
 public class Request {
-  @TableId(value = "id", type = IdType.AUTO)
-  private Long id;
 
+  @TableId(value = "requestId", type = IdType.AUTO)
+  private Long requestId;
   private String description;
+  private Long studentId;
 
   // Getter and Setter
   public String getDescription() {
@@ -18,5 +19,9 @@ public class Request {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public void setStudentId(Long studentId) {
+    this.studentId = studentId;
   }
 }

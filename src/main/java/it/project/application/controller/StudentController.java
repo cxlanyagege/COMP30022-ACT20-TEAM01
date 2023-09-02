@@ -3,6 +3,8 @@ package it.project.application.controller;
 import it.project.application.entity.Subject;
 import it.project.application.entity.Student;
 import it.project.application.service.StudentService;
+import it.project.application.util.JwtUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,9 @@ public class StudentController {
     @Autowired
     private StudentService userService;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody Student user) {
         Student authenticatedUser = userService.authenticate(user.getName(),
@@ -31,12 +36,16 @@ public class StudentController {
         Map<String, String> response = new HashMap<>();
 
         if (authenticatedUser != null) {
+            // Authentication role
             List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("STUDENT"));
             Authentication authentication = new UsernamePasswordAuthenticationToken(authenticatedUser.getName(), null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
+            // JWT transmission
+            String jwt = jwtUtil.generateToken(authenticatedUser.getId());
+            response.put("jwt", jwt);
+
             // Login success
-            response.put("message", "Login Successfully");
             return ResponseEntity.ok(response);
         } else {
             // Login failed
