@@ -1,40 +1,54 @@
-# IT Project
+# IT Project: Teaching Support Platform for Applying Special Consideration
 
-## Activity: 20 Team: 1
-Teaching Support Platform for Applying Special Consideration
+## Team Information
+- **Activity Code**: ACT20
+- **Team Number**: TEAM01
 
-### Deployment Test
-- [Dev Login](http://121.41.46.143:8081/login.html)
-- [New Dashboard](http://121.41.46.143:8081/profile.html)
+## Live Demo
+- [Developer Login](http://121.41.46.143:8081/login.html)
+- [User Dashboard](http://121.41.46.143:8081/profile.html)
 
-### Sample Usage
-|     | User type | Password | Sample request history |
-|-----|-----------|----------|------------------------|
-|Demo | Student   | 123456   | Built-in 1 sample      |
-|Test | Student   | 123456   | Empty sample           |
+## Sample User Information
+| Identifier | User Role | Password | Sample Request History |
+|------------|-----------|----------|------------------------|
+| Demo       | Student   | 123456   | Contains 1 built-in sample request |
+| Test       | Student   | 123456   | No sample requests      |
 
-### Build & Run
-#### Prerequisits
-1. Install [Adoptium Temurin OpenJDK](https://adoptium.net/zh-CN/temurin/releases/), recommended 17+
-2. (Optional) Install [Gradle](https://gradle.org/install/)
+## Build & Run Instructions
 
-#### Clone
-Clone the repository to your local environment
+### Prerequisites
+1. Install [Adoptium Temurin OpenJDK](https://adoptium.net/zh-CN/temurin/releases/). Recommended version: 17 or higher.
+2. Optionally, install [Gradle Build Tool](https://gradle.org/install/).
 
-`https://github.com/cxlanyagege/COMP30022-ACT20-TEAM01.git`
+### Cloning the Repository
+Clone the repository to your local machine:
 
-#### Build
-Go to project's root directory
+\`\`\`bash
+git clone https://github.com/cxlanyagege/COMP30022-ACT20-TEAM01.git
+\`\`\`
 
-`cd COMP30022-ACT20-TEAM01`
+### Building the Project
+Navigate to the root directory of the project:
 
-Build project with Gradle
+\`\`\`bash
+cd COMP30022-ACT20-TEAM01
+\`\`\`
 
-`.\gradlew clean build`
+To build the project using the Gradle Wrapper included in the repository, execute:
 
-Or if you have already installed Gradle, type
+\`\`\`bash
+.\gradlew clean build
+\`\`\`
 
-`gradle clean build`
+If you have Gradle installed, you can also run:
 
-#### Run
-`java -jar build/libs/application-0.0.1-SNAPSHOT.jar`
+\`\`\`bash
+gradle clean build
+\`\`\`
+
+### Running the Application
+Execute the following command to run the application:
+
+\`\`\`bash
+java -jar build/libs/application-0.0.1-SNAPSHOT.jar
+\`\`\`
