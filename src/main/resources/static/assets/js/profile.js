@@ -14,16 +14,19 @@ window.onload = async function() {
 
     // Get the blank page image div
     const blankPageImageDiv = document.querySelector("div[style='display: grid; place-items: center; margin-top: 37px;']");
+    const userFriendlyImageDiv = document.querySelector("div[class='position-absolute bottom-0 end-0 p-3']");
 
     // If no data, show the blank page image
     if (data.length === 0) {
         blankPageImageDiv.style.display = "grid";
+        userFriendlyImageDiv.style.display = "grid";
     } 
     
     // If there is data, hide the image instead
     else {
 
         blankPageImageDiv.style.display = "none";
+        userFriendlyImageDiv.style.display = "none";
 
         // Initialize requestId counter
         let requestId = 1;
