@@ -23,32 +23,32 @@
 ### Cloning the Repository
 Clone the repository to your local machine:
 
-\`\`\`bash
+```
 git clone https://github.com/cxlanyagege/COMP30022-ACT20-TEAM01.git
-\`\`\`
+```
 
 ### Building the Project
 Navigate to the root directory of the project:
 
-\`\`\`bash
+```
 cd COMP30022-ACT20-TEAM01
-\`\`\`
+```
 
 To build the project using the Gradle Wrapper included in the repository, execute:
 
-\`\`\`bash
+```
 .\gradlew clean build
-\`\`\`
+```
 
 If you have Gradle installed, you can also run:
 
-\`\`\`bash
+```
 gradle clean build
-\`\`\`
+```
 
 ### Running the Application
 Execute the following command to run the application:
 
-\`\`\`bash
+```
 java -jar build/libs/application-0.0.1-SNAPSHOT.jar
-\`\`\`
+```
