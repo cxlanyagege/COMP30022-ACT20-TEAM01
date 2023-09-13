@@ -19,15 +19,6 @@
         </template>
       </el-table-column>
       <el-table-column prop="date" label="APPLICATION DATE" />
-      <el-table-column label="ACTION">
-        <template slot-scope="scope">
-          <el-button
-            type="danger"
-            size="small"
-            @click="handleDelete(scope.row.idNo)"
-          >Delete</el-button>
-        </template>
-      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -42,29 +33,17 @@ export default {
           type: 'Task',
           name: 'Asssignment 1',
           status: 'UNASSESSED',
-          date: '23/08/2023',
-          action: 'delete'
+          date: '23/08/2023'
         },
         {
           idNo: '123578',
           type: 'Personal',
           name: 'Leave of Absence for Tut',
           status: 'UNASSESSED',
-          date: '30/08/2023',
-          action: 'delete'
+          date: '30/08/2023'
         }
       ],
       listLoading: false
-    }
-  },
-  methods: {
-    // 处理删除操作
-    handleDelete(idNo) {
-      // 根据 idNo 删除相应的请求
-      const index = this.tableData.findIndex((item) => item.idNo === idNo)
-      if (index !== -1) {
-        this.tableData.splice(index, 1)
-      }
     }
   }
 }

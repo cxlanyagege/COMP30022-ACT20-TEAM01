@@ -1,17 +1,17 @@
 <template>
   <div class="app-container">
-    <el-input v-model="filterText" placeholder="Filter keyword" style="margin-bottom:30px;" />
-    <Table :data="tableData" />
+    <el-input v-model="filterText" placeholder="Filter keyword" style="width: 1200px; text-align: center; margin-left: 28px;" />
+    <HistoryTable :data="tableData" />
 
   </div>
 </template>
 
 <script>
-import Table from '@/components/table/index.vue'
+import HistoryTable from '@/components/table/historyTable'
 
 export default {
   components: {
-    Table
+    HistoryTable
   },
   data() {
     return {
