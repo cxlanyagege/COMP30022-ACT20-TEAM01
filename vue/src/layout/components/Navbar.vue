@@ -3,31 +3,12 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
-            <el-dropdown-item>
-              Home
-            </el-dropdown-item>
-          </router-link>
-
-          <!-- 点击按钮弹出学生信息模态框 -->
-          <el-dropdown-item type="text" @click="showStudentProfileDialog">
-            <span>Student Profile</span>
-          </el-dropdown-item>
-
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">Log Out</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <div class="avatar-container" @click="showStudentProfileDialog">
+        <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" :size="45" class="vertical-center"></el-avatar>
+      </div>
     </div>
 
-    <!-- 学生信息模态框应该放在组件的模板中 -->
+    <!-- 添加学生信息模态框 -->
     <el-dialog
       v-model="showProfileDialog"
       title="Student Profile"
@@ -54,7 +35,13 @@ export default {
   data() {
     return {
       showProfileDialog: false, // 控制学生信息模态框的显示与隐藏
-      studentInfo: {} // 学生信息数据，根据实际情况初始化
+      studentInfo: {
+        name: "John Doe", // 学生姓名
+        id: "1266543",
+        email: "Johndoe@student.unimelb.edu.au",// 学生年龄
+        aap: "Yes"       // 学生成绩
+        // 添加更多学生信息字段
+      }
     }
   },
   computed: {
@@ -73,13 +60,15 @@ export default {
     },
     showStudentProfileDialog() {
       // 点击按钮弹出学生信息模态框的方法
-      this.showProfileDialog = true // 显示模态框
+      console.log("Button clicked"); // 检查方法是否被调用
+      this.showProfileDialog = true; // 显示模态框
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
 .navbar {
   height: 50px;
   overflow: hidden;
@@ -123,6 +112,10 @@ export default {
 
     .avatar-container {
       margin-right: 30px;
+      margin-top: 3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
 
       .avatar-wrapper {
         margin-top: 5px;
