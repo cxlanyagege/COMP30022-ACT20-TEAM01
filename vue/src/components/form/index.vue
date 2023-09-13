@@ -6,7 +6,10 @@
       </el-form-item>
       <el-form-item label="Request Type">
         <el-select v-model="form.region" placeholder="Please select type">
-          <el-option label="Task" value="Task" />
+          <el-option label="Assignment" value="Task" />
+          <el-option label="Quiz" value="Task" />
+          <el-option label="Exam" value="Task" />
+          <el-option label="Remark" value="Task" />
           <el-option label="Personal" value="Personal" />
         </el-select>
       </el-form-item>
