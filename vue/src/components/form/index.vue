@@ -4,23 +4,30 @@
       <el-form-item label="Student ID">
         <el-input v-model="form.name" />
       </el-form-item>
-      <el-form-item label="Subject Code">
-        <el-input v-model="form.name" />
-      </el-form-item>
       <el-form-item label="Request Type">
         <el-select v-model="form.region" placeholder="Please select type">
-          <el-option label="Extension" value="Extension" />
+          <el-option label="Task" value="Task" />
           <el-option label="Personal" value="Personal" />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="form.region === 'Extension'" label="Task Type">
+      <el-form-item v-if="form.region === 'Task'" label="Task Type">
         <el-radio-group v-model="form.type">
           <el-radio label="Individual">Individual</el-radio>
           <el-radio label="Group">Group</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="form.region === 'Extension'" label="Task Name">
-        <el-input v-model="form.name" />
+      <el-form-item v-if="form.type === 'Group'" label="Teammate">
+        <div v-for="(email, index) in form.teammates" :key="index">
+          <el-input v-model="form.teammates[index]" />
+          <el-button @click="removeTeammate(index)">Remove</el-button>
+        </div>
+        <el-button @click="addTeammate">Add Student Email</el-button>
+      </el-form-item>
+      <el-form-item v-if="form.region === 'Task'" label="Task Name">
+        <el-input v-model="form.taskName" />
+      </el-form-item>
+      <el-form-item v-if="form.region === 'Personal'" label="Request Name">
+        <el-input v-model="form.requestName" />
       </el-form-item>
       <el-form-item label="Email Alerts">
         <el-switch v-model="form.delivery" />
@@ -65,14 +72,15 @@ export default {
         time: '',
         email: false,
         detail: '',
-        file: null
+        file: null,
+        teammates: [] // 存储队友的电子邮件地址
       }
     }
   },
   watch: {
     'form.region'(newValue) {
       // 根据选择的 "Request Type" 更新 showAdditionalOptions 的值
-      this.form.showAdditionalOptions = newValue === 'extension'
+      this.form.showAdditionalOptions = newValue === 'Task'
     }
   },
   methods: {
@@ -94,14 +102,17 @@ export default {
         formData.name = this.form.name
       }
 
+      // 包含队友的电子邮件地址
+      formData.teammates = this.form.teammates
+
       // 现在可以将 formData 发送到服务器或执行其他处理
       console.log('Form submitted with data:', formData)
 
-      this.$message('submit!')
+      this.$message('Submit successful!')
     },
     onCancel() {
       this.$message({
-        message: 'cancel!',
+        message: 'Cancel!',
         type: 'warning'
       })
     },
@@ -117,13 +128,15 @@ export default {
       } else {
         this.$message.error('File upload failed')
       }
+    },
+    // 添加队友的电子邮件地址输入框
+    addTeammate() {
+      this.form.teammates.push('')
+    },
+    // 删除队友的电子邮件地址输入框
+    removeTeammate(index) {
+      this.form.teammates.splice(index, 1)
     }
   }
 }
 </script>
-
-<style scoped>
-.line{
-  text-align: center;
-}
-</style>

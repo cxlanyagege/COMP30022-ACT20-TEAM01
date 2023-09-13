@@ -4,9 +4,11 @@
       class="custom-button"
       @click="showForm"
     >+ Create</el-button>
-    <el-dialog :visible.sync="formVisible" width="65%" title="Request Form" :modal="false">
+    <el-dialog :visible.sync="formVisible" width="65%" :modal="false">
+      <strong style="font-size: 20px;" title="COMP30022 Request Form">COMP30022 Request Form</strong>
       <RequestForm @form-submitted="submitForm" />
     </el-dialog>
+
   </div>
 </template>
 
