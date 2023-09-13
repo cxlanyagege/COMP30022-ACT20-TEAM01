@@ -59,6 +59,14 @@ public class StudentController {
         }
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<Map<String, Object>> logout() {
+        // Logout success
+        Map<String, Object> response = new HashMap<>();
+        response.put("code", 20000);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/getUserInfo")
     public ResponseEntity<Map<String, Object>> getUserInfo(@RequestParam String token) {
 
