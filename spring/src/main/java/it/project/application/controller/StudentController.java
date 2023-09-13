@@ -21,6 +21,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:8888")
 public class StudentController {
 
     @Autowired
@@ -30,10 +31,11 @@ public class StudentController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody Student user) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Student user) {
         Student authenticatedUser = userService.authenticate(user.getName(),
                 user.getPassword());
-        Map<String, String> response = new HashMap<>();
+        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
 
         if (authenticatedUser != null) {
             // Authentication role
@@ -43,22 +45,45 @@ public class StudentController {
 
             // JWT transmission
             String jwt = jwtUtil.generateToken(authenticatedUser.getId());
-            response.put("jwt", jwt);
+            data.put("token", jwt);
+            response.put("data", data);
 
             // Login success
+            response.put("code", 20000);
             return ResponseEntity.ok(response);
         } else {
             // Login failed
             // TODO: More specific error indication
-            response.put("message", "Login Failed");
+            response.put("code", 50000);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
     }
 
-    @GetMapping("/getUserSubjects")
-    public ResponseEntity<List<Subject>> getUserSubjects(@RequestParam Long userId) {
-        List<Subject> subjects = userService.getSubjectsForUser(userId);
-        return ResponseEntity.ok(subjects);
+    @GetMapping("/getUserInfo")
+    public ResponseEntity<Map<String, Object>> getUserInfo(@RequestParam String token) {
+
+        // Parse student id from token
+        String studentIdStr = jwtUtil.extractStudentId(token);
+        Long studentId = Long.valueOf(studentIdStr);
+
+        // Get student entity from student id
+        Student student = userService.getUserInfo(studentId);
+
+        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
+        if (student != null) {
+            data.put("name", student.getName());
+            data.put("avatar", "Avatar");
+
+            response.put("code", 20000);
+            response.put("data", data);
+            
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            response.put("code", 5008);
+            response.put("message", "User not found");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
     }
 
 }

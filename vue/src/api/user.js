@@ -2,15 +2,18 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: '/vue-admin-template/user/login',
+    url: '/api/login',
     method: 'post',
-    data
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: JSON.stringify(data)
   })
 }
 
 export function getInfo(token) {
   return request({
-    url: '/vue-admin-template/user/info',
+    url: '/api/getUserInfo',
     method: 'get',
     params: { token }
   })

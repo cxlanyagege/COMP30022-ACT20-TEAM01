@@ -28,14 +28,11 @@ public class StudentService {
         }
         return null;
     }
-
-    // Get enrolled subjects
-    public List<Subject> getSubjectsForUser(Long userId) {
-        Student user = userMapper.selectById(userId);
-        if (user == null) {
-            throw new RuntimeException("User not found");
-        }
-        return user.getSubjects();
+    
+    // Get user info from user id
+    public Student getUserInfo(Long studentId) {
+        return userMapper.selectById(studentId);
     }
+    
 
 }

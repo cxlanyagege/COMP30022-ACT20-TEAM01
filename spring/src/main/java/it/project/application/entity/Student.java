@@ -13,8 +13,6 @@ public class Student {
     private String name;
     private String password;     // TODO: Encrypted password
 
-    private List<Subject> subjects;
-
     public Long getId() {
         return studentId;
     }
@@ -39,14 +37,6 @@ public class Student {
     // TODO: Encrypted password reset
     private void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<Subject> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(List<Subject> subjects) {
-        this.subjects = subjects;
     }
 
 }
