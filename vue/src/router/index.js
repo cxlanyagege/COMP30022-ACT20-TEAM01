@@ -56,6 +56,31 @@ export const constantRoutes = [
   },
 
   {
+    path: '/Staff dashboard',
+    component: Layout,
+    redirect: '/Staff dashboard',
+    children: [{
+      path: 'Staff dashboard',
+      name: 'Staff dashboard',
+      component: () => import('@/views/Staff dashboard/index'),
+      meta: { title: 'Staff dashboard', icon: 'dashboard' }
+    }]
+  },
+
+  {
+    path: '/Authority',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Authority',
+        component: () => import('@/views/form/index'),
+        meta: { title: 'Authority', icon: 'el-icon-s-help' }
+      }
+    ]
+  },
+
+  {
     path: '/history',
     component: Layout,
     redirect: '/history',
