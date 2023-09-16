@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-input v-model="filterText" placeholder="Filter keyword" style="width: 1200px; text-align: center; margin-left: 28px;" />
+    <el-input v-model="filterText" placeholder="Filter keyword"/>
     <HistoryTable :data="tableData" />
 
   </div>

@@ -6,14 +6,14 @@
       </el-form-item>
       <el-form-item label="Request Type">
         <el-select v-model="form.region" placeholder="Please select type">
-          <el-option label="Assignment" value="Task" />
-          <el-option label="Quiz" value="Task" />
-          <el-option label="Exam" value="Task" />
-          <el-option label="Remark" value="Task" />
+          <el-option label="Assignment" value="Assignment" />
+          <el-option label="Test" value="Test" />
+          <el-option label="Exam" value="Exam" />
           <el-option label="Personal" value="Personal" />
+          <el-option label="Others" value="Others" />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="form.region === 'Task'" label="Task Type">
+      <el-form-item v-if="form.region === 'Test'|| form.region === 'Assignment' || form.region === 'Exam'" label="Task Type">
         <el-radio-group v-model="form.type">
           <el-radio label="Individual">Individual</el-radio>
           <el-radio label="Group">Group</el-radio>
@@ -26,11 +26,8 @@
         </div>
         <el-button @click="addTeammate">Add Student Email</el-button>
       </el-form-item>
-      <el-form-item v-if="form.region === 'Task'" label="Task Name">
-        <el-input v-model="form.taskName" />
-      </el-form-item>
-      <el-form-item v-if="form.region === 'Personal'" label="Request Name">
-        <el-input v-model="form.requestName" />
+      <el-form-item label="Request Name">
+        <el-input v-model="form.name" />
       </el-form-item>
       <el-form-item label="Email Alerts">
         <el-switch v-model="form.delivery" />
