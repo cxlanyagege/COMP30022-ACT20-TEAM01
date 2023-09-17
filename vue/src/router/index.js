@@ -56,7 +56,7 @@ export const constantRoutes = [
   },
 
   {
-    path: '/history',
+    path: '/',
     component: Layout,
     redirect: '/history',
     children: [
@@ -66,6 +66,32 @@ export const constantRoutes = [
         component: () => import('@/views/history/index'),
         meta: { title: 'History', icon: 'tree' }
       }]
+  },
+
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/staff_dashboard',
+    children: [{
+      path: 'staff_dashboard',
+      name: 'Staff_dashboard',
+      component: () => import('@/views/staff_dashboard/index'),
+      meta: { title: 'Staff dashboard', icon: 'dashboard' }
+    }]
+  },
+
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/authority',
+    children: [
+      {
+        path: 'authority',
+        name: 'Authority',
+        component: () => import('@/views/authority/index'),
+        meta: { title: 'Authority', icon: 'el-icon-s-help' }
+      }
+    ]
   },
 
   // 404 page must be placed at the end !!!
