@@ -17,10 +17,10 @@
       stripe
       style="width: 100%">
 
-      <el-table-column prop="position" label="Staff Position" ></el-table-column>
-      <el-table-column prop="name" label="Staff Name" ></el-table-column>
-      <el-table-column prop="email" label="Staff Email" ></el-table-column>
-      <el-table-column prop="authority" label="Authority" >
+      <el-table-column prop="position" label="Staff Position" :width="170"></el-table-column>
+      <el-table-column prop="name" label="Staff Name" :width="179"></el-table-column>
+      <el-table-column prop="email" label="Staff Email" :width="296"></el-table-column>
+      <el-table-column prop="authority" label="Authority" :width="640">
  
         <template slot-scope="{ row }">
           <el-switch v-model="row.authority" :active-value="true" :inactive-value="false" active-text="Yes" inactive-text="No"></el-switch>
