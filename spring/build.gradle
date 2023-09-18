@@ -32,6 +32,9 @@ dependencies {
 
 	// XML Bind
 	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    
+	// LTI-related library
+	implementation 'org.imsglobal:basiclti-util:1.2.0'
 }
 
 tasks.named('test') {

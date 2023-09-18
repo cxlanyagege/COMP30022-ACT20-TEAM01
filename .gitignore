@@ -38,3 +38,7 @@ out/
 
 ### macOS ###
 **/.DS_Store
+spring/src/main/resources/static/favicon.svg
+
+### Non-Vue Static ###
+spring/src/main/resources/static

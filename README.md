@@ -5,8 +5,7 @@
 - **Team Number**: TEAM01
 
 ## Live Demo
-- [Developer Login](http://121.41.46.143:8081/login.html)
-- [User Dashboard](http://121.41.46.143:8081/profile.html)
+- [Developer Login & Dashboard](http://121.41.46.143:8081/index.html)
 
 ## Sample User Information
 | Identifier | User Role | Password | Sample Request History |

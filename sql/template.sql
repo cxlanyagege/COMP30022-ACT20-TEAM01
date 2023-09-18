@@ -1,4 +1,4 @@
-﻿-- MySQL dump 10.13  Distrib 8.1.0, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.1.0, for Win64 (x86_64)
 --
 -- Host: localhost    Database: sc
 -- ------------------------------------------------------
@@ -43,7 +43,7 @@ CREATE TABLE `request` (
 
 LOCK TABLES `request` WRITE;
 /*!40000 ALTER TABLE `request` DISABLE KEYS */;
-INSERT INTO `request` VALUES (0,'Hello Request!',NULL,NULL,0,NULL);
+INSERT INTO `request` VALUES (0,'Hello Request!','0','2000-01-01 00:00:00',0,'EXMP10000'),(1,'Different Status?','1','2000-01-01 00:12:00',0,'EXMP10000');
 /*!40000 ALTER TABLE `request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,7 +69,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (0,'demo','123456',NULL),(1,'test','123456',NULL);
+INSERT INTO `student` VALUES (0,'demo','123456','demo@student.unimelb.edu.au'),(1,'test','123456','test@unimelb.edu.au');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -106,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-03  1:56:49
+-- Dump completed on 2023-09-18 10:50:46
