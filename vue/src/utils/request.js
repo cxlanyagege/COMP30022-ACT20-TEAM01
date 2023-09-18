@@ -5,7 +5,12 @@ import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: 'http://localhost:8081', // url = base url + request url
+  // base url = base url + request url
+  // local dev env
+  // baseURL: 'http://localhost:8081',
+  // deploy prod env
+  baseURL: 'http://121.41.46.143:8081',
+
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
