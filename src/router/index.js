@@ -84,7 +84,7 @@ export const constantRoutes = [
       {
         path: 'index',
         name: 'Authority',
-        component: () => import('@/views/form/index'),
+        component: () => import('@/views/authority/index'),
         meta: { title: 'Authority', icon: 'el-icon-s-help' }
       }
     ]

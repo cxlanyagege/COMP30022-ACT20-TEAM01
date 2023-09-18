@@ -3,7 +3,7 @@
     <!-- 网站logo和名字 -->
     <div class="website-header">
       <img src="../../../../public/favicon.svg" alt="My Website Logo" class="logo">
-      <span class="website-name">StuRequestHub</span>
+      <span class="website-name">StudentRequestHub</span>
     </div>
     <div :class="{ 'has-logo': showLogo }">
       <logo v-if="showLogo" :collapse="isCollapse" />
