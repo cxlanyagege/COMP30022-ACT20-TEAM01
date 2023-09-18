@@ -1,19 +1,32 @@
 package it.project.application.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.http.HttpStatus;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.RequestMapping;
+// import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.servlet.http.HttpServletRequest;
+// import it.project.application.service.LtiService;
+// import jakarta.servlet.http.HttpServletRequest;
 
-@RestController
-public class LtiController {
+// @RestController
+// @RequestMapping("/lti")
+// public class LtiController {
 
-    @PostMapping("/lti-launch")
-    public ModelAndView handleLtiLaunch(HttpServletRequest request) {
-        // TODO: OAuth
-        // TODO: LTI Parameters
+//     @Autowired
+//     private LtiService ltiService;
 
-        return new ModelAndView("ltiView");
-    }
-}
+//     @PostMapping("/launch")
+//     public ResponseEntity<?> ltiLaunch(HttpServletRequest request) {
+//         if (ltiService.verifyLtiRequest(request)) {
+//         // Success
+//         return new ResponseEntity<>("LTI launch successful", HttpStatus.OK);
+//         } else {
+//         // Failed
+//         return new ResponseEntity<>("Invalid LTI launch request", HttpStatus.UNAUTHORIZED);
+//         }
+//     }
+  
+//     // Other Lti related coms
+// }
