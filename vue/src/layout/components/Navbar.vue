@@ -36,9 +36,9 @@ export default {
     return {
       showProfileDialog: false, // 控制学生信息模态框的显示与隐藏
       studentInfo: {
-        name: "John Doe", // 学生姓名
-        id: "1266543",
-        email: "Johndoe@student.unimelb.edu.au",// 学生年龄
+        name: this.$store.state.user.name, // 学生姓名
+        id: this.$store.state.user.id,
+        email: this.$store.state.user.email,// 学生年龄
         aap: "Yes"       // 学生成绩
         // 添加更多学生信息字段
       }

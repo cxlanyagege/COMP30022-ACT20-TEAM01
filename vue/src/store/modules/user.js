@@ -19,8 +19,14 @@ const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
+  SET_ID: (state, id) => {
+    state.id = id
+  },
   SET_NAME: (state, name) => {
     state.name = name
+  },
+  SET_EMAIL: (state, email) => {
+    state.email = email
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
@@ -53,9 +59,11 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
 
-        const { name, avatar } = data
+        const { id, name, email, avatar } = data
 
+        commit('SET_ID', id)
         commit('SET_NAME', name)
+        commit('SET_EMAIL', email)
         commit('SET_AVATAR', avatar)
         resolve(data)
       }).catch(error => {

@@ -80,7 +80,9 @@ public class StudentController {
         Map<String, Object> response = new HashMap<>();
         Map<String, Object> data = new HashMap<>();
         if (student != null) {
+            data.put("id", studentId);
             data.put("name", student.getName());
+            data.put("email", student.getEmail());
             data.put("avatar", "Avatar");
 
             response.put("code", 20000);

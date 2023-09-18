@@ -11,6 +11,7 @@ public class Student {
     @TableId
     private Long studentId;
     private String name;
+    private String email;
     private String password;     // TODO: Encrypted password
 
     public Long getId() {
@@ -19,6 +20,10 @@ public class Student {
 
     public String getName() {
         return name;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     // TODO: Need security considers on requesting password
