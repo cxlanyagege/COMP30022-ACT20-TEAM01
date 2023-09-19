@@ -1,3 +1,13 @@
+/**
+ * Class Name: SecurityConfig
+ * Description: Configuration for Spring Security
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ * 
+ * Note: Spring Security is still under construction
+ */
+
 package it.project.application.config;
 
 import org.springframework.context.annotation.Bean;

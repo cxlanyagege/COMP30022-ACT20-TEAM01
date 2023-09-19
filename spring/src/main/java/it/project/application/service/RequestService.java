@@ -1,3 +1,11 @@
+/**
+ * Class Name: RequestService
+ * Description: Service provided for manipulating requests
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ */
+
 package it.project.application.service;
 
 import java.util.List;

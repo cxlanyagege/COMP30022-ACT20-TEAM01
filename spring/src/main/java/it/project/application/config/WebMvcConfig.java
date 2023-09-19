@@ -1,3 +1,13 @@
+/**
+ * Class Name: WebMvcConfig
+ * Description: Configuration for web interceptor/debugger
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ * 
+ * Note: Not required in production
+ */
+
 package it.project.application.config;
 
 import org.springframework.beans.factory.annotation.Autowired;

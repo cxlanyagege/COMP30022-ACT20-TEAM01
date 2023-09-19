@@ -1,3 +1,13 @@
+/**
+ * Class Name: LtiService
+ * Description: Service provided for Lti
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ * 
+ * Note: Lti is still under construction
+ */
+
 package it.project.application.service;
 
 // import org.imsglobal.lti.launch.LtiVerificationResult;

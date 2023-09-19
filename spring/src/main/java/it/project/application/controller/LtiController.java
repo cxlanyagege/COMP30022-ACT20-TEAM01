@@ -1,3 +1,13 @@
+/**
+ * Class Name: LtiController
+ * Description: Controller for handling lti requests
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ * 
+ * Note: Lti is still under construction
+ */
+
 package it.project.application.controller;
 
 // import org.springframework.beans.factory.annotation.Autowired;

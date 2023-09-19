@@ -1,3 +1,13 @@
+/**
+ * Class Name: UserService
+ * Description: Service provided for all/general users
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ * 
+ * Note: Users polymorphism is not yet completed
+ */
+
 package it.project.application.service;
 
 import org.springframework.beans.factory.annotation.Autowired;

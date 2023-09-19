@@ -1,3 +1,13 @@
+/**
+ * Class Name: DebugInterceptor
+ * Description: Interceptor for debugging purpose on web's mvc
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ * 
+ * Note: Not required in production
+ */
+
 package it.project.application.interceptor;
 
 import java.util.logging.Logger;

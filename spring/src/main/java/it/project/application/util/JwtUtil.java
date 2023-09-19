@@ -1,3 +1,11 @@
+/**
+ * Class Name: JwtUtil
+ * Description: Utility for processing jwt
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ */
+
 package it.project.application.util;
 
 import io.jsonwebtoken.Claims;

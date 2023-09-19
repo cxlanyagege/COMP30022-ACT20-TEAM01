@@ -1,3 +1,13 @@
+/**
+ * Class Name: LtiConfig
+ * Description: Configuration for connecting through LTI
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ * 
+ * Note: Lti is still under construction
+ */
+
 package it.project.application.config;
 
 // import org.imsglobal.lti.launch.LtiVerifier;

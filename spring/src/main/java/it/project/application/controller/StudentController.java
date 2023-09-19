@@ -1,3 +1,13 @@
+/**
+ * Class Name: StudentController
+ * Description: Controller for handling student related requests
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ * 
+ * Note: Not finalized since there is no StaffController
+ */
+
 package it.project.application.controller;
 
 import it.project.application.entity.Subject;

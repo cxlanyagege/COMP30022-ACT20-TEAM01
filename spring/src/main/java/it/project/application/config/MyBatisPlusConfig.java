@@ -1,3 +1,11 @@
+/**
+ * Class Name: MyBatisPlusConfig
+ * Description: Configuration for JPA ORM on MyBatis
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ */
+
 package it.project.application.config;
 
 import org.mybatis.spring.annotation.MapperScan;

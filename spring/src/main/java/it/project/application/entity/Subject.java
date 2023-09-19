@@ -1,3 +1,11 @@
+/**
+ * Class Name: Subject
+ * Description: Entity for subjects
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ */
+
 package it.project.application.entity;
 
 import java.util.List;

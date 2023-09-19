@@ -1,3 +1,13 @@
+/**
+ * Class Name: Student
+ * Description: Entity for student
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ * 
+ * Note: Spring Security has not fully applied
+ */
+
 package it.project.application.entity;
 
 import java.util.List;

@@ -1,3 +1,13 @@
+/**
+ * Class Name: RequestController
+ * Description: Controller for handling requests on form typed
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ * 
+ * Note: Not finalized due to user identity issues
+ */
+
 package it.project.application.controller;
 
 import java.util.List;

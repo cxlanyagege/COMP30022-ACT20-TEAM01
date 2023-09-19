@@ -1,3 +1,13 @@
+/**
+ * Class Name: Request
+ * Description: Entity for requests submitting by student
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ * 
+ * Note: Not finalized to fulfill every forms
+ */
+
 package it.project.application.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;

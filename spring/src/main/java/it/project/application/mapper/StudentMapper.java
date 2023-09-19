@@ -1,3 +1,11 @@
+/**
+ * Class Name: StudentMapper
+ * Description: ORM Mapper for Student Entity
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ */
+
 package it.project.application.mapper;
 
 import org.apache.ibatis.annotations.Mapper;

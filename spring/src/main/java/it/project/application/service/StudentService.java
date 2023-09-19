@@ -1,3 +1,11 @@
+/**
+ * Class Name: StudentService
+ * Description: Service provided for manipulating student
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ */
+
 package it.project.application.service;
 
 import it.project.application.entity.Subject;
