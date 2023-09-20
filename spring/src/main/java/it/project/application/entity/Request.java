@@ -27,6 +27,10 @@ public class Request {
     return description;
   }
 
+  public Long getStudentId() {
+    return studentId;
+  }
+
   public void setDescription(String description) {
     this.description = description;
   }

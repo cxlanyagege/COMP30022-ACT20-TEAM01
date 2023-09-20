@@ -8,14 +8,12 @@
 
 package it.project.application.service;
 
-import it.project.application.entity.Subject;
 import it.project.application.entity.Student;
 import it.project.application.mapper.StudentMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -28,11 +26,9 @@ public class StudentService {
     public Student authenticate(String username, String password) {
         Student user = userMapper.findByName(username);
 
-        if (user != null) {
-            // TODO: Encrypted password comparison
-            if (Objects.equals(password, user.getPassword())) {
+        if (user != null && (Objects.equals(password, user.getPassword()))) {
                 return user;
-            }
+            
         }
         return null;
     }

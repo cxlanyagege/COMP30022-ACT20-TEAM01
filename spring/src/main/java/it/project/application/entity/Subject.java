@@ -23,6 +23,4 @@ public class Subject {
 
     private List<Student> users;
 
-    // TODO: Regular getter and setter (for future use)
-
 }

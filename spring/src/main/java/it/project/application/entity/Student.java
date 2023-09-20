@@ -10,8 +10,6 @@
 
 package it.project.application.entity;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -22,7 +20,7 @@ public class Student {
     private Long studentId;
     private String name;
     private String email;
-    private String password;     // TODO: Encrypted password
+    private String password;
 
     public Long getId() {
         return studentId;
@@ -36,7 +34,6 @@ public class Student {
         return email;
     }
 
-    // TODO: Need security considers on requesting password
     public String getPassword() {
         return password;
     }
