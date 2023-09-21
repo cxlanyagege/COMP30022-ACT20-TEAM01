@@ -40,12 +40,11 @@
         <el-upload
           v-model:file-list="form.fileList"
           class="upload-demo"
-          action="http://localhost:8080/upload"
+          :action="uploadURL"
           :on-success="handleSuccess"
           :on-error="handleError"
           :on-remove="handleRemove"
           :accept="'*'"
-          :on-change="handleUploadChange"
         >
           <el-button size="small" type="primary">Click to Upload</el-button>
           <div slot="tip" class="el-upload__tip">You can upload any file format</div>
@@ -63,6 +62,7 @@
 <script>
 import {getRequests, addRequest, deleteRequest} from '@/api/request'
 import listTable from '@/components/table/index.vue'
+import {attachmentBaseURL, uploadURL} from '@/config/config'
 
 export default {
   components: {
@@ -83,7 +83,8 @@ export default {
         detail: '',
         fileList: [],
         teammates: [] // 存储队友的电子邮件地址
-      }
+      },
+      uploadURL: uploadURL
     }
   },
   watch: {
@@ -104,7 +105,7 @@ export default {
         submissionDate: currentDate,
         // email: this.form.email,
         description: this.form.detail,
-        // file: this.form.file
+        fileList: this.form.fileList,
         requestName: this.form.name
       }
 
@@ -123,6 +124,9 @@ export default {
         submissionDate: formData.submissionDate,
         requestType: formData.requestType,
         requestName: formData.requestName,
+        attachments: formData.fileList.map(item => {
+          return {url: this.convertUrlWithoutPrefix(item.url)}
+        })
       }
       addRequest(param).then(res => {
         console.log(res.data);
@@ -146,19 +150,21 @@ export default {
         type: 'warning'
       })
     },
+    convertUrlWithPrefix(url) {
+      return attachmentBaseURL + url;
+    },
+    convertUrlWithoutPrefix(url){
+      return url.substr(attachmentBaseURL.length, url.length);
+    },
     // 处理文件上传成功
     handleSuccess(response, file, fileList) {
-      console.log(response, file, fileList)
+      // console.log(fileList)
       // this.form.file = response.data.fileUrl // 将文件的 URL 存储在表单数据中
-      // this.form.fileList.push({
-      //   uid: file.data.uid
-      // })
-      //  = fileList.map( item => {
-      //   if (item.uid === res.file.uid){
-      //     item = {uid: item.uid, url: convertUrlWithPrefix(uploadInfo.data)};
-      //   }
-      //   return item;
-      // })
+      this.form.fileList.push({
+        uid: file.raw.uid,
+        url: this.convertUrlWithPrefix(response.data)
+      })
+      console.log(this.form.fileList)
       this.$message.success('File uploaded successfully')
     },
     handleError(err) {
@@ -170,7 +176,9 @@ export default {
       }
     },
     handleRemove(file, files){
-      console.log(file, files)
+      // console.log(file, files)
+      this.form.fileList = this.form.fileList.filter(item => item.uid != file.uid);
+      console.log(this.form.fileList)
     },
     // 添加队友的电子邮件地址输入框
     addTeammate() {
