@@ -1,37 +1,37 @@
-import axios from "axios";
+import axios from 'axios'
 // 基础地址
-axios.defaults.baseURL = VUE_APP_API_BASE_URL;
+axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL
 
 // 如果要访问'http://localhost:8080/api/getRequest', url = "/api/getRequest"就可以了
 
 export const getAction = (url, params) => {
-    return axios({
-        url: url,
-        method: 'get',
-        params
-    })
+  return axios({
+    url: url,
+    method: 'get',
+    params
+  })
 }
 
 export const postAction = (url, data) => {
-    return axios({
-        url: url,
-        method: 'post',
-        data // since data are stored in the body
-    })
+  return axios({
+    url: url,
+    method: 'post',
+    data // since data are stored in the body
+  })
 }
 
 export const putAction = (url, data) => {
-    return axios({
-        url: url,
-        method: 'put',
-        data
-    })
+  return axios({
+    url: url,
+    method: 'put',
+    data
+  })
 }
 
 export const deleteAction = (url, params) => {
-    return axios({
-        url: url,
-        method: 'delete',
-        params
-    })
+  return axios({
+    url: url,
+    method: 'delete',
+    params
+  })
 }
