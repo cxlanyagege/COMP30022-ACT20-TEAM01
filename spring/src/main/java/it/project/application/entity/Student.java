@@ -3,7 +3,7 @@
  * Description: Entity for student
  * 
  * Author: He Shen
- * Date: 2023/8/16
+ * Date: 2023/9/23
  * 
  * Note: Spring Security has not fully applied
  */
@@ -20,7 +20,12 @@ public class Student {
     private Long studentId;
     private String name;
     private String email;
-    private String password;
+
+    public Student(Long id, String name, String email) {
+        this.studentId = id;
+        this.name = name;
+        this.email = email;
+    }
 
     public Long getId() {
         return studentId;
@@ -33,22 +38,4 @@ public class Student {
     public String getEmail() {
         return email;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    private void setId(Long id) {
-        this.studentId = id;
-    }
-
-    private void setUsername(String username) {
-        this.name = username;
-    }
-
-    // TODO: Encrypted password reset
-    private void setPassword(String password) {
-        this.password = password;
-    }
-
 }

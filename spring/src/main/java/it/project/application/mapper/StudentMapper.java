@@ -3,7 +3,7 @@
  * Description: ORM Mapper for Student Entity
  * 
  * Author: He Shen
- * Date: 2023/8/16
+ * Date: 2023/9/23
  */
 
 package it.project.application.mapper;
@@ -15,6 +15,6 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface StudentMapper extends BaseMapper<Student> {
-    @Select("SELECT * FROM student WHERE Name = #{username}")
-    Student findByName(String username);
+    @Select("SELECT * FROM student WHERE StudentId = #{id}")
+    Student findById(Long id);
 }

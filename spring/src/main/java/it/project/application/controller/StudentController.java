@@ -3,7 +3,7 @@
  * Description: Controller for handling student related requests
  * 
  * Author: He Shen
- * Date: 2023/8/16
+ * Date: 2023/9/23
  * 
  * Note: Not finalized since there is no StaffController
  */
@@ -32,38 +32,6 @@ public class StudentController {
 
     @Autowired
     private JwtUtil jwtUtil;
-
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody Student user) {
-
-        Student authenticatedUser = userService.authenticate(user.getName(),
-                user.getPassword());
-        Map<String, Object> response = new HashMap<>();
-        Map<String, Object> data = new HashMap<>();
-
-        if (authenticatedUser != null) {
-            // JWT transmission
-            String jwt = jwtUtil.generateToken(authenticatedUser.getId());
-            data.put("token", jwt);
-            response.put("data", data);
-
-            // Login success
-            response.put("code", 20000);
-            return ResponseEntity.ok(response);
-        } else {
-            // Login failed
-            response.put("code", 50000);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-        }
-    }
-
-    @PostMapping("/logout")
-    public ResponseEntity<Map<String, Object>> logout() {
-        // Logout success
-        Map<String, Object> response = new HashMap<>();
-        response.put("code", 20000);
-        return ResponseEntity.ok(response);
-    }
 
     @GetMapping("/getUserInfo")
     public ResponseEntity<Map<String, Object>> getUserInfo(@RequestParam String token) {

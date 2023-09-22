@@ -3,16 +3,19 @@
  * Description: Controller for handling Lti launch
  * 
  * Author: He Shen
- * Date: 2023/9/21
+ * Date: 2023/9/23
  */
 
 package it.project.application.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.project.application.service.StudentService;
+import it.project.application.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -36,6 +39,14 @@ public class LtiController {
     @Value("${lti.sharedSecret}")
     private String sharedSecret;
 
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    private final String CODED_FORM = "UTF-8";
+
     @PostMapping("/launch")
     public String handleLtiLaunch(HttpServletRequest request, HttpServletResponse response) 
         throws UnsupportedEncodingException, 
@@ -53,7 +64,7 @@ public class LtiController {
         // Generate base string from post
         StringBuilder baseString = new StringBuilder();
         baseString.append("POST&");
-        baseString.append(URLEncoder.encode(request.getRequestURL().toString(), "UTF-8"));
+        baseString.append(URLEncoder.encode(request.getRequestURL().toString(), CODED_FORM));
         baseString.append("&");
 
         // Sort and append post items in tree
@@ -67,15 +78,15 @@ public class LtiController {
             }
 
             // Encode with space and connections between each pair
-            paramString.append(URLEncoder.encode(entry.getKey(), "UTF-8").replace("+", "%20"));
+            paramString.append(URLEncoder.encode(entry.getKey(), CODED_FORM).replace("+", "%20"));
             paramString.append("=");
-            paramString.append(URLEncoder.encode(entry.getValue()[0], "UTF-8").replace("+", "%20"));
+            paramString.append(URLEncoder.encode(entry.getValue()[0], CODED_FORM).replace("+", "%20"));
             paramString.append("&");
         }
 
         // Encode again to reduce redundant signs
         paramString.deleteCharAt(paramString.length() - 1);
-        baseString.append(URLEncoder.encode(paramString.toString(), "UTF-8"));
+        baseString.append(URLEncoder.encode(paramString.toString(), CODED_FORM));
 
         // Use HmacSHA1 to sign shared secret key
         SecretKeySpec signingKey = new SecretKeySpec((sharedSecret + "&").getBytes(), "HmacSHA1");
@@ -89,8 +100,17 @@ public class LtiController {
         // Compare with original signature from canvas
         String incomingSignature = request.getParameter("oauth_signature");
         if (calculatedSignature.equals(incomingSignature)) {
+
+            // Store user info from lti post into jwt token
+            Long id = Long.valueOf(request.getParameter("custom_canvas_user_id"));
+            String name = request.getParameter("lis_person_name_full");
+            String email = request.getParameter("lis_person_contact_email_primary");
+            studentService.authenticate(id, name, email);
+            String jwt = jwtUtil.generateToken(id);
+
+            // Launch StuRequestHub dashboard
             try {
-                response.sendRedirect("/index.html");
+                response.sendRedirect("/#/login?jwt=" + jwt);
             } catch (IOException e) {
                 e.printStackTrace();
                 return "Redirect failed";
