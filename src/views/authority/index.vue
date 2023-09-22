@@ -1,15 +1,9 @@
 <template>
   <div class="app-container">
-    <!--     Filter Function
-    <el-input v-model="filterText" placeholder="Filter keyword"/>
-    <HistoryTable :data="tableData" /> 
-    -->
-
     <!-- Authority Table -->
-
-    <el-table 
+    <el-table
       v-loading="listLoading"
-      :data="tableData" 
+      :data="tableData"
       element-loading-text="Loading"
       border
       fit
@@ -21,13 +15,6 @@
       <el-table-column prop="name" label="Staff Name" :width="179"></el-table-column>
       <el-table-column prop="email" label="Staff Email" :width="296"></el-table-column>
       <el-table-column prop="authority" label="Authority" :width="640">
-
-        <!--
-        <template slot-scope="{ row }">
-          <el-switch v-model="row.authority" :active-value="true" :inactive-value="false" active-text="Yes" inactive-text="No"></el-switch>
-        </template>
-        -->
-
         <template slot-scope="{ row }">
           <el-row>
             <el-col :span="4" style="width: 26%;">
@@ -60,19 +47,19 @@ export default {
 
   handleCheckboxChange(row, index) {
     if (row.authority === undefined) {
-      row.authority = []; // 如果authority字段尚未定义，初始化为一个空数组
+      row.authority = [] // 如果authority字段尚未定义，初始化为一个空数组
     }
     if (row.authority.includes(row.authority[index])) {
       // 如果已包含标签值，表示取消勾选，从数组中移除
-      row.authority.splice(row.authority.indexOf(row.authority[index]), 1);
+      row.authority.splice(row.authority.indexOf(row.authority[index]), 1)
     } else {
       // 否则，表示勾选，添加标签值到数组
-      row.authority.push(row.authority[index]);
+      row.authority.push(row.authority[index])
     }
     // 执行其他操作或更新数据
-    console.log(`勾选后的authority值: ${row.authority}`);
+    console.log(`勾选后的authority值: ${row.authority}`)
   },
-  
+
   data() {
     return {
       tableData: [
@@ -89,7 +76,7 @@ export default {
           email: 'davidj2@unimelb.edu.au',
           authority: ['Yes']
         },
-        
+
         {
           position: 'Head Tutor',
           name: 'James Wilson',
@@ -100,7 +87,7 @@ export default {
         {
           position: 'Tutor',
           name: 'Tom Harris',
-          email: 'tomh6@unimelb.edu.au',        
+          email: 'tomh6@unimelb.edu.au',
           authority: ['Yes']
         }
 
@@ -111,10 +98,8 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .line{
   text-align: center;
 }
 </style>
-

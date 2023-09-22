@@ -21,7 +21,7 @@ import Layout from '@/layout'
     title: 'title'               the name show in sidebar and breadcrumb (recommend set)
     icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
     breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
-    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
+    activeMenu: '/subjects/list'  if set path, the sidebar will highlight the path you set
   }
  */
 
@@ -73,6 +73,34 @@ export const constantRoutes = [
         name: 'Tree',
         component: () => import('@/views/tree/index'),
         meta: { title: 'Tree', icon: 'tree' }
+      }
+    ]
+  },
+
+  {
+    path: '/subjects',
+    component: Layout,
+    redirect: '/subjects/table',
+    name: 'subjects',
+    meta: { title: 'Subjects', icon: 'nested' },
+    children: [
+      {
+        path: 'comp30023',
+        name: 'COMP30023',
+        component: () => import('@/views/Subjects/index'),
+        meta: { title: 'COMP30023' }
+      },
+      {
+        path: 'comp30026',
+        name: 'COMP30026',
+        component: () => import('@/views/Subjects/index'),
+        meta: { title: 'COMP30026' }
+      },
+      {
+        path: 'comp20008',
+        name: 'COMP20008',
+        component: () => import('@/views/Subjects/index'),
+        meta: { title: 'COMP20008' }
       }
     ]
   },
