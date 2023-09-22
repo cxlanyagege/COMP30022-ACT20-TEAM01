@@ -21,12 +21,24 @@ export default {
   },
   data() {
     return {
-      formVisible: false
+      formVisible: false,
     }
   },
   methods: {
     showForm() {
       this.formVisible = true
+      this.$root.$refs.form_component.isCheck = false
+      this.$root.$refs.form_component.form.studentId = '';
+      this.$root.$refs.form_component.form.subjectCode = '';
+      this.$root.$refs.form_component.form.region = '';
+      this.$root.$refs.form_component.form.type = '';
+      this.$root.$refs.form_component.form.name = '';
+      this.$root.$refs.form_component.form.time = '';
+      this.$root.$refs.form_component.form.detail = '';
+      this.$root.$refs.form_component.form.fileList = [];
+      this.$root.$refs.form_component.form.teammates = [];
+      this.$root.$refs.form_component.form.email = false;
+      this.$root.$refs.form_component.form.showAdditionalOptions = false;
     },
     submitForm(formData) {
       // 这里处理提交表单后的逻辑，formData 包含表单数据
@@ -38,7 +50,11 @@ export default {
         this.formVisible = false
       })
     }
-  }
+  },
+  created() {
+    // set componenent name
+    this.$root.$refs.button_component = this;
+  },
 }
 </script>
 

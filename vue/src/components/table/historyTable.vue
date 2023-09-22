@@ -41,7 +41,7 @@ export default {
       tableData: [],
       listLoading: false,
       pageNum: 1,
-      pageSize: 10,
+      pageSize: 5,
       total: 0,
     }
   },
@@ -86,6 +86,10 @@ export default {
     handlePageChange(pageNum) {
       this.updateRequests(pageNum, this.pageSize);
     }
+  },
+
+  created() {
+    this.$root.$refs.history_component = this;
   }
 }
 </script>

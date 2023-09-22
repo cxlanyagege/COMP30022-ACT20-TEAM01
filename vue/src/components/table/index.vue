@@ -26,6 +26,12 @@
           <el-button
             type="danger"
             size="small"
+            @click="showRequestDetail(scope.row.idNo)"
+          >Detail</el-button>
+          <el-divider direction="vertical" />
+          <el-button
+            type="danger"
+            size="small"
             @click="handleDelete(scope.row.idNo)"
           >Delete</el-button>
         </template>
@@ -42,7 +48,7 @@
 </template>
 
 <script>
-import {getRequests, addRequest, deleteRequest} from '@/api/request'
+import {getRequests, addRequest, deleteRequest, getRequest} from '@/api/request'
 
 export default {
   data() {
@@ -50,7 +56,7 @@ export default {
       tableData: [],
       listLoading: false,
       pageNum: 1,
-      pageSize: 10,
+      pageSize: 5,
       total: 0,
     }
   },
@@ -66,6 +72,25 @@ export default {
       deleteRequest(idNo).then(res=>{
         console.log(res.data);
         this.updateRequests(this.pageNum, this.pageSize)
+      })
+    },
+
+    showRequestDetail(requestId) {
+      this.$root.$refs.button_component.formVisible = true;
+      this.$root.$refs.form_component.isCheck = true;
+      getRequest(requestId, null).then(res => {
+        console.log(res.data);
+        this.$root.$refs.form_component.form.studentId = res.data.data.studentId;
+        this.$root.$refs.form_component.form.detail = res.data.data.description;
+        this.$root.$refs.form_component.form.region = res.data.data.requestType;
+        this.$root.$refs.form_component.form.name = res.data.data.requestName;
+        this.$root.$refs.form_component.form.email = false;
+        this.$root.$refs.form_component.form.type = res.data.data.taskType;
+        // editableItem.subjectId = "";
+        // editableItem.requestId = requestId;
+        this.$root.$refs.form_component.form.fileList = res.data.data.attachments.map(item => {
+          return {uid: item.attachmentId, url: this.$root.$refs.form_component.convertUrlWithPrefix(item.url)}
+        })
       })
     },
 
