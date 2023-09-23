@@ -1,3 +1,4 @@
+<!-- writeen by Xuan Zhang -->
 <template>
   <el-table
     :data="tableData"
@@ -33,6 +34,7 @@
       </template>
     </el-table-column>
     <el-table-column
+      min-width="40"
       label="ID No."
       prop="id"
     >
@@ -61,10 +63,10 @@
     </el-table-column>
     <el-table-column label="Decision">
       <template slot-scope="{ row }">
-        <!-- 使用 v-if 条件渲染 -->
+        <!-- use v-if -->
         <template v-if="row.status === 'UNASSESSED'">
-          <el-button type="success" @click="handleApproveClick(row)">Approved</el-button>
-          <el-button type="danger" @click="handleRejectClick(row)">Rejected</el-button>
+          <el-button type="success" size="small" @click="handleApproveClick(row)">Approved</el-button>
+          <el-button type="danger" size="small" @click="handleRejectClick(row)">Rejected</el-button>
         </template>
         <template v-else>
           <span v-if="row.status === 'APPROVE'">Approved</span>
@@ -72,12 +74,12 @@
         </template>
       </template>
     </el-table-column>
-    <el-table-column label="Flag">
+    <el-table-column label="Flag" prop="flag" min-width="30">
       <template slot-scope="{ row }">
         <el-button
           v-if="!row.flagClicked"
           @click="handleFlagClick(row)"
-          type="default"
+          type="danger"
           :class="{ 'flag-button-clicked': row.flagClicked }"
           icon="el-icon-s-flag"
         circle>
@@ -88,6 +90,15 @@
 </template>
 
 <style>
+  .demo-table-expand .el-form-item span {
+    font-size: 14px; /* 设置字体大小 */
+    color: #333; /* 设置字体颜色 */
+    /* 添加其他样式属性 */
+  }
+
+  .demo-table-expand .el-form-item label {
+    width: 150px; /* 设置标签宽度 */
+  }
   .demo-table-expand {
     font-size: 0;
   }
@@ -97,12 +108,12 @@
   }
   .demo-table-expand .el-form-item {
     margin-right: 0;
-    margin-bottom: 0;
+    margin-bottom: 1;
     width: 50%;
   }
   .flag-button-clicked {
-  background-color: red;
-  color: white;
+  background-color: white;
+  color: red;
   }
 </style>
 
@@ -146,7 +157,7 @@ export default {
         reqType: 'Others',
         taskType: 'N/A',
         reqName: 'AAP certification',
-        reqDetail: 'Hi, I would like to ask about my AAP ce4rtification stuff',
+        reqDetail: 'Hi, I would like to ask about my AAP certification stuff',
         files: 'N/A',
         status: 'UNASSESSED',
         flagClicked: false
@@ -156,9 +167,8 @@ export default {
   methods: {
     handleFlagClick(row) {
       if (!row.flagClicked) {
-        // 将被点击的旗子标记为已点击
         this.flagClicked = !this.flagClicked;
-        // 将当前行移到第一位
+        // move to row to the front
         this.tableData = [row, ...this.tableData.filter(item => item !== row)];
       }``
     },
@@ -169,25 +179,22 @@ export default {
         cancelButtonText: 'Cancel',
         type: 'success'
       }).then(() => {
-        // 用户点击了确认按钮
-        // 在这里可以处理 Approve 的逻辑
+        // click confirm for approve
         row.status = 'APPROVE'
       }).catch(() => {
-        // 用户点击了取消按钮
       })
     },
     handleRejectClick(row) {
-      // 弹出对话框
+      // comfirmation window pop out
       this.$confirm('Do you confim your selection?(Reject)', 'Warning', {
         confirmButtonText: 'Send',
         cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
-        // 用户点击了确认按钮
-        // 在这里可以处理 Reject 的逻辑
+        // click confirm for reject
         row.status = 'REJECT'
       }).catch(() => {
-        // 用户点击了取消按钮
+        // user cancel the button
       })
     }
   }

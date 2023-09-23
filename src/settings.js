@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'StudentRequestHub',
+  title: 'StuRequestHub',
 
   /**
    * @type {boolean} true | false
