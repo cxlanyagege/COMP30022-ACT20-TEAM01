@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: Server
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/student_requests
+    username: root
+    password: 54!45L^i
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+upload:
+  localPath: /Users/wangzeyu/Desktop/IT Project/IT-project/test uploaded attachments/
+  accessPath: /upload/
