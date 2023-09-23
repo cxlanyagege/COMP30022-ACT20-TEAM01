@@ -34,6 +34,9 @@ dependencies {
     
 	// LTI-related library
 	implementation 'org.imsglobal:basiclti-util:1.2.0'
+
+	// Lombok
+	implementation 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
