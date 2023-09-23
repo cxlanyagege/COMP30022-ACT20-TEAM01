@@ -10,7 +10,7 @@ import java.sql.Date;
 @TableName("Request")
 public class Request {
     // 和数据库相关
-    @TableId("request_id") // Specify the primary key field
+    @TableId("requestId") // Specify the primary key field
     private Integer requestId;
     private String description;
     private String status;

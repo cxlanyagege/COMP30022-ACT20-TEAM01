@@ -43,7 +43,7 @@ public class RequestController {
 
         // Create a query wrapper filter the records with the specified studentId
         QueryWrapper<Request> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("student_id", studentId);
+        queryWrapper.eq("studentId", studentId);
         if (Objects.equals(status, "WAITING")){
             queryWrapper.eq("status", status);
         } else {
@@ -70,7 +70,7 @@ public class RequestController {
         RequestVo requestVo = new RequestVo();
         Request request = requestService.getById(requestId);
         QueryWrapper query = new QueryWrapper();
-        query.eq("request_id", request.getRequestId());
+        query.eq("requestId", request.getRequestId());
         List<Attachment> attachments = attachmentService.list(query);
         BeanUtils.copyProperties(request, requestVo);
         requestVo.setAttachments(attachments);

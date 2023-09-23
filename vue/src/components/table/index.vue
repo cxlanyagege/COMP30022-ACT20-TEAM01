@@ -101,7 +101,7 @@ export default {
       })
     },
 
-    // WRITTEN BY DENNIS
+    // WRITTEN BY DENNIS & HE SHEN
     updateRequests(page, pageSize) {
       // send the update request to the server and return all requests 
       // that are still waiting to be accessed 
@@ -111,7 +111,8 @@ export default {
         pageSize,
         status: "WAITING"
       }
-      getRequests(1266288, param).then((res) => {
+      const userId = this.$store.getters.id
+      getRequests(userId, param).then((res) => {
         console.log(res.data)
 
         if (res.data.data.records.length == 0 && page != 0){

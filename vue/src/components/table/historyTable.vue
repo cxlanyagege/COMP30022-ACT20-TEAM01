@@ -55,7 +55,7 @@ export default {
   },
 
   methods: {
-    // WRITTEN BY DENNIS
+    // WRITTEN BY DENNIS & HE SHEN
     updateRequests(page, pageSize) {
       // same thing as the table in student dashboard main page
       // except now return all the requests that are processed
@@ -65,7 +65,8 @@ export default {
         pageSize,
         status: "OTHER"
       }
-      getRequests(1266288, param).then((res) => {
+      const userId = this.$store.getters.id
+      getRequests(userId, param).then((res) => {
         console.log(res.data)
         if (res.data.data.records.length == 0 && page != 0){
           this.pageNum = page - 1

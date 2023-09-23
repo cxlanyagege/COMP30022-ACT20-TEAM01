@@ -76,7 +76,7 @@ export default {
       labelPosition: 'left',
       form: {
         studentId: '',
-        // subjectCode: '',
+        subjectCode: '',
         region: '',
         showAdditionalOptions: false,
         type: '',
@@ -101,14 +101,14 @@ export default {
     }
   },
   methods: {
-    // WRITTEN BY DENNIS WANG
+    // WRITTEN BY DENNIS WANG & HE SHEN
     onSubmit() {
       const currentDate = new Date();
       // construct a formData to finalise all the information in the
       // form, used later to pass data to the request 
       const formData = {
         studentId: this.form.studentId,
-        // subjectId: this.form.subjectCode,
+        subjectId: this.form.subjectCode,
         requestType: this.form.region,
         submissionDate: currentDate,
         // email: this.form.email,
@@ -128,7 +128,7 @@ export default {
       let param = {
         description: formData.description,
         studentId: formData.studentId,
-        subjectId: "COMP10012", // requires LMS connection
+        subjectId: formData.subjectCode,
         submissionDate: formData.submissionDate,
         requestType: formData.requestType,
         requestName: formData.requestName,
@@ -207,12 +207,26 @@ export default {
     // 删除队友的电子邮件地址输入框
     removeTeammate(index) {
       this.form.teammates.splice(index, 1)
+    },
+    // get student id
+    getCurrentUserId() {
+      return this.$store.getters.id
+    },
+    // get subject id
+    getCurrentSubjectId() {
+      return this.$store.getters.subjectId
     }
   },
   // WRITTEN BY DENNIS WANG
   created() {
     // set componenent name
     this.$root.$refs.form_component = this;
+
+    // set current student id
+    this.form.studentId = this.getCurrentUserId()
+
+    // set current subject id
+    this.form.subjectCode = this.getCurrentSubjectId;
   },
 }
 </script>
