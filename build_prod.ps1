@@ -11,8 +11,13 @@ if ($LASTEXITCODE -ne 0) {
 # Go back to previous directory
 cd ..
 
-# Remove all files in the spring static folder
-Remove-Item .\spring\src\main\resources\static\* -Recurse -Force
+# Define the static folder path
+$staticFolderPath = ".\spring\src\main\resources\static\"
+
+# Remove all files in the spring static folder if it exists
+if (Test-Path -Path $staticFolderPath -PathType Container) {
+    Remove-Item -Path "$staticFolderPath*" -Recurse -Force
+}
 
 # Move dist to spring static folder
 Copy-Item -Recurse .\vue\dist\* .\spring\src\main\resources\static\
