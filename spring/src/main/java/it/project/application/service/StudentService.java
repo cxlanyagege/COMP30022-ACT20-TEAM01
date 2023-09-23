@@ -18,27 +18,27 @@ import org.springframework.stereotype.Service;
 public class StudentService {
 
     @Autowired
-    private StudentMapper userMapper;
+    private StudentMapper studentMapper;
 
     // Authenticate user for log in purpose
     public Student authenticate(Long id, String name, String email) {
 
         // Find user name in database
-        Student user = userMapper.findById(id);
+        Student student = studentMapper.findById(id);
 
         // User who already registers StuRequestHub
-        if (user != null) {
-            return user;
+        if (student != null) {
+            return student;
         }
 
         // User who use for the first time
         Student newStudent = new Student(id, name, email);
-        userMapper.insert(newStudent);
+        studentMapper.insert(newStudent);
         return newStudent;
     }
     
     // Get user info from user id
     public Student getUserInfo(Long studentId) {
-        return userMapper.selectById(studentId);
+        return studentMapper.selectById(studentId);
     }
 }

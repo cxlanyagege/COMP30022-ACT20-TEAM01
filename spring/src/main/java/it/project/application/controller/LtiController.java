@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.project.application.service.StudentService;
+import it.project.application.service.SubjectService;
 import it.project.application.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -43,9 +44,12 @@ public class LtiController {
     private StudentService studentService;
 
     @Autowired
+    private SubjectService subjectService;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
-    private final String CODED_FORM = "UTF-8";
+    private static final String CODED_FORM = "UTF-8";
 
     @PostMapping("/launch")
     public String handleLtiLaunch(HttpServletRequest request, HttpServletResponse response) 
@@ -106,7 +110,14 @@ public class LtiController {
             String name = request.getParameter("lis_person_name_full");
             String email = request.getParameter("lis_person_contact_email_primary");
             studentService.authenticate(id, name, email);
-            String jwt = jwtUtil.generateToken(id);
+
+            // Store subject course information
+            Long subjectId = Long.valueOf(request.getParameter("custom_canvas_course_id"));
+            String subjectName = request.getParameter("context_label");
+            subjectService.store(subjectId, subjectName);
+
+            // Generate jwt token
+            String jwt = jwtUtil.generateToken(id, name, email, subjectId, subjectName);
 
             // Launch StuRequestHub dashboard
             try {

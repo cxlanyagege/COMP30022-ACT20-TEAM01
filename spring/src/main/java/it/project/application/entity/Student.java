@@ -4,8 +4,6 @@
  * 
  * Author: He Shen
  * Date: 2023/9/23
- * 
- * Note: Spring Security has not fully applied
  */
 
 package it.project.application.entity;

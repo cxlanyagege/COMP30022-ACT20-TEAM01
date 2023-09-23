@@ -5,7 +5,7 @@
       @click="showForm"
     >+ Create</el-button>
     <el-dialog :visible.sync="formVisible" width="65%" :modal="false">
-      <strong style="font-size: 20px;" title="COMP30022 Request Form">COMP30022 Request Form</strong>
+      <strong style="font-size: 20px;" :title="subjectInfo.subjectName + ' Request Form'">{{ subjectInfo.subjectName }} Request Form</strong>
       <RequestForm @form-submitted="submitForm" />
     </el-dialog>
 
@@ -21,24 +21,41 @@ export default {
   },
   data() {
     return {
-      formVisible: false,
+      formVisible: false
     }
   },
+  computed: {
+    subjectInfo() {
+      return {
+        subjectName: this.$store.state.subject.subjectName,
+        subjectId: this.$store.state.subject.subjectId
+      }
+    }
+  },
+  created() {
+    // set componenent name
+    this.$root.$refs.button_component = this
+  },
   methods: {
-    showForm() {
-      this.formVisible = true
-      this.$root.$refs.form_component.isCheck = false
-      this.$root.$refs.form_component.form.studentId = '';
-      this.$root.$refs.form_component.form.subjectCode = '';
-      this.$root.$refs.form_component.form.region = '';
-      this.$root.$refs.form_component.form.type = '';
-      this.$root.$refs.form_component.form.name = '';
-      this.$root.$refs.form_component.form.time = '';
-      this.$root.$refs.form_component.form.detail = '';
-      this.$root.$refs.form_component.form.fileList = [];
-      this.$root.$refs.form_component.form.teammates = [];
-      this.$root.$refs.form_component.form.email = false;
-      this.$root.$refs.form_component.form.showAdditionalOptions = false;
+    async showForm() {
+      try {
+        await this.$store.dispatch('subject/getSubjectInfo')
+        this.formVisible = true
+        this.$root.$refs.form_component.isCheck = false
+        this.$root.$refs.form_component.form.studentId = ''
+        this.$root.$refs.form_component.form.subjectCode = ''
+        this.$root.$refs.form_component.form.region = ''
+        this.$root.$refs.form_component.form.type = ''
+        this.$root.$refs.form_component.form.name = ''
+        this.$root.$refs.form_component.form.time = ''
+        this.$root.$refs.form_component.form.detail = ''
+        this.$root.$refs.form_component.form.fileList = []
+        this.$root.$refs.form_component.form.teammates = []
+        this.$root.$refs.form_component.form.email = false
+        this.$root.$refs.form_component.form.showAdditionalOptions = false
+      } catch (error) {
+        console.error('Error getting subject info', error)
+      }
     },
     submitForm(formData) {
       // 这里处理提交表单后的逻辑，formData 包含表单数据
@@ -50,11 +67,7 @@ export default {
         this.formVisible = false
       })
     }
-  },
-  created() {
-    // set componenent name
-    this.$root.$refs.button_component = this;
-  },
+  }
 }
 </script>
 

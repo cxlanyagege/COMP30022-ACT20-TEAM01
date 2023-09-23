@@ -24,11 +24,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:8888")
 public class StudentController {
 
     @Autowired
-    private StudentService userService;
+    private StudentService studentService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -41,8 +40,9 @@ public class StudentController {
         Long studentId = Long.valueOf(studentIdStr);
 
         // Get student entity from student id
-        Student student = userService.getUserInfo(studentId);
+        Student student = studentService.getUserInfo(studentId);
 
+        // Response with matched student entity
         Map<String, Object> response = new HashMap<>();
         Map<String, Object> data = new HashMap<>();
         if (student != null) {

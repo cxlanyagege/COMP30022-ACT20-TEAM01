@@ -4,7 +4,7 @@
 
     <div class="right-menu">
       <div class="avatar-container" @click="showStudentProfileDialog">
-        <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" :size="45" class="vertical-center"></el-avatar>
+        <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" :size="45" class="vertical-center" />
       </div>
     </div>
 
@@ -36,10 +36,10 @@ export default {
     return {
       showProfileDialog: false, // 控制学生信息模态框的显示与隐藏
       studentInfo: {
-        name: this.$store.state.user.name, // 学生姓名
-        id: this.$store.state.user.id,
-        email: this.$store.state.user.email,// 学生年龄
-        aap: "Yes"       // 学生成绩
+        name: this.$store.state.user.name, // Student name
+        id: this.$store.state.user.id, // Student id
+        email: this.$store.state.user.email, // Student email
+        aap: 'Yes' // Student aap support
         // 添加更多学生信息字段
       }
     }
@@ -54,14 +54,10 @@ export default {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
-    async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-    },
     showStudentProfileDialog() {
       // 点击按钮弹出学生信息模态框的方法
-      console.log("Button clicked"); // 检查方法是否被调用
-      this.showProfileDialog = true; // 显示模态框
+      console.log('Button clicked') // 检查方法是否被调用
+      this.showProfileDialog = true // 显示模态框
     }
   }
 }

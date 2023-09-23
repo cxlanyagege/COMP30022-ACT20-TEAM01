@@ -1,14 +1,20 @@
-import { getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+/**
+ * JS Name: store/modules/subject.js
+ * Description: Subject information storing
+ * 
+ * Author: He Shen
+ * Date: 2023/9/23
+ */
+
+import { getSubjectInfo } from '@/api/subject'
+import { getToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
-    id: null,
-    name: '',
-    avatar: '',
-    email: ''
+    subjectId: null,
+    subjectName: ''
   }
 }
 
@@ -21,47 +27,33 @@ const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_ID: (state, id) => {
-    state.id = id
+  SET_SUBJECTID: (state, subjectId) => {
+    state.subjectId = subjectId
   },
-  SET_NAME: (state, name) => {
-    state.name = name
-  },
-  SET_EMAIL: (state, email) => {
-    state.email = email
-  },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
+  SET_SUBJECTNAME: (state, subjectName) => {
+    state.subjectName = subjectName
   }
 }
 
 const actions = {
-  // user login
-  login({ commit }, jwt) {
+  // get subject info
+  getSubjectInfo({ commit, state, rootState }) {
     return new Promise((resolve, reject) => {
-      // Set token from jwt
-      commit('SET_TOKEN', jwt)
-      setToken(jwt)
-      resolve()
-    })
-  },
+      if (!state.token) {
+        commit('SET_TOKEN', rootState.user.token)
+      }
 
-  // get user info
-  getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
+      getSubjectInfo(state.token).then(response => {
         const { data } = response
 
         if (!data) {
           reject('Verification failed, please Login again.')
         }
 
-        const { id, name, email, avatar } = data
+        const { subjectId, subjectName } = data
 
-        commit('SET_ID', id)
-        commit('SET_NAME', name)
-        commit('SET_EMAIL', email)
-        commit('SET_AVATAR', avatar)
+        commit('SET_SUBJECTID', subjectId)
+        commit('SET_SUBJECTNAME', subjectName)
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -86,4 +78,3 @@ export default {
   mutations,
   actions
 }
-

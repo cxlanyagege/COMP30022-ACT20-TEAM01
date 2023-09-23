@@ -7,10 +7,3 @@ export function getInfo(token) {
     params: { token }
   })
 }
-
-export function logout() {
-  return request({
-    url: '/api/logout',
-    method: 'post'
-  })
-}

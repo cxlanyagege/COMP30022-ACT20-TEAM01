@@ -15,6 +15,19 @@ import com.baomidou.mybatisplus.annotation.TableName;
 public class Subject {
 
     @TableId
-    private Integer id;
+    private Long subjectId;
+    private String subjectName;
 
+    public Subject(Long subjectId, String subjectName) {
+        this.subjectId = subjectId;
+        this.subjectName = subjectName;
+    }
+
+    public Long getSubjectId() {
+        return subjectId;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
 }
