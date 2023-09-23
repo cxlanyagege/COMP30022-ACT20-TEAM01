@@ -22,7 +22,6 @@ public class Request {
   private String description;
   private Long studentId;
 
-  // Getter and Setter
   public String getDescription() {
     return description;
   }

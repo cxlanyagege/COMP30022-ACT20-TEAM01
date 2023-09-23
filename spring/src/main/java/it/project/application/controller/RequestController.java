@@ -22,6 +22,7 @@ import it.project.application.service.RequestService;
 import it.project.application.util.JwtUtil;
 
 @RestController
+@RequestMapping("/api")
 public class RequestController {
   
   @Autowired
@@ -30,7 +31,7 @@ public class RequestController {
   @Autowired
     private JwtUtil jwtUtil;
 
-  @PostMapping("/api/saveRequest")
+  @PostMapping("/saveRequest")
   public ResponseEntity<Map<String, String>> saveRequest(
     @RequestHeader("Authorization") String authorizationHeader, 
     @RequestBody Request request) {
@@ -44,7 +45,7 @@ public class RequestController {
     return ResponseEntity.ok(Map.of("message", "Request saved successfully!"));
   }
 
-  @GetMapping("/api/getRequests")
+  @GetMapping("/getRequests")
   public List<Request> getRequests(@RequestHeader("Authorization") String authorizationHeader) {
 
     String jwt = authorizationHeader.substring(7);

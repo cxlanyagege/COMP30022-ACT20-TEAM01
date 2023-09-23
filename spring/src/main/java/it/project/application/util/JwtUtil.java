@@ -20,7 +20,7 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-    private final String SECRET_KEY = "itproject_sid";
+    private String SECRET_KEY = "itproject_sid";
 
     // Extract student id as string
     public String extractStudentId(String token) {
