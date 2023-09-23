@@ -1,4 +1,6 @@
 <template>
+  <!--TEMPLATE CONSTRUCTED BY __, TRIGGER METHODS AND DATA
+  UPDATED BY DENNIS-->
   <div class="app-container">
     <el-table
       v-loading="listLoading"
@@ -24,7 +26,7 @@
       <el-table-column label="ACTION">
         <template slot-scope="scope">
           <el-button
-            type="danger"
+            type="info"
             size="small"
             @click="showRequestDetail(scope.row.idNo)"
           >Detail</el-button>
@@ -61,21 +63,26 @@ export default {
     }
   },
 
+  // WRITTEN BY DENNIS
   mounted() {
+    // show the request list when the component's been added to DOM
     this.updateRequests(this.pageNum, this.pageSize)
   },
 
   methods: {
-    // 处理删除操作
+    // WRITTEN BY DENNIS
     handleDelete(idNo) {
-      // 根据 idNo 删除相应的请求
+      // delete request based on requestid
       deleteRequest(idNo).then(res=>{
         console.log(res.data);
         this.updateRequests(this.pageNum, this.pageSize)
       })
     },
 
+    // WRITTEN BY DENNIS
     showRequestDetail(requestId) {
+      // get the details of a specified request when student
+      // want to check the content of it
       this.$root.$refs.button_component.formVisible = true;
       this.$root.$refs.form_component.isCheck = true;
       getRequest(requestId, null).then(res => {
@@ -94,7 +101,10 @@ export default {
       })
     },
 
+    // WRITTEN BY DENNIS
     updateRequests(page, pageSize) {
+      // send the update request to the server and return all requests 
+      // that are still waiting to be accessed 
       console.log('handle requests');
       const param = {
         pageNum: page,
@@ -126,10 +136,13 @@ export default {
       });
     },
 
+    // WRITTEN BY DENNIS
     handlePageChange(pageNum) {
+      // used to handle the pagination
       this.updateRequests(pageNum, this.pageSize);
     }
   },
+  // WRITTEN BY DENNIS
   created() {
     // set componenent name
     this.$root.$refs.table_component = this;

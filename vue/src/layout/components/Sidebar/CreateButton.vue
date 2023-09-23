@@ -25,15 +25,16 @@ export default {
     }
   },
   methods: {
+    // ADDED BY DENNIS WANG
     showForm() {
+      // reset everything in the form everytime the form is opened
       this.formVisible = true
       this.$root.$refs.form_component.isCheck = false
       this.$root.$refs.form_component.form.studentId = '';
-      this.$root.$refs.form_component.form.subjectCode = '';
+      // this.$root.$refs.form_component.form.subjectCode = '';
       this.$root.$refs.form_component.form.region = '';
       this.$root.$refs.form_component.form.type = '';
       this.$root.$refs.form_component.form.name = '';
-      this.$root.$refs.form_component.form.time = '';
       this.$root.$refs.form_component.form.detail = '';
       this.$root.$refs.form_component.form.fileList = [];
       this.$root.$refs.form_component.form.teammates = [];
@@ -51,6 +52,7 @@ export default {
       })
     }
   },
+  // WRITTEN BY DENNIS WANG
   created() {
     // set componenent name
     this.$root.$refs.button_component = this;

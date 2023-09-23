@@ -1,4 +1,6 @@
 <template>
+  <!--TEMPLATE ORIGINAL CONSTRUCTED BY __, TRIGGER FUNCTIONS AND 
+  DATA UPDATED AND ADDED BY DENNIS-->
   <div class="app-container">
     <el-table
       v-loading="listLoading"
@@ -46,12 +48,17 @@ export default {
     }
   },
 
+  // WRITTEN BY DENNIS
   mounted() {
+    // table needs to be rendered when it's been first added into DOM
     this.updateRequests(this.pageNum, this.pageSize)
   },
 
   methods: {
+    // WRITTEN BY DENNIS
     updateRequests(page, pageSize) {
+      // same thing as the table in student dashboard main page
+      // except now return all the requests that are processed
       console.log('handle requests');
       const param = {
         pageNum: page,
@@ -60,7 +67,6 @@ export default {
       }
       getRequests(1266288, param).then((res) => {
         console.log(res.data)
-
         if (res.data.data.records.length == 0 && page != 0){
           this.pageNum = page - 1
           this.updateRequests(this.pageNum, pageSize)
@@ -80,15 +86,19 @@ export default {
           this.pageNum = res.data.data.current
         }
         // console.log(this.pageNum, this.pageSize)
+        console.log(this.tableData);
       });
     },
 
+    // WRITTEN BY DENNIS
     handlePageChange(pageNum) {
+      // handle pagination
       this.updateRequests(pageNum, this.pageSize);
     }
   },
 
   created() {
+    // set component name
     this.$root.$refs.history_component = this;
   }
 }
