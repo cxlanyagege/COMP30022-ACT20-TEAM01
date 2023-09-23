@@ -83,12 +83,12 @@
           </template>
         </template>
       </el-table-column>
-      <el-table-column label="Flag">
+      <el-table-column label="Flag" prop="flag" min-width="40">
         <template slot-scope="{ row }">
           <el-button
             v-if="!row.flagClicked"
             @click="handleFlagClick(row)"
-            type="default"
+            type="danger"
             :class="{ 'flag-button-clicked': row.flagClicked }"
             icon="el-icon-s-flag"
           circle>
