@@ -82,24 +82,24 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/subjects/table',
     name: 'subjects',
-    meta: { title: 'Subjects', icon: 'nested' },
+    meta: { title: 'subjects', icon: 'nested' },
     children: [
       {
         path: 'comp30023',
         name: 'COMP30023',
-        component: () => import('@/views/Subjects/index'),
+        component: () => import('@/views/subjects/index'),
         meta: { title: 'COMP30023' }
       },
       {
         path: 'comp30026',
         name: 'COMP30026',
-        component: () => import('@/views/Subjects/index'),
+        component: () => import('@/views/subjects/index'),
         meta: { title: 'COMP30026' }
       },
       {
         path: 'comp20008',
         name: 'COMP20008',
-        component: () => import('@/views/Subjects/index'),
+        component: () => import('@/views/subjects/index'),
         meta: { title: 'COMP20008' }
       }
     ]
