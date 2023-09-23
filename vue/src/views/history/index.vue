@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-input v-model="filterText" @input="filterTable" placeholder="Filter keyword"/>
-    <HistoryTable :data="filteredTableData" />
+    <HistoryTable />
 
   </div>
 </template>
@@ -15,29 +15,27 @@ export default {
   },
   data() {
     return {
-      // tableData: [], // 你的表格数据
+      tableData: [],
       filterText: '',
-      filteredTableData: []
+      // used as a source to filter the requests
+      tempData: this.$root.$refs.history_component.tableData
     }
   },
   methods: {
+    // WRITTEN BY DENNIS
     filterTable() {
-      // Convert filterText to lowercase for case-insensitive filtering
+      // in order to make case-insensitive search
       const keyword = this.filterText.toLowerCase().trim();
-      
-      // Filter the tableData based on the keyword
-      this.filteredTableData = this.$root.$refs.history_component.tableData.filter(item => {
-        // Customize this logic to match your data structure and filter requirements
-        // For example, you can filter based on a specific column (e.g., item.name)
-        // Adjust the condition as needed to match your use case.
+      // filter through the requests to find wanted requests
+      this.tableData = this.tempData.filter(item => {
         if (item.name.toLowerCase().includes(keyword)){
           return item;
         }
       });
-      console.log(this.filteredTableData)
+      // update the tableData that's required to render the table on the webpage
+      this.$root.$refs.history_component.tableData = this.tableData;
     }
   }
-  // 其他组件选项和方法
 }
 </script>
 

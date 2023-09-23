@@ -1,4 +1,7 @@
 <template>
+  <!--ORIGINAL TEMPLATE CONSTRUCTED BY ___, UPDATED AND CHANGED
+  BY DENNIS WANG, MOSTLY ADDING THE TRIGGER FUNCTIONS DEFINED
+  FURTHER IN THE SCRIPT SECTION-->
   <div class="app-container">
     <el-form ref="form" :label-position="labelPosition" :model="form" label-width="120px">
       <el-form-item label="Student ID">
@@ -60,7 +63,7 @@
 </template>
 
 <script>
-import {getRequests, addRequest, deleteRequest} from '@/api/request'
+import {addRequest} from '@/api/request'
 import listTable from '@/components/table/index.vue'
 import {attachmentBaseURL, uploadURL} from '@/config/config'
 
@@ -78,11 +81,10 @@ export default {
         showAdditionalOptions: false,
         type: '',
         name: '',
-        // time: '',
         email: false,
         detail: '',
         fileList: [],
-        teammates: [] // 存储队友的电子邮件地址
+        teammates: []
       },
       uploadURL: uploadURL,
       isCheck: false
@@ -90,7 +92,7 @@ export default {
   },
   watch: {
     'form.region'(newValue) {
-      // 根据选择的 "Request Type" 更新 showAdditionalOptions 的值
+      // update showAdditionOptions based on the region
       if (newValue === "Test" || newValue === "Assignment" || newValue === "Exam"){
         this.form.showAdditionalOptions = true;
       } else {
@@ -99,10 +101,11 @@ export default {
     }
   },
   methods: {
+    // WRITTEN BY DENNIS WANG
     onSubmit() {
-      // 创建一个 formData 对象，根据用户选择的动态包含 type 和 name 字段
       const currentDate = new Date();
-
+      // construct a formData to finalise all the information in the
+      // form, used later to pass data to the request 
       const formData = {
         studentId: this.form.studentId,
         // subjectId: this.form.subjectCode,
@@ -125,7 +128,7 @@ export default {
       let param = {
         description: formData.description,
         studentId: formData.studentId,
-        subjectId: "COMP10012", // 需要从lms上面获取
+        subjectId: "COMP10012", // requires LMS connection
         submissionDate: formData.submissionDate,
         requestType: formData.requestType,
         requestName: formData.requestName,
@@ -133,11 +136,14 @@ export default {
         attachments: formData.fileList.map(item => {
           return {url: this.convertUrlWithoutPrefix(item.url)}
         })
-      }
+      } // send the add request to the server to save the request
+      // info in the DB
       addRequest(param).then(res => {
         console.log(res.data);
         if (res.data.code == 0){
           this.$message(res.data.msg)
+          // after successfully saving the request, it should be shown on the
+          // web page as well, so update the request table here
           this.$root.$refs.table_component.updateRequests(this.$root.$refs.table_component.pageNum,
                             this.$root.$refs.table_component.pageSize);
         } else {
@@ -145,10 +151,9 @@ export default {
         }
       })
 
-      // 现在可以将 formData 发送到服务器或执行其他处理
-      console.log('Form submitted with data:', param)
+      // console.log('Form submitted with data:', param)
 
-      this.$message('Submit successful!')
+      // this.$message('Submit successful!')
     },
     onCancel() {
       this.$message({
@@ -156,16 +161,23 @@ export default {
         type: 'warning'
       })
     },
+    // WRITTEN BY DENNIS WANG
+    // used to show the files on the form page, given access to 
+    // the file from the client side
     convertUrlWithPrefix(url) {
       return attachmentBaseURL + url;
     },
+    // WRITTEN BY DENNIS WANG
+    // used to store the data in the server side as it doesn't
+    // require extra address to access
     convertUrlWithoutPrefix(url){
       return url.substr(attachmentBaseURL.length, url.length);
     },
-    // 处理文件上传成功
+    // WRITTEN BY DENNIS WANG
+    // handle files uploaded successfully
     handleSuccess(response, file, fileList) {
       // console.log(fileList)
-      // this.form.file = response.data.fileUrl // 将文件的 URL 存储在表单数据中
+      // push all the files uploaded into the fileList
       this.form.fileList.push({
         uid: file.raw.uid,
         url: this.convertUrlWithPrefix(response.data)
@@ -181,6 +193,8 @@ export default {
         this.$message.error('File upload failed')
       }
     },
+    // WRITTEN BY DENNIS WANG
+    // remove all the files removed by the client from the fileList
     handleRemove(file, files){
       // console.log(file, files)
       this.form.fileList = this.form.fileList.filter(item => item.uid != file.uid);
@@ -195,6 +209,7 @@ export default {
       this.form.teammates.splice(index, 1)
     }
   },
+  // WRITTEN BY DENNIS WANG
   created() {
     // set componenent name
     this.$root.$refs.form_component = this;

@@ -32,14 +32,19 @@ export default {
       }
     }
   },
+  // WRITTEN BY DENNIS WANG
   created() {
     // set componenent name
     this.$root.$refs.button_component = this
   },
   methods: {
+    // ADDED BY DENNIS WANG & HE SHEN
     async showForm() {
       try {
+        // get subject info
         await this.$store.dispatch('subject/getSubjectInfo')
+
+        // reset everything in the form everytime the form is opened
         this.formVisible = true
         this.$root.$refs.form_component.isCheck = false
         this.$root.$refs.form_component.form.studentId = ''
