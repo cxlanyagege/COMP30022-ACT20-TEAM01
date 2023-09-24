@@ -4,6 +4,8 @@
  * 
  * Author: He Shen
  * Date: 2023/9/23
+ * 
+ * Note: Find student entity by student id
  */
 
 package it.project.application.mapper;

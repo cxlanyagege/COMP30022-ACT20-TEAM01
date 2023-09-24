@@ -1,3 +1,11 @@
+/**
+ * Class Name: Application
+ * Description: Main entry for the project
+ * 
+ * Author: He Shen
+ * Date: 2023/8/16
+ */
+
 package it.project.application;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

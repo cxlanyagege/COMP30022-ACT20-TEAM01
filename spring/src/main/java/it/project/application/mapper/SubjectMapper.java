@@ -4,6 +4,8 @@
  * 
  * Author: He Shen
  * Date: 2023/9/23
+ * 
+ * Note: Find subject entity by subject id
  */
 
 package it.project.application.mapper;

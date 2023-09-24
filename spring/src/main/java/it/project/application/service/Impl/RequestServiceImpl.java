@@ -1,3 +1,11 @@
+/**
+ * Class Name: RequestServiceImpl
+ * Description: Implementation for Request Service
+ * 
+ * Author: Dennis Wang
+ * Date: 2023/9/23
+ */
+
 package it.project.application.service.Impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

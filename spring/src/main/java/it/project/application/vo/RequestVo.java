@@ -1,3 +1,11 @@
+/**
+ * Class Name: RequestVo
+ * Description: Pojo for Request when callback
+ * 
+ * Author: Dennis Wang
+ * Date: 2023/9/23
+ */
+
 package it.project.application.vo;
 
 import lombok.Data;
@@ -10,7 +18,8 @@ import it.project.application.pojo.Attachment;
 @Data
 public class RequestVo {
     // from server to client
-    // 返回的如果是一个class，springboot会自动把class转换成JSON格式
+    // if returns a class...
+    // springboot will automatically translate class into JSON
     private String description;
     // private String subjectId;
     private Integer studentId;

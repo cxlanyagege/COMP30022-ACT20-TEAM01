@@ -1,9 +1,9 @@
 /**
- * Class Name: MyBatisPlusConfig
- * Description: Configuration for JPA ORM on MyBatis
+ * Class Name: MybatisPlusConfig
+ * Description: Configuration for JPA ORM on MybatisPlus
  * 
- * Author: He Shen & Dennis Wang
- * Date: 2023/8/16
+ * Author: Dennis Wang & He Shen
+ * Date: 2023/9/23
  */
 
 package it.project.application.config;
@@ -18,8 +18,9 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 
 @Configuration
 @MapperScan("it.project.application.mapper*")
-public class MyBatisPlusConfig {
+public class MybatisPlusConfig {
 
+    // Mybatis Plus interceptor
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
@@ -27,8 +28,10 @@ public class MyBatisPlusConfig {
         return interceptor;
     }
 
+    // Custom Mybatis Plus config
     @Bean
     public ConfigurationCustomizer configurationCustomizer() {
         return configuration -> configuration.setMapUnderscoreToCamelCase(false);
     }
+    
 }

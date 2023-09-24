@@ -1,3 +1,11 @@
+/**
+ * Class Name: Result
+ * Description: Result indicator in attachment uploading
+ * 
+ * Author: Dennis Wang
+ * Date: 2023/9/23
+ */
+
 package it.project.application.vo;
 
 public class Result<T> {

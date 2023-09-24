@@ -1,3 +1,11 @@
+/**
+ * Class Name: RequestFrom
+ * Description: Generic form for request data
+ * 
+ * Author: Dennis Wang
+ * Date: 2023/9/23
+ */
+
 package it.project.application.form;
 
 import lombok.Data;

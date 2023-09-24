@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'it.project'
-version = '0.0.1-SNAPSHOT'
+version = 'v1.0-alpha'
 
 java {
 	sourceCompatibility = '17'
@@ -20,7 +20,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// MyBatis Plus
+	// Mybatis Plus
 	implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.2'
 
 	// MySQL

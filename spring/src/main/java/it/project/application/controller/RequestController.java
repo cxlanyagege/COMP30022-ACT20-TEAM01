@@ -1,3 +1,11 @@
+/**
+ * Class Name: RequestController
+ * Description: Controller for handling request manipulations
+ * 
+ * Author: Dennis Wang
+ * Date: 2023/9/23
+ */
+
 package it.project.application.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -5,17 +13,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import it.project.application.form.RequestForm;
-import it.project.application.mapper.RequestMapper;
 import it.project.application.pojo.Attachment;
 import it.project.application.pojo.Request;
 import it.project.application.service.IAttachmentService;
 import it.project.application.service.IRequestService;
 import it.project.application.vo.RequestVo;
 import it.project.application.vo.Result;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +28,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController // RestFul
-@Slf4j
 @RequestMapping("/api")
 public class RequestController {
 

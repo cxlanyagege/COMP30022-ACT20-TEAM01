@@ -1,3 +1,11 @@
+/**
+ * Class Name: IRequestService
+ * Description: Interface for Request Service
+ * 
+ * Author: Dennis Wang
+ * Date: 2023/9/23
+ */
+
 package it.project.application.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;

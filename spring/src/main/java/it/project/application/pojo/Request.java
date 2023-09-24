@@ -1,3 +1,11 @@
+/**
+ * Class Name: Request
+ * Description: Pojo for Request
+ * 
+ * Author: Dennis Wang
+ * Date: 2023/9/23
+ */
+
 package it.project.application.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -9,7 +17,7 @@ import java.sql.Date;
 @Data
 @TableName("Request")
 public class Request {
-    // 和数据库相关
+    // Database related
     @TableId("requestId") // Specify the primary key field
     private Integer requestId;
     private String description;

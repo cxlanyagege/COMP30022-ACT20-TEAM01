@@ -1,3 +1,11 @@
+/**
+ * Class Name: WebConfig
+ * Description: Configuration for uploading attachments to local
+ * 
+ * Author: Dennis Wang
+ * Date: 2023/9/23
+ */
+
 package it.project.application.config;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -15,11 +23,14 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${upload.localPath}")
     private String localPath;
 
-    // 帮助浏览器访问图片
+    // Help browser to locate the resource
+    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler(accessPath + "**").addResourceLocations("file:" + localPath);
     }
 
+    // Add cross region profile (not needed in production)
+    @Override
     public void addCorsMappings(CorsRegistry corsRegistry){
         corsRegistry.addMapping("/**")
                 .allowedOrigins("*")

@@ -1,3 +1,11 @@
+/**
+ * Class Name: SubjectServiceTest
+ * Description: Test for subject service
+ * 
+ * Author: He Shen
+ * Date: 2023/9/24
+ */
+
 package it.project.application.service;
 
 import it.project.application.entity.Subject;
