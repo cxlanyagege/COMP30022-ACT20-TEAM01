@@ -22,6 +22,9 @@
             <el-form-item label="Student ID">
               <span>{{ props.row.id }}</span>
             </el-form-item>
+            <el-form-item label="Subject ID">
+              <span>{{ props.row.subID }}</span>
+            </el-form-item>   
             <el-form-item label="Application Date">
               <span>{{ props.row.appDate }}</span>
             </el-form-item>
@@ -47,6 +50,11 @@
         min-width="40"
         label="ID No."
         prop="id"
+      >
+      </el-table-column>
+      <el-table-column
+        label="Subject ID"
+        prop="subID"
       >
       </el-table-column>
       <el-table-column
@@ -134,6 +142,7 @@ export default {
     return {
       tableData: [{
         id: '1266704',
+        subID: 'COMP30022',
         appDate: '01/01/2024',
         reqType: 'Assignment',
         taskType: 'Individual',
@@ -144,6 +153,7 @@ export default {
         flagClicked: false
       }, {
         id: '1266705',
+        subID: 'COMP30026',
         appDate: '01/01/2024',
         reqType: 'Test',
         taskType: 'N/A',
@@ -154,6 +164,7 @@ export default {
         flagClicked: false
       }, {
         id: '1266706',
+        subID: 'COMP30027',
         appDate: '01/01/2024',
         reqType: 'Exam',
         taskType: 'N/A',
@@ -164,6 +175,7 @@ export default {
         flagClicked: false
       }, {
         id: '1266704',
+        subID: 'COMP20008',
         appDate: '01/01/2024',
         reqType: 'Others',
         taskType: 'N/A',
