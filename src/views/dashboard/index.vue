@@ -3,16 +3,16 @@
   <div>
     <div>
       <!-- Add button to filter based on request type -->
-      <button @click="applyFilter('All')">All</button>
-      <button @click="applyFilter('Assignment')">Assignment</button>
-      <button @click="applyFilter('Test')">Test</button>
-      <button @click="applyFilter('Exam')">Exam</button>
-      <button @click="applyFilter('Individual')">Individual</button>
-      <button @click="applyFilter('Others')">Others</button>
+      <el-button type="primary" plain @click="applyFilter('All')" style="width: 18%; margin-right: 2%; margin-left: 1.5%">All</el-button>
+      <el-button plain @click="applyFilter('Assignment')" style="width: 13%; margin-right: 2%">Assignment</el-button>
+      <el-button plain @click="applyFilter('Test')" style="width: 13%; margin-right: 2%">Test</el-button>
+      <el-button plain @click="applyFilter('Exam')" style="width: 13%; margin-right: 2%">Exam</el-button>
+      <el-button plain @click="applyFilter('Individual')" style="width: 13%; margin-right: 2%">Individual</el-button>
+      <el-button plain @click="applyFilter('Others')" style="width: 13%; margin-right: 2%">Others</el-button>
     </div>
     <el-table
       :data="filteredData"
-      style="width: 100%"
+      style="width: 100%; top: 28px"
       border
       stripe
     >
