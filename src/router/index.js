@@ -81,8 +81,8 @@ export const constantRoutes = [
     path: '/subjects',
     component: Layout,
     redirect: '/subjects/table',
-    name: 'subjects',
-    meta: { title: 'subjects', icon: 'nested' },
+    name: 'Subjects',
+    meta: { title: 'Subjects', icon: 'nested' },
     children: [
       {
         path: 'comp30023',

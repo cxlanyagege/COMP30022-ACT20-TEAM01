@@ -2,15 +2,16 @@
 <template>
   <div>
     <div>
-      <!-- 添加筛选功能按钮 -->
-      <button @click="applyFilterA('someFilter')">Assignment</button>
-      <button @click="applyFilterT('someFilter')">Test</button>
-      <button @click="applyFilterE('someFilter')">Exam</button>
-      <button @click="applyFilterI('someFilter')">Personal</button>
-      <button @click="applyFilterO('someFilter')">Others</button>
+      <!-- Add button to filter based on request type -->
+      <button @click="applyFilter('All')">All</button>
+      <button @click="applyFilter('Assignment')">Assignment</button>
+      <button @click="applyFilter('Test')">Test</button>
+      <button @click="applyFilter('Exam')">Exam</button>
+      <button @click="applyFilter('Individual')">Individual</button>
+      <button @click="applyFilter('Others')">Others</button>
     </div>
     <el-table
-      :data="tableData"
+      :data="filteredData"
       style="width: 100%"
       border
       stripe
@@ -171,8 +172,14 @@ export default {
         files: 'N/A',
         status: 'UNASSESSED',
         flagClicked: false
-      }]
+      }],
+      // add a list to store the filtered data
+      filteredData: []
     }
+  },
+  created() {
+    // initialize the filtering to "All"
+    this.applyFilter('All')
   },
   methods: {
     handleFlagClick(row) {
@@ -208,36 +215,20 @@ export default {
         // user cancel the button
       })
     },
-    applyFilterA(filterCondition) {
-    // 在这里根据 filterCondition 对 tableData 数据进行筛选
-    // 更新 tableData 数据源，以显示符合条件的数据
-      if (filterCondition === 'someFilter') {
-        // 筛选出 reqType 为 'Assignment' 的数据
-        this.tableData = this.tableData.filter(item => item.reqType === 'Assignment')
-      }
-    },
-    applyFilterT(filterCondition) {
-      if (filterCondition === 'someFilter') {
-        // 例如，筛选出 reqType 为 'Test' 的数据
-        this.tableData = this.tableData.filter(item => item.reqType === 'Test')
-      }
-    },
-    applyFilterE(filterCondition) {
-      if (filterCondition === 'someFilter') {
-        // 例如，筛选出 reqType 为 'Exam' 的数据
-        this.tableData = this.tableData.filter(item => item.reqType === 'Exam')
-      }
-    },
-    applyFilterI(filterCondition) {
-      if (filterCondition === 'someFilter') {
-        // 例如，筛选出 reqType 为 'Individual' 的数据
-        this.tableData = this.tableData.filter(item => item.reqType === 'Individual')
-      }
-    },
-    applyFilterO(filterCondition) {
-      if (filterCondition === 'someFilter') {
-        // 例如，筛选出 reqType 为 'Others' 的数据
-        this.tableData = this.tableData.filter(item => item.reqType === 'Others')
+    applyFilter(filterCondition) {
+      // filter according to "filterCondition"
+      if (filterCondition === 'Assignment') {
+        this.filteredData = this.tableData.filter(item => item.reqType === 'Assignment')
+      } else if (filterCondition === 'Test') {
+        this.filteredData = this.tableData.filter(item => item.reqType === 'Test')
+      } else if (filterCondition === 'Exam') {
+        this.filteredData = this.tableData.filter(item => item.reqType === 'Exam')
+      } else if (filterCondition === 'Individual') {
+        this.filteredData = this.tableData.filter(item => item.taskType === 'Individual')
+      } else if (filterCondition === 'Others') {
+        this.filteredData = this.tableData.filter(item => item.reqType === 'Others')
+      } else {
+        this.filteredData = this.tableData
       }
     }
   }
