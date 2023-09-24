@@ -16,6 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `attachment`
+--
+
+DROP TABLE IF EXISTS `attachment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `attachment` (
+  `attachmentID` int NOT NULL,
+  `url` text,
+  `requestID` int DEFAULT NULL,
+  PRIMARY KEY (`attachmentID`),
+  KEY `requestID` (`requestID`),
+  CONSTRAINT `attachment_ibfk_1` FOREIGN KEY (`requestID`) REFERENCES `request` (`RequestID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `attachment`
+--
+
+LOCK TABLES `attachment` WRITE;
+/*!40000 ALTER TABLE `attachment` DISABLE KEYS */;
+INSERT INTO `attachment` VALUES (0,NULL,10000);
+/*!40000 ALTER TABLE `attachment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `request`
 --
 
@@ -24,17 +51,23 @@ DROP TABLE IF EXISTS `request`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `request` (
   `RequestID` int NOT NULL AUTO_INCREMENT,
-  `description` mediumtext,
-  `status` varchar(10) DEFAULT NULL,
-  `submissionDate` datetime DEFAULT NULL,
   `StudentID` int DEFAULT NULL,
   `SubjectID` varchar(10) DEFAULT NULL,
+  `RequestType` varchar(50) DEFAULT NULL,
+  `TaskType` varchar(50) DEFAULT NULL,
+  `Emails` text,
+  `RequestName` mediumtext,
+  `Alert` int DEFAULT NULL,
+  `Attachment` text,
+  `SubmissionDate` datetime DEFAULT NULL,
+  `description` text,
+  `status` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`RequestID`),
   KEY `StudentID` (`StudentID`),
   KEY `SubjectID` (`SubjectID`),
   CONSTRAINT `request_ibfk_1` FOREIGN KEY (`StudentID`) REFERENCES `student` (`StudentID`),
   CONSTRAINT `request_ibfk_2` FOREIGN KEY (`SubjectID`) REFERENCES `subject` (`SubjectID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1804210179 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +76,7 @@ CREATE TABLE `request` (
 
 LOCK TABLES `request` WRITE;
 /*!40000 ALTER TABLE `request` DISABLE KEYS */;
-INSERT INTO `request` VALUES (0,'Hello Request!','0','2000-01-01 00:00:00',0,'EXMP10000'),(1,'Different Status?','1','2000-01-01 00:12:00',0,'EXMP10000');
+INSERT INTO `request` VALUES (10000,108998431,'7677778','Assignment','Group','exmp1@student.unimelb.edu.au,exmp2@student.unimelb.edu.au','Sample request',1,NULL,'2023-09-01 00:00:00',NULL,'WAITING');
 /*!40000 ALTER TABLE `request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,7 +90,6 @@ DROP TABLE IF EXISTS `student`;
 CREATE TABLE `student` (
   `StudentID` int NOT NULL,
   `Name` varchar(45) DEFAULT NULL,
-  `Password` varchar(45) DEFAULT NULL,
   `Email` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`StudentID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -69,7 +101,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (0,'demo','123456','demo@student.unimelb.edu.au'),(1,'test','123456','test@unimelb.edu.au');
+INSERT INTO `student` VALUES (108998431,'He Shen','heshen@student.unimelb.edu.au');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +125,7 @@ CREATE TABLE `subject` (
 
 LOCK TABLES `subject` WRITE;
 /*!40000 ALTER TABLE `subject` DISABLE KEYS */;
-INSERT INTO `subject` VALUES ('EXMP10000','Example Subject');
+INSERT INTO `subject` VALUES ('7677778','AU-COURSE-TEMPLATE');
 /*!40000 ALTER TABLE `subject` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -106,4 +138,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-18 10:50:46
+-- Dump completed on 2023-09-24 20:26:07

@@ -23,3 +23,16 @@ if (Test-Path -Path $staticFolderPath -PathType Container) {
 
 # Move dist to spring static folder
 Copy-Item -Recurse .\vue\dist\* .\spring\src\main\resources\static\
+
+# Switch to spring directory and build with gradle
+cd .\spring\
+.\gradlew.bat clean build
+
+# Check gradle build status
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Spring Boot build failed"
+    exit 1
+}
+
+# Go back to project root directory
+cd ..

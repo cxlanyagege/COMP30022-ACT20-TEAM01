@@ -29,11 +29,4 @@ public class Request {
     private String taskType;
     private String requestName;
 
-    public Integer getRequestId() {
-        return requestId;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

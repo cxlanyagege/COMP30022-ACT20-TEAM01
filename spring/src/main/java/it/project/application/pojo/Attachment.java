@@ -21,7 +21,4 @@ public class Attachment {
     private String url;
     private Integer requestId;
 
-    public void setRequestId(Integer requestId) {
-        this.requestId = requestId;
-    }
 }

@@ -5,72 +5,78 @@
 - **Team Number**: TEAM01
 
 ## Live Demo
-- [Developer Login](http://121.41.46.143:8081/login.html)
-- [User Dashboard](http://121.41.46.143:8081/profile.html)
-
-## Sample User Information
-| Identifier | User Role | Password | Sample Request History |
-|------------|-----------|----------|------------------------|
-| Demo       | Student   | 123456   | Contains 1 built-in sample request |
-| Test       | Student   | 123456   | No sample requests      |
+- [LTI Launch](https://act20team01.xyz:8081/lti/launch)
 
 ## Build & Run Instructions
 
 ### Prerequisites
-1. Install [Adoptium Temurin OpenJDK](https://adoptium.net/zh-CN/temurin/releases/). Recommended version: 17 or higher.
-2. Optionally, install [Gradle Build Tool](https://gradle.org/install/).
+1. Install [Node.js](https://nodejs.org/en/download). Recommended version: 18.18.0+
+2. Install [Adoptium Temurin OpenJDK](https://adoptium.net/zh-CN/temurin/releases/). Recommended version: 17+
+3. Install and setup [MySQL Server](https://dev.mysql.com/downloads/mysql/). Recommended version: 8.0.34+
 
-### Cloning the Repository
+### Clone
 Clone the repository to your local machine:
 
 ```
 git clone https://github.com/cxlanyagege/COMP30022-ACT20-TEAM01.git
 ```
 
-### Building the Project
-Navigate to the root directory of the project:
+### Setup
+Install npm dependencies which are required for building vue:
 
 ```
-cd COMP30022-ACT20-TEAM01
+cd COMP30022-ACT20-TEAM01/vue
+npm install
 ```
 
-To build the project using the Gradle Wrapper included in the repository, execute:
-
+Import template SQL schema into your database:
 ```
-.\gradlew clean build
-```
-
-If you have Gradle installed, you can also run:
-
-```
-gradle clean build
+cd ../sql
+mysql -u root -p
+CREATE DATABASE sc;
+QUIT;
+mysql -u root -p sc < template.sql
 ```
 
-### Running the Application
+Your database configuration and desired attachment saved location may be different to what was defined in project file. 
+You may manually modify these line in `application.properties` in spring/src/main/resources:
+
+```
+spring.datasource.url=jdbc:mysql://localhost:3306/sc
+spring.datasource.username=itproject
+spring.datasource.password=123456
+...
+upload.localPath=C:\\Users\\cxlan\\AppData\\Local\\Temp\\
+upload.accessPath=/upload/
+```
+
+Or you can place your own `application.properties` with above new defining, along with `application-v1.0-alpha.jar` in spring/build/libs after build
+
+### Build
+Navigate back to the root directory of the project:
+
+```
+cd ..
+```
+
+If you are using macOS or Linux, execute:
+
+```
+./build.sh
+```
+
+Or if you are using Windows 7 or higher, execute:
+
+```
+.\build.ps1
+```
+
+### Run
 Execute the following command to run the application:
 
 ```
-java -jar build/libs/application-0.0.1-SNAPSHOT.jar
+java -jar spring/build/libs/application-v1.0-alpha.jar
 ```
 
-### Steps required on testing locally
-1. Make sure MySQL is open before testing
-2. Navigate to application.yml file in the spring folder, make changes to the below content: 
-
-datasource:
-    url: jdbc:mysql://(your-localhost address, for instance, 127.0.0.1:3306, you can look it up on your MySQL workbench starting page)/student_requests(this is a schema in MySQL workbench, no need to worry)
-    username: root <-- change this to your MySQL workbench sever name, it will show on the starting page under each connection
-    password: 54!45L^i <-- change to your password required to log in to MySQL
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-3. In the same application.yml, make changes to the below content as well:
-
-upload:
-  localPath: /Users/wangzeyu/Desktop/IT Project/IT-project/test uploaded attachments/ <-- where you would like uploaded files to be stored
-  accessPath: /upload/
-
-4. Navigate to the vue folder, change 2 addresses (localhost:8080) that are in src->config->config.js to your localhost address
-
-5. The axios.defaults.baseURL in src->utils->communication.js should be changed to your localhost address as well
-
-6. Run the springboot project first, and then run the vue project, you should now be seeing website opened
+### Connect
+For the connection using LTI1.1 standards, please refer to [How to connect to LMS](https://wxd.atlassian.net/wiki/spaces/~712020572c35dfb81c4ad48d0be3dc166f9960/pages/7438386/Deployment#Connect-to-LMS%3A)
