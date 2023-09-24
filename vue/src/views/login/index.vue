@@ -4,7 +4,7 @@
       <div class="title-container">
         <h3 class="title">StuRequestHub is launching...</h3>
       </div>
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="refreshPage">Refresh</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="refreshPage">Not loading? Click here to refresh the page</el-button>
     </el-form>
   </div>
 </template>

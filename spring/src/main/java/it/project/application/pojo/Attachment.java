@@ -12,4 +12,8 @@ public class Attachment {
     private Integer attachmentId;
     private String url;
     private Integer requestId;
+
+    public void setRequestId(Integer requestId) {
+        this.requestId = requestId;
+    }
 }

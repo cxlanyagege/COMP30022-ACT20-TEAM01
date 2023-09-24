@@ -33,6 +33,8 @@ public class RequestController {
     @Autowired
     private IAttachmentService attachmentService;
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RequestController.class);
+
     @GetMapping("/getRequests/{studentId}")
     public Result getRequests(@PathVariable int studentId, @RequestParam(defaultValue = "waiting") String status,
                               @RequestParam(defaultValue = "1") int pageNum,

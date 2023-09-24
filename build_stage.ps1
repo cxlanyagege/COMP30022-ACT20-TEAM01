@@ -17,6 +17,8 @@ $staticFolderPath = ".\spring\src\main\resources\static\"
 # Remove all files in the spring static folder if it exists
 if (Test-Path -Path $staticFolderPath -PathType Container) {
     Remove-Item -Path "$staticFolderPath*" -Recurse -Force
+} else {
+    New-Item -Path $staticFolderPath -ItemType Directory
 }
 
 # Move dist to spring static folder

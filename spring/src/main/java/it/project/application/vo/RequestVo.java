@@ -21,4 +21,8 @@ public class RequestVo {
     private Integer requestId;
     private String taskType;
     private List<Attachment> attachments;
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
 }

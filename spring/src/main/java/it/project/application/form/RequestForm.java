@@ -19,4 +19,8 @@ public class RequestForm {
     private String requestName;
     private String taskType;
     private List<Attachment> attachments;
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
 }
