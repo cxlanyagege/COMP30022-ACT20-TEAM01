@@ -1,4 +1,4 @@
-<!-- writeen by Xuan Zhang (main dashboard functions) and Lanruo Su (Filter funtion) -->
+<!-- writen by Lanruo Su (based on the dashboard table made by Xuan Zhang) -->
 <template>
   <div>
     <div>
@@ -57,12 +57,6 @@
         min-width="55"
         prop="subID"
       >
-        <template slot-scope="scope">
-          <!-- 使用 <router-link> 来导航到不同的subject detail页面 -->
-          <router-link :to="{ name: scope.row.comp20008, params: { subID: scope.row.subID } }">
-            {{ scope.row.subID }}
-          </router-link>
-        </template>
       </el-table-column>
       <el-table-column
         label="Request Type"
@@ -200,8 +194,8 @@ export default {
     }
   },
   created() {
-    // initialize the filtering to "All"
-    this.applyFilter('All')
+    // 初始化时将所有 "Subject ID" 为 "COMP30023" 的行存储到 filteredData 中
+    this.filteredData = this.tableData.filter(item => item.subID === 'COMP30023');
   },
   methods: {
     handleFlagClick(row) {
@@ -238,19 +232,25 @@ export default {
       })
     },
     applyFilter(filterCondition) {
-      // filter according to "filterCondition"
-      if (filterCondition === 'Assignment') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Assignment')
-      } else if (filterCondition === 'Test') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Test')
-      } else if (filterCondition === 'Exam') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Exam')
-      } else if (filterCondition === 'Individual') {
-        this.filteredData = this.tableData.filter(item => item.taskType === 'Individual')
-      } else if (filterCondition === 'Others') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Others')
+      // filtering according to filterCondition
+      if (filterCondition === 'All') {
+        // reset filteredData to the rows with "Subject ID" of "COMP30023"
+        this.filteredData = this.tableData.filter(item => item.subID === 'COMP30023');
       } else {
-        this.filteredData = this.tableData
+        // reset filteredData to the rows with "Subject ID" of "COMP30023"
+        this.filteredData = this.tableData.filter(item => item.subID === 'COMP30023');
+        // make further filtering based on the subject
+        if (filterCondition === 'Assignment') {
+          this.filteredData = this.filteredData.filter(item => item.reqType === 'Assignment');
+        } else if (filterCondition === 'Test') {
+          this.filteredData = this.filteredData.filter(item => item.reqType === 'Test');
+        } else if (filterCondition === 'Exam') {
+          this.filteredData = this.filteredData.filter(item => item.reqType === 'Exam');
+        } else if (filterCondition === 'Individual') {
+          this.filteredData = this.filteredData.filter(item => item.reqType === 'Individual');
+        } else if (filterCondition === 'Others') {
+          this.filteredData = this.filteredData.filter(item => item.reqType === 'Others');
+        }
       }
     }
   }
