@@ -3,12 +3,12 @@
   <div>
     <div>
       <!-- Add button to filter based on request type -->
-      <el-button type="primary" plain @click="applyFilter('All')" style="width: 17%; margin-right: 2%; margin-left: 1.5%">All</el-button>
-      <el-button plain @click="applyFilter('Assignment')" style="width: 13%; margin-right: 2%">Assignment</el-button>
-      <el-button plain @click="applyFilter('Test')" style="width: 13%; margin-right: 2%">Test</el-button>
-      <el-button plain @click="applyFilter('Exam')" style="width: 13%; margin-right: 2%">Exam</el-button>
-      <el-button plain @click="applyFilter('Individual')" style="width: 13%; margin-right: 2%">Individual</el-button>
-      <el-button plain @click="applyFilter('Others')" style="width: 13%; margin-right: 2%">Others</el-button>
+      <el-button type="primary" plain style="width: 17%; margin-right: 2%; margin-left: 1.5%" @click="applyFilter('All')">All</el-button>
+      <el-button plain style="width: 13%; margin-right: 2%" @click="applyFilter('Assignment')">Assignment</el-button>
+      <el-button plain style="width: 13%; margin-right: 2%" @click="applyFilter('Test')">Test</el-button>
+      <el-button plain style="width: 13%; margin-right: 2%" @click="applyFilter('Exam')">Exam</el-button>
+      <el-button plain style="width: 13%; margin-right: 2%" @click="applyFilter('Individual')">Individual</el-button>
+      <el-button plain style="width: 13%; margin-right: 2%" @click="applyFilter('Others')">Others</el-button>
     </div>
     <el-table
       :data="filteredData"
@@ -24,7 +24,7 @@
             </el-form-item>
             <el-form-item label="Subject ID">
               <span>{{ props.row.subID }}</span>
-            </el-form-item>   
+            </el-form-item>
             <el-form-item label="Application Date">
               <span>{{ props.row.appDate }}</span>
             </el-form-item>
@@ -100,11 +100,12 @@
         <template slot-scope="{ row }">
           <el-button
             v-if="!row.flagClicked"
-            @click="handleFlagClick(row)"
             type="danger"
             :class="{ 'flag-button-clicked': row.flagClicked }"
             icon="el-icon-s-flag"
-          circle>
+            circle
+            @click="handleFlagClick(row)"
+          >
           </el-button>
         </template>
       </el-table-column>
@@ -195,7 +196,7 @@ export default {
   },
   created() {
     // 初始化时将所有 "Subject ID" 为 "COMP30026" 的行存储到 filteredData 中
-    this.filteredData = this.tableData.filter(item => item.subID === 'COMP30026');
+    this.filteredData = this.tableData.filter(item => item.subID === 'COMP30026')
   },
   methods: {
     handleFlagClick(row) {
@@ -235,21 +236,21 @@ export default {
       // filtering according to filterCondition
       if (filterCondition === 'All') {
         // reset filteredData to the rows with "Subject ID" of "COMP30026"
-        this.filteredData = this.tableData.filter(item => item.subID === 'COMP30026');
+        this.filteredData = this.tableData.filter(item => item.subID === 'COMP30026')
       } else {
         // reset filteredData to the rows with "Subject ID" of "COMP30026"
-        this.filteredData = this.tableData.filter(item => item.subID === 'COMP30026');
+        this.filteredData = this.tableData.filter(item => item.subID === 'COMP30026')
         // make further filtering based on the subject
         if (filterCondition === 'Assignment') {
-          this.filteredData = this.filteredData.filter(item => item.reqType === 'Assignment');
+          this.filteredData = this.filteredData.filter(item => item.reqType === 'Assignment')
         } else if (filterCondition === 'Test') {
-          this.filteredData = this.filteredData.filter(item => item.reqType === 'Test');
+          this.filteredData = this.filteredData.filter(item => item.reqType === 'Test')
         } else if (filterCondition === 'Exam') {
-          this.filteredData = this.filteredData.filter(item => item.reqType === 'Exam');
+          this.filteredData = this.filteredData.filter(item => item.reqType === 'Exam')
         } else if (filterCondition === 'Individual') {
-          this.filteredData = this.filteredData.filter(item => item.reqType === 'Individual');
+          this.filteredData = this.filteredData.filter(item => item.reqType === 'Individual')
         } else if (filterCondition === 'Others') {
-          this.filteredData = this.filteredData.filter(item => item.reqType === 'Others');
+          this.filteredData = this.filteredData.filter(item => item.reqType === 'Others')
         }
       }
     }

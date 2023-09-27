@@ -100,7 +100,7 @@ export const constantRoutes = [
         path: 'comp20008',
         name: 'COMP20008',
         component: () => import('@/views/subjects/comp20008'),
-        meta: { title: 'COMP20008' },
+        meta: { title: 'COMP20008' }
       }
     ]
   },

@@ -3,12 +3,12 @@
   <div>
     <div>
       <!-- Add button to filter based on request type -->
-      <el-button type="primary" plain @click="applyFilter('All')" style="width: 17%; margin-right: 2%; margin-left: 1.5%">All</el-button>
-      <el-button plain @click="applyFilter('Assignment')" style="width: 13%; margin-right: 2%">Assignment</el-button>
-      <el-button plain @click="applyFilter('Test')" style="width: 13%; margin-right: 2%">Test</el-button>
-      <el-button plain @click="applyFilter('Exam')" style="width: 13%; margin-right: 2%">Exam</el-button>
-      <el-button plain @click="applyFilter('Individual')" style="width: 13%; margin-right: 2%">Individual</el-button>
-      <el-button plain @click="applyFilter('Others')" style="width: 13%; margin-right: 2%">Others</el-button>
+      <el-button type="primary" plain style="width: 17%; margin-right: 2%; margin-left: 1.5%" @click="applyFilter('All')">All</el-button>
+      <el-button plain style="width: 13%; margin-right: 2%" @click="applyFilter('Assignment')">Assignment</el-button>
+      <el-button plain style="width: 13%; margin-right: 2%" @click="applyFilter('Test')">Test</el-button>
+      <el-button plain style="width: 13%; margin-right: 2%" @click="applyFilter('Exam')">Exam</el-button>
+      <el-button plain style="width: 13%; margin-right: 2%" @click="applyFilter('Individual')">Individual</el-button>
+      <el-button plain style="width: 13%; margin-right: 2%" @click="applyFilter('Others')">Others</el-button>
     </div>
     <el-table
       :data="filteredData"
@@ -24,7 +24,7 @@
             </el-form-item>
             <el-form-item label="Subject ID">
               <span>{{ props.row.subID }}</span>
-            </el-form-item>   
+            </el-form-item>
             <el-form-item label="Application Date">
               <span>{{ props.row.appDate }}</span>
             </el-form-item>
@@ -106,11 +106,12 @@
         <template slot-scope="{ row }">
           <el-button
             v-if="!row.flagClicked"
-            @click="handleFlagClick(row)"
             type="danger"
             :class="{ 'flag-button-clicked': row.flagClicked }"
             icon="el-icon-s-flag"
-          circle>
+            circle
+            @click="handleFlagClick(row)"
+          >
           </el-button>
         </template>
       </el-table-column>
