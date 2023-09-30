@@ -1,4 +1,4 @@
-<!-- writeen by Xuan Zhang (main dashboard functions) and Lanruo Su (Filter funtion) -->
+<!-- writeen by Xuan Zhang (main dashboard functions) and Lanruo Su (Filter funtions, subID, AAPs) -->
 <template>
   <div>
     <div>
@@ -27,6 +27,9 @@
             </el-form-item>
             <el-form-item label="Application Date">
               <span>{{ props.row.appDate }}</span>
+            </el-form-item>
+            <el-form-item label="AAPs">
+              <span>{{ props.row.AAPs }}</span>
             </el-form-item>
             <el-form-item label="Request Type">
               <span>{{ props.row.reqType }}</span>
@@ -78,9 +81,18 @@
       </el-table-column>
       <el-table-column
         label="Application Date"
-        min-width="65"
+        min-width="60"
         prop="appDate"
       >
+      </el-table-column>
+      <el-table-column
+        label="AAPs"
+        min-width="30"
+        prop="AAPs"
+      >
+        <template slot-scope="{ row }">
+          <el-button v-if="row.AAPs === 'Yes'" icon="el-icon-document" circle></el-button>
+        </template>
       </el-table-column>
       <el-table-column label="Status" prop="status" min-width="60">
         <template slot-scope="{ row }">
@@ -155,6 +167,7 @@ export default {
         id: '1266704',
         subID: 'COMP30022',
         appDate: '01/01/2024',
+        AAPs: 'Yes',
         reqType: 'Assignment',
         taskType: 'Individual',
         reqName: 'A1 extension',
