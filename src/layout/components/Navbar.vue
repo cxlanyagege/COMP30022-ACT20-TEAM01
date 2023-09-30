@@ -3,6 +3,15 @@
 
     <breadcrumb class="breadcrumb-container" />
 
+    <!-- add searching bar -->
+    <div class="search-container">
+      <el-input
+        v-model="searchKeyword"
+        placeholder="Search..."
+        @input="handleSearch"
+      />
+    </div>
+
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -40,6 +49,11 @@ export default {
     Breadcrumb,
     Hamburger
   },
+  data() {
+    return {
+      searchKeyword: '' // 用于存储搜索关键词
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar',
@@ -53,6 +67,10 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    handleSearch() {
+      // 在这里处理搜索逻辑，可以根据 searchKeyword 过滤内容
+      // 例如，可以使用 this.searchKeyword 来过滤数据
     }
   }
 }
@@ -69,6 +87,13 @@ export default {
   .breadcrumb-container {
     float: left;
     margin-left: 35px;
+  }
+
+  .search-container {
+    float: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 1030px; 
   }
 
   .right-menu {
