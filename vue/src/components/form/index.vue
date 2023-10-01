@@ -41,7 +41,7 @@
       </el-form-item>
       <el-form-item label="Upload File">
         <el-upload
-          v-model:file-list="form.fileList"
+          v-model="form.fileList"
           class="upload-demo"
           :action="uploadURL"
           :on-success="handleSuccess"

@@ -11,12 +11,6 @@ import Layout from '@/layout'
 // MODIFIED BY YAWEN LUO
 export const constantRoutes = [
   {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
-
-  {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
@@ -33,45 +27,25 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
+  
   {
-    path: '/',
+    path: '/history',
     component: Layout,
-    redirect: '/history',
     children: [
       {
         path: 'history',
         name: 'History',
         component: () => import('@/views/history/index'),
         meta: { title: 'History', icon: 'tree' }
-      }]
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/staff_dashboard',
-    children: [{
-      path: 'staff_dashboard',
-      name: 'Staff_dashboard',
-      component: () => import('@/views/staff_dashboard/index'),
-      meta: { title: 'Staff dashboard', icon: 'dashboard' }
-    }]
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/authority',
-    children: [
-      {
-        path: 'authority',
-        name: 'Authority',
-        component: () => import('@/views/authority/index'),
-        meta: { title: 'Authority', icon: 'el-icon-s-help' }
       }
     ]
   },
+
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  { path: '*', redirect: '/dashboard', hidden: true } // 不再自动重定向到 /404，而是重定向到 /dashboard
 ]
+
+
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
