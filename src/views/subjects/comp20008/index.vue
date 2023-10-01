@@ -1,4 +1,4 @@
-<!-- writeen by Xuan Zhang (main dashboard functions) and Lanruo Su (Filter funtions, subID, AAPs) -->
+<!-- writen by Lanruo Su (based on the dashboard table made by Xuan Zhang) -->
 <template>
   <div>
     <div>
@@ -27,9 +27,6 @@
             </el-form-item>
             <el-form-item label="Application Date">
               <span>{{ props.row.appDate }}</span>
-            </el-form-item>
-            <el-form-item label="AAPs">
-              <span>{{ props.row.AAPs }}</span>
             </el-form-item>
             <el-form-item label="Request Type">
               <span>{{ props.row.reqType }}</span>
@@ -60,12 +57,6 @@
         min-width="55"
         prop="subID"
       >
-        <template slot-scope="scope">
-          <!-- 使用 <router-link> 来导航到不同的subject detail页面 -->
-          <router-link :to="{ name: scope.row.comp20008, params: { subID: scope.row.subID } }">
-            {{ scope.row.subID }}
-          </router-link>
-        </template>
       </el-table-column>
       <el-table-column
         label="Request Type"
@@ -81,18 +72,9 @@
       </el-table-column>
       <el-table-column
         label="Application Date"
-        min-width="60"
+        min-width="65"
         prop="appDate"
       >
-      </el-table-column>
-      <el-table-column
-        label="AAPs"
-        min-width="30"
-        prop="AAPs"
-      >
-        <template slot-scope="{ row }">
-          <el-button v-if="row.AAPs === 'Yes'" icon="el-icon-document" circle></el-button>
-        </template>
       </el-table-column>
       <el-table-column label="Status" prop="status" min-width="60">
         <template slot-scope="{ row }">
@@ -105,8 +87,8 @@
         <template slot-scope="{ row }">
           <!-- 使用 v-if 条件渲染 -->
           <template v-if="row.status === 'UNASSESSED'">
-            <el-button type="success" size="small" @click="handleApproveClick(row)">Approve</el-button>
-            <el-button type="danger" size="small" @click="handleRejectClick(row)">Reject</el-button>
+            <el-button type="success" size="small" @click="handleApproveClick(row)">Approved</el-button>
+            <el-button type="danger" size="small" @click="handleRejectClick(row)">Rejected</el-button>
           </template>
           <template v-else>
             <span v-if="row.status === 'APPROVE'">Approved</span>
@@ -167,7 +149,6 @@ export default {
         id: '1266704',
         subID: 'COMP30022',
         appDate: '01/01/2024',
-        AAPs: 'Yes',
         reqType: 'Assignment',
         taskType: 'Individual',
         reqName: 'A1 extension',
@@ -214,8 +195,8 @@ export default {
     }
   },
   created() {
-    // initialize the filtering to "All"
-    this.applyFilter('All')
+    // 初始化时将所有 "Subject ID" 为 "COMP20008" 的行存储到 filteredData 中
+    this.filteredData = this.tableData.filter(item => item.subID === 'COMP20008')
   },
   methods: {
     handleFlagClick(row) {
@@ -252,19 +233,25 @@ export default {
       })
     },
     applyFilter(filterCondition) {
-      // filter according to "filterCondition"
-      if (filterCondition === 'Assignment') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Assignment')
-      } else if (filterCondition === 'Test') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Test')
-      } else if (filterCondition === 'Exam') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Exam')
-      } else if (filterCondition === 'Individual') {
-        this.filteredData = this.tableData.filter(item => item.taskType === 'Individual')
-      } else if (filterCondition === 'Others') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Others')
+      // filtering according to filterCondition
+      if (filterCondition === 'All') {
+        // reset filteredData to the rows with "Subject ID" of "COMP20008"
+        this.filteredData = this.tableData.filter(item => item.subID === 'COMP20008')
       } else {
-        this.filteredData = this.tableData
+        // reset filteredData to the rows with "Subject ID" of "COMP20008"
+        this.filteredData = this.tableData.filter(item => item.subID === 'COMP20008')
+        // make further filtering based on the subject
+        if (filterCondition === 'Assignment') {
+          this.filteredData = this.filteredData.filter(item => item.reqType === 'Assignment')
+        } else if (filterCondition === 'Test') {
+          this.filteredData = this.filteredData.filter(item => item.reqType === 'Test')
+        } else if (filterCondition === 'Exam') {
+          this.filteredData = this.filteredData.filter(item => item.reqType === 'Exam')
+        } else if (filterCondition === 'Individual') {
+          this.filteredData = this.filteredData.filter(item => item.reqType === 'Individual')
+        } else if (filterCondition === 'Others') {
+          this.filteredData = this.filteredData.filter(item => item.reqType === 'Others')
+        }
       }
     }
   }

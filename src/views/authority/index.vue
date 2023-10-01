@@ -1,3 +1,4 @@
+<!-- writen by Lanruo Su -->
 <template>
   <div class="app-container">
     <!-- Authority Table -->
@@ -9,8 +10,8 @@
       fit
       highlight-current-row
       stripe
-      style="width: 100%">
-
+      style="width: 100%"
+    >
       <el-table-column prop="position" label="Staff Position" :width="170"></el-table-column>
       <el-table-column prop="name" label="Staff Name" :width="179"></el-table-column>
       <el-table-column prop="email" label="Staff Email" :width="296"></el-table-column>
@@ -18,7 +19,7 @@
         <template slot-scope="{ row }">
           <el-row>
             <el-col :span="4" style="width: 26%;">
-              <el-checkbox v-model="row.authority[0]" label="Assignment" :width ="150" @change="handleCheckboxChange(row, 0)">Assignment</el-checkbox>
+              <el-checkbox v-model="row.authority[0]" label="Assignment" :width="150" @change="handleCheckboxChange(row, 0)">Assignment</el-checkbox>
             </el-col>
             <el-col :span="4" style="width: 18%;">
               <el-checkbox v-model="row.authority[1]" label="Quiz" @change="handleCheckboxChange(row, 1)">Quiz</el-checkbox>
