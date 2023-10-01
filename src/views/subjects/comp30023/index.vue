@@ -87,8 +87,8 @@
         <template slot-scope="{ row }">
           <!-- 使用 v-if 条件渲染 -->
           <template v-if="row.status === 'UNASSESSED'">
-            <el-button type="success" size="small" @click="handleApproveClick(row)">Approved</el-button>
-            <el-button type="danger" size="small" @click="handleRejectClick(row)">Rejected</el-button>
+            <el-button type="success" size="small" @click="handleApproveClick(row)">Approve</el-button>
+            <el-button type="danger" size="small" @click="handleRejectClick(row)">Reject</el-button>
           </template>
           <template v-else>
             <span v-if="row.status === 'APPROVE'">Approved</span>
