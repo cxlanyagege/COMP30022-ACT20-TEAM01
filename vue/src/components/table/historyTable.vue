@@ -1,6 +1,8 @@
+<!-- The component code was written by Yawen Luo, and Dennis Wang and He Shen were modified the 
+     front-end and back-end interaction method code at a later stage. The following code is used to build the 
+     component table elements of the history dashboard. -->
+
 <template>
-  <!--TEMPLATE ORIGINAL CONSTRUCTED BY __, TRIGGER FUNCTIONS AND 
-  DATA UPDATED AND ADDED BY DENNIS-->
   <div class="app-container">
     <el-table
       v-loading="listLoading"
@@ -48,14 +50,14 @@ export default {
     }
   },
 
-  // WRITTEN BY DENNIS
+  // MODIFIED BY DENNIS WANG
   mounted() {
     // table needs to be rendered when it's been first added into DOM
     this.updateRequests(this.pageNum, this.pageSize)
   },
 
   methods: {
-    // WRITTEN BY DENNIS & HE SHEN
+    // MODIFIED BY DENNIS & HE SHEN
     updateRequests(page, pageSize) {
       // same thing as the table in student dashboard main page
       // except now return all the requests that are processed
@@ -90,14 +92,11 @@ export default {
         console.log(this.tableData);
       });
     },
-
-    // WRITTEN BY DENNIS
     handlePageChange(pageNum) {
       // handle pagination
       this.updateRequests(pageNum, this.pageSize);
     }
   },
-
   created() {
     // set component name
     this.$root.$refs.history_component = this;

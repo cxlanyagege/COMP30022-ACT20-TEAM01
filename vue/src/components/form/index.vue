@@ -1,7 +1,8 @@
+<!-- The component code was written by Yawen Luo, and Dennis Wang and He Shen were modified the 
+     front-end and back-end interaction method code at a later stage. The following code is used to build the 
+     component form elements of the Bashboard. -->
+
 <template>
-  <!--ORIGINAL TEMPLATE CONSTRUCTED BY ___, UPDATED AND CHANGED
-  BY DENNIS WANG, MOSTLY ADDING THE TRIGGER FUNCTIONS DEFINED
-  FURTHER IN THE SCRIPT SECTION-->
   <div class="app-container">
     <el-form ref="form" :label-position="labelPosition" :model="form" label-width="120px">
       <el-form-item label="Student ID">
@@ -38,7 +39,6 @@
       <el-form-item label="Request Detail">
         <el-input v-model="form.detail" type="textarea" />
       </el-form-item>
-
       <el-form-item label="Upload File">
         <el-upload
           v-model:file-list="form.fileList"
@@ -53,7 +53,6 @@
           <div slot="tip" class="el-upload__tip">You can upload any file format</div>
         </el-upload>
       </el-form-item>
-
       <el-form-item>
         <el-button type="primary" @click="onSubmit" v-if="!isCheck">Create</el-button>
         <el-button @click="onCancel" v-if="!isCheck">Cancel</el-button>
@@ -101,7 +100,7 @@ export default {
     }
   },
   methods: {
-    // WRITTEN BY DENNIS WANG & HE SHEN
+    // MODIFIED BY DENNIS WANG & HE SHEN
     onSubmit() {
       const currentDate = new Date();
       // construct a formData to finalise all the information in the
@@ -117,12 +116,10 @@ export default {
         requestName: this.form.name
       }
 
-      // 如果 showAdditionalOptions 为 true，则包含 type 和 name 字段
       if (this.form.showAdditionalOptions) {
         formData.type = this.form.type
       }
 
-      // 包含队友的电子邮件地址
       formData.teammates = this.form.teammates
 
       let param = {
@@ -155,25 +152,24 @@ export default {
 
       // this.$message('Submit successful!')
     },
+
+    // MODIFIED BY DENNIS WANG
     onCancel() {
       this.$message({
         message: 'Cancel!',
         type: 'warning'
       })
     },
-    // WRITTEN BY DENNIS WANG
     // used to show the files on the form page, given access to 
     // the file from the client side
     convertUrlWithPrefix(url) {
       return attachmentBaseURL + url;
     },
-    // WRITTEN BY DENNIS WANG
     // used to store the data in the server side as it doesn't
     // require extra address to access
     convertUrlWithoutPrefix(url){
       return url.substr(attachmentBaseURL.length, url.length);
     },
-    // WRITTEN BY DENNIS WANG
     // handle files uploaded successfully
     handleSuccess(response, file, fileList) {
       // console.log(fileList)
@@ -187,24 +183,21 @@ export default {
     },
     handleError(err) {
       if (err && err.response && err.response.data) {
-        const errorMessage = err.response.data.error // 假设后端响应中包含一个 "error" 字段
+        const errorMessage = err.response.data.error
         this.$message.error('File upload failed: ' + errorMessage)
       } else {
         this.$message.error('File upload failed')
       }
     },
-    // WRITTEN BY DENNIS WANG
     // remove all the files removed by the client from the fileList
     handleRemove(file, files){
       // console.log(file, files)
       this.form.fileList = this.form.fileList.filter(item => item.uid != file.uid);
       console.log(this.form.fileList)
     },
-    // 添加队友的电子邮件地址输入框
     addTeammate() {
       this.form.teammates.push('')
     },
-    // 删除队友的电子邮件地址输入框
     removeTeammate(index) {
       this.form.teammates.splice(index, 1)
     },
@@ -217,7 +210,6 @@ export default {
       return this.$store.getters.subjectId
     }
   },
-  // WRITTEN BY DENNIS WANG
   created() {
     // set componenent name
     this.$root.$refs.form_component = this;

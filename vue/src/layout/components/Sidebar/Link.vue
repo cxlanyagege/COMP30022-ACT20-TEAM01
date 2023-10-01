@@ -1,3 +1,5 @@
+<!-- The following code is the framework that comes with the scaffolding -->
+
 <template>
   <component :is="type" v-bind="linkProps(to)">
     <slot />

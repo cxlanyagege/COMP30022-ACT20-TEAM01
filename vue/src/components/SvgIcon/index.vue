@@ -1,3 +1,7 @@
+ <!-- The following code is the framework that comes with the scaffolding, modified and 
+      edited by Yawen Luo to fit the student platform. The code describes svglcon
+      components-->
+
 <template>
   <div v-if="isExternal" :style="styleExternalIcon" class="svg-external-icon svg-icon" v-on="$listeners" />
   <svg v-else :class="svgClass" aria-hidden="true" v-on="$listeners">
@@ -21,6 +25,7 @@ export default {
     }
   },
   computed: {
+    // MUDIFIED BY YAWEN LUO
     isExternal() {
       return isExternal(this.iconClass)
     },

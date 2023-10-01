@@ -1,8 +1,10 @@
+<!-- Following code is Author by Yawen Luo and modified by Dennis Wang code is describe 
+     the entry page in history view -->
+
 <template>
   <div class="app-container">
     <el-input v-model="filterText" @input="filterTable" placeholder="Filter keyword"/>
     <HistoryTable />
-
   </div>
 </template>
 
@@ -17,12 +19,11 @@ export default {
     return {
       tableData: [],
       filterText: '',
-      // used as a source to filter the requests
       tempData: this.$root.$refs.history_component.tableData
     }
   },
   methods: {
-    // WRITTEN BY DENNIS
+    // MODIFIed BY DENNIS
     filterTable() {
       // in order to make case-insensitive search
       const keyword = this.filterText.toLowerCase().trim();

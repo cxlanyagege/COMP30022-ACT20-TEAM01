@@ -1,6 +1,8 @@
+<!-- The component code was written by Yawen Luo, and Dennis Wang and He Shen were modified the 
+     front-end and back-end interaction method code at a later stage. The following code is used 
+     to build the component table elements of the dashboard. -->
+
 <template>
-  <!--TEMPLATE CONSTRUCTED BY __, TRIGGER METHODS AND DATA
-  UPDATED BY DENNIS-->
   <div class="app-container">
     <el-table
       v-loading="listLoading"
@@ -62,15 +64,13 @@ export default {
       total: 0,
     }
   },
-
-  // WRITTEN BY DENNIS
   mounted() {
     // show the request list when the component's been added to DOM
     this.updateRequests(this.pageNum, this.pageSize)
   },
 
   methods: {
-    // WRITTEN BY DENNIS
+    // MODIFIED BY DENNIS
     handleDelete(idNo) {
       // delete request based on requestid
       deleteRequest(idNo).then(res=>{
@@ -79,7 +79,7 @@ export default {
       })
     },
 
-    // WRITTEN BY DENNIS
+    // MODIFIED BY DENNIS
     showRequestDetail(requestId) {
       // get the details of a specified request when student
       // want to check the content of it
@@ -143,7 +143,6 @@ export default {
       this.updateRequests(pageNum, this.pageSize);
     }
   },
-  // WRITTEN BY DENNIS
   created() {
     // set componenent name
     this.$root.$refs.table_component = this;

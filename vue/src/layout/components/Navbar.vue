@@ -1,14 +1,14 @@
+<!-- The following code is written by Yawen Luo, the code is discribe the Navbar element-->
+
 <template>
   <div class="navbar">
     <breadcrumb class="breadcrumb-container" />
-
     <div class="right-menu">
       <div class="avatar-container" @click="showStudentProfileDialog">
         <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" :size="45" class="vertical-center" />
       </div>
     </div>
-
-    <!-- 添加学生信息模态框 -->
+    <!-- Add student information modal box -->
     <el-dialog
       v-model="showProfileDialog"
       title="Student Profile"
@@ -16,7 +16,7 @@
       width="50%"
       center
     >
-      <!-- 引用StudentProfile组件并传递学生信息 -->
+      <!-- Referencing the StudentProfile component and passing student information -->
       <student-profile :student-info="studentInfo" />
     </el-dialog>
   </div>
@@ -34,13 +34,12 @@ export default {
   },
   data() {
     return {
-      showProfileDialog: false, // 控制学生信息模态框的显示与隐藏
+      showProfileDialog: false,
       studentInfo: {
-        name: this.$store.state.user.name, // Student name
-        id: this.$store.state.user.id, // Student id
-        email: this.$store.state.user.email, // Student email
-        aap: 'Yes' // Student aap support
-        // 添加更多学生信息字段
+        name: this.$store.state.user.name, 
+        id: this.$store.state.user.id,
+        email: this.$store.state.user.email,
+        aap: 'Yes' 
       }
     }
   },
@@ -55,9 +54,8 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     showStudentProfileDialog() {
-      // 点击按钮弹出学生信息模态框的方法
-      console.log('Button clicked') // 检查方法是否被调用
-      this.showProfileDialog = true // 显示模态框
+      console.log('Button clicked') 
+      this.showProfileDialog = true
     }
   }
 }

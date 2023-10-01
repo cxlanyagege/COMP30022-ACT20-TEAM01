@@ -1,3 +1,6 @@
+ <!-- The following code is the framework that comes with the scaffolding, modified and 
+      edited by Yawen Luo to fit the student platform. The code main page to entry -->
+
 <template>
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
@@ -18,8 +21,8 @@ export default {
 </script>
 
 <style scoped>
+/* MODIFIED BY YAWEN LUO */
 .app-main {
-  /*50 = navbar  */
   min-height: calc(100vh - 50px);
   width: 100%;
   position: relative;
@@ -31,7 +34,6 @@ export default {
 </style>
 
 <style lang="scss">
-// fix css style bug in open el-dialog
 .el-popup-parent--hidden {
   .fixed-header {
     padding-right: 15px;

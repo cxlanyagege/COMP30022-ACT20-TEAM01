@@ -1,3 +1,6 @@
+<!-- The component code was written by Yawen Luo. This code is used to display the 
+     form element component of the student's personal information -->
+
 <template>
   <div class="student-profile">
     <div>
@@ -21,8 +24,6 @@
         <label>AAP Documentation: </label>
         <span v-if="studentInfo.aap === 'Yes'">{{ studentInfo.aap }}</span>
         <span v-else>NA</span>
-        
-        <!-- 仅在 AAP Beneficiaries 为 "yes" 时才显示上传文档的选项 -->
         <el-upload
           v-if="studentInfo.aap === 'Yes'"
           class="upload-demo"
@@ -46,7 +47,6 @@ export default {
       required: true
     }
   },
-  // 处理文件上传成功
   handleRemove(file, fileList) {
     console.log(file, fileList);
   },
@@ -60,7 +60,6 @@ export default {
     return this.$confirm(`确定移除 ${ file.name }？`);
   },
   handleError() {
-      // 在这里处理错误逻辑
   }
 }
 </script>

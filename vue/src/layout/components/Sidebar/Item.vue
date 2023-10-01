@@ -1,3 +1,5 @@
+<!-- The following code is the framework that comes with the scaffolding -->
+
 <script>
 export default {
   name: 'MenuItem',

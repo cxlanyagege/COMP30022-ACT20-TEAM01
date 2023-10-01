@@ -1,3 +1,4 @@
+<!-- Following code is Author by Yawen Luo, code is describe the entry page in dashboard view -->
 <template>
   <div class="dashboard-container">
     <Table :data="tableData" />
@@ -13,9 +14,8 @@ export default {
   },
   data() {
     return {
-      tableData: [] // 你的表格数据
+      tableData: []
     }
   }
-  // 其他组件选项和方法
 }
 </script>

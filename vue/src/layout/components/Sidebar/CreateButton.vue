@@ -1,3 +1,7 @@
+<!-- The component code was written by Yawen Luo, and Dennis Wang and He Shen were modified the 
+     front-end and back-end interaction method code at a later stage. The following code is used 
+     to build the component button elements of the sidebar. -->
+
 <template>
   <div class="custom-button-group">
     <el-button
@@ -8,7 +12,6 @@
       <strong style="font-size: 20px;" :title="subjectInfo.subjectName + ' Request Form'">{{ subjectInfo.subjectName }} Request Form</strong>
       <RequestForm @form-submitted="submitForm" />
     </el-dialog>
-
   </div>
 </template>
 
@@ -32,18 +35,16 @@ export default {
       }
     }
   },
-  // WRITTEN BY DENNIS WANG
   created() {
-    // set componenent name
     this.$root.$refs.button_component = this
   },
+
   methods: {
-    // ADDED BY DENNIS WANG & HE SHEN
+    // MODIFIED BY DENNIS WANG & HE SHEN
     async showForm() {
       try {
         // get subject info
         await this.$store.dispatch('subject/getSubjectInfo')
-
         // reset everything in the form everytime the form is opened
         this.formVisible = true
         this.$root.$refs.form_component.isCheck = false
@@ -63,11 +64,7 @@ export default {
       }
     },
     submitForm(formData) {
-      // 这里处理提交表单后的逻辑，formData 包含表单数据
-      // 例如，您可以将数据发送到服务器
       console.log('Form submitted with data:', formData)
-
-      // 使用 $nextTick 来确保在关闭表单后再隐藏
       this.$nextTick(() => {
         this.formVisible = false
       })

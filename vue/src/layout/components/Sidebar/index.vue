@@ -1,6 +1,10 @@
+ <!-- The following code is the framework that comes with the scaffolding, modified and 
+      edited by Yawen Luo to fit the student platform. The code describes bottom components
+      on the sidebar -->
+
 <template>
+  <!-- MOFIDIED BY YAWEN LUO -->
   <div>
-    <!-- 网站logo和名字 -->
     <div class="website-header">
       <img src="../../../../public/favicon.svg" alt="My Website Logo" class="logo">
       <span class="website-name">StuRequestHub</span>
@@ -39,6 +43,7 @@ import variables from '@/styles/variables.scss'
 import CustomButtonGroup from './CreateButton.vue'
 
 export default {
+  // MODIFIED BY YAWNE LUO
   components: { SidebarItem, Logo, CustomButtonGroup },
   data() {
     return {
@@ -69,7 +74,7 @@ export default {
 </script>
 
 <style>
-/* 样式可以根据你的需求进行调整 */
+/* MODIFIED BY YAWEN LUO */
 .website-header {
   display: flex;
   align-items: center;

@@ -1,3 +1,7 @@
+ <!-- The following code is the framework that comes with the scaffolding, modified and 
+      edited by Yawen Luo to fit the student platform. The code describes logo components
+      on the student web page -->
+
 <template>
   <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
@@ -14,6 +18,7 @@
 </template>
 
 <script>
+// MODIFIED BY YAWEN LUO
 export default {
   name: 'SidebarLogo',
   props: {
@@ -32,6 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// MODIFIED BY YAWEN LUO
 .sidebarLogoFade-enter-active {
   transition: opacity 1.5s;
 }

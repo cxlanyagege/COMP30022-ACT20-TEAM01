@@ -1,6 +1,11 @@
+ <!-- The following code is the framework that comes with the scaffolding, modified and 
+      edited by Yawen Luo to fit the student platform. The code describes mostly Breadcrumb's 
+      components-->
+
 <template>
   <el-breadcrumb class="app-breadcrumb" separator="/">
     <transition-group name="breadcrumb">
+      <!-- MODIFIED BY YAWEN LUO -->
       <el-breadcrumb-item v-for="(item,index) in levelList" :key="item.path">
         <span v-if="item.redirect==='noRedirect'||index==levelList.length-1" class="no-redirect">{{ item.meta.title }}</span>
         <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
@@ -27,6 +32,7 @@ export default {
     this.getBreadcrumb()
   },
   methods: {
+    // MODIFIED BY YAWEN LUO
     getBreadcrumb() {
       // only show routes with meta.title
       let matched = this.$route.matched.filter(item => item.meta && item.meta.title)
@@ -63,6 +69,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// MODIFIED BY YAWEN LUO
 .app-breadcrumb.el-breadcrumb {
   display: inline-block;
   font-size: 14px;

@@ -1,3 +1,5 @@
+ <!-- The following code is the framework that comes with the scaffolding -->
+
 <template>
   <div class="wscn-http404-container">
     <div class="wscn-http404">
