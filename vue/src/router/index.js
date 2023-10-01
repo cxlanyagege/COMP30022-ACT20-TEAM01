@@ -11,6 +11,12 @@ import Layout from '@/layout'
 // MODIFIED BY YAWEN LUO
 export const constantRoutes = [
   {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
+
+  {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
@@ -29,8 +35,9 @@ export const constantRoutes = [
   },
   
   {
-    path: '/history',
+    path: '/',
     component: Layout,
+    redirect: '/history',
     children: [
       {
         path: 'history',
@@ -42,7 +49,7 @@ export const constantRoutes = [
   },
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/dashboard', hidden: true } // 不再自动重定向到 /404，而是重定向到 /dashboard
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 
