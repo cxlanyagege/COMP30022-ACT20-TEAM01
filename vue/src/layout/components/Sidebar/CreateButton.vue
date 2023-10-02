@@ -38,7 +38,6 @@ export default {
       this.$root.$refs.form_component.form.detail = '';
       this.$root.$refs.form_component.form.fileList = [];
       this.$root.$refs.form_component.form.teammates = [];
-      this.$root.$refs.form_component.form.email = false;
       this.$root.$refs.form_component.form.showAdditionalOptions = false;
     },
     submitForm(formData) {

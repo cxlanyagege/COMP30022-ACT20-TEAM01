@@ -32,9 +32,6 @@
       <el-form-item label="Request Name">
         <el-input v-model="form.name" />
       </el-form-item>
-      <el-form-item label="Email Alerts">
-        <el-switch v-model="form.email" />
-      </el-form-item>
       <el-form-item label="Request Detail">
         <el-input v-model="form.detail" type="textarea" />
       </el-form-item>
@@ -81,7 +78,6 @@ export default {
         showAdditionalOptions: false,
         type: '',
         name: '',
-        email: false,
         detail: '',
         fileList: [],
         teammates: []
@@ -111,7 +107,6 @@ export default {
         // subjectId: this.form.subjectCode,
         requestType: this.form.region,
         submissionDate: currentDate,
-        // email: this.form.email,
         description: this.form.detail,
         fileList: this.form.fileList,
         requestName: this.form.name
@@ -133,6 +128,7 @@ export default {
         requestType: formData.requestType,
         requestName: formData.requestName,
         taskType: formData.type,
+        teammates: formData.teammates,
         attachments: formData.fileList.map(item => {
           return {url: this.convertUrlWithoutPrefix(item.url)}
         })

@@ -1,6 +1,6 @@
 import axios from "axios";
 // 基础地址
-axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = process.env.VUE_APP_API_BASE_API;
 
 // 如果要访问'http://localhost:8080/api/getRequest', url = "/api/getRequest"就可以了
 

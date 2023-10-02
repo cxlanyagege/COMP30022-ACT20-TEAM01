@@ -25,11 +25,25 @@
       <el-table-column prop="date" label="APPLICATION DATE" />
       <el-table-column label="ACTION">
         <template slot-scope="scope">
+          <!-- showRequestDetail(scope.row.idNo) -->
           <el-button
             type="info"
             size="small"
-            @click="showRequestDetail(scope.row.idNo)"
+            @click="handleDetailClick(scope.row.idNo)"
           >Detail</el-button>
+          <el-dialog
+            v-model="dialogVisible"
+            title="Request detail"
+            width="30%"
+          >
+            <div>
+              <p><strong>Student ID:</strong> {{ requestDetail.studentId }}</p>
+              <p><strong>Request Detail:</strong> {{ requestDetail.detail }}</p>
+              <p><strong>Request Type:</strong> {{ requestDetail.region }}</p>
+              <p><strong>Rqeuest Name:</strong> {{ requestDetail.name }}</p>
+              <p><strong>Task Type:</strong> {{ requestDetail.type }}</p>
+            </div>
+          </el-dialog>
           <el-divider direction="vertical" />
           <el-button
             type="danger"
@@ -60,6 +74,15 @@ export default {
       pageNum: 1,
       pageSize: 5,
       total: 0,
+      dialogVisible: false,
+      requestDetail: {
+        studentId: '',
+        detail: '',
+        region: '',
+        name: '',
+        type: '',
+        fileList: []
+      }
     }
   },
 
@@ -79,26 +102,33 @@ export default {
       })
     },
 
+    handleDetailClick(idNo) {
+      this.dialogVisible = true;
+      this.showRequestDetail(idNo);
+    },
+
     // WRITTEN BY DENNIS
     showRequestDetail(requestId) {
       // get the details of a specified request when student
       // want to check the content of it
-      this.$root.$refs.button_component.formVisible = true;
-      this.$root.$refs.form_component.isCheck = true;
+
+      // this.$root.$refs.button_component.formVisible = true;
+      // this.$root.$refs.form_component.isCheck = true;
       getRequest(requestId, null).then(res => {
         console.log(res.data);
-        this.$root.$refs.form_component.form.studentId = res.data.data.studentId;
-        this.$root.$refs.form_component.form.detail = res.data.data.description;
-        this.$root.$refs.form_component.form.region = res.data.data.requestType;
-        this.$root.$refs.form_component.form.name = res.data.data.requestName;
-        this.$root.$refs.form_component.form.email = false;
-        this.$root.$refs.form_component.form.type = res.data.data.taskType;
+        this.requestDetail.studentId = res.data.data.studentId;
+        this.requestDetail.detail = res.data.data.description;
+        this.requestDetail.region = res.data.data.requestType;
+        this.requestDetail.name = res.data.data.requestName;
+        this.requestDetail.type = res.data.data.taskType;
+        // this.requestDetail.teammates = res.data.data.teammates;
         // editableItem.subjectId = "";
         // editableItem.requestId = requestId;
-        this.$root.$refs.form_component.form.fileList = res.data.data.attachments.map(item => {
+        this.requestDetail.fileList = res.data.data.attachments.map(item => {
           return {uid: item.attachmentId, url: this.$root.$refs.form_component.convertUrlWithPrefix(item.url)}
         })
       })
+      console.log(this.requestDetail)
     },
 
     // WRITTEN BY DENNIS
