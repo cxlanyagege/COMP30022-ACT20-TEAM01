@@ -19,9 +19,15 @@
       <el-table-column prop="name" label="REQUEST NAME" />
       <el-table-column label="STATUS" prop="status">
         <template slot-scope="{ row }">
-          <el-tag v-if="row.status === 'WAITING'" type="warning">{{ row.status }}</el-tag>
-          <el-tag v-else-if="row.status === 'APPROVED'" type="success">{{ row.status }}</el-tag>
-          <el-tag v-else-if="row.status === 'REJECTED'" type="danger">{{ row.status }}</el-tag>
+          <el-tag v-if="row.status === 'WAITING'" type="warning">{{
+            row.status
+          }}</el-tag>
+          <el-tag v-else-if="row.status === 'APPROVED'" type="success">{{
+            row.status
+          }}</el-tag>
+          <el-tag v-else-if="row.status === 'REJECTED'" type="danger">{{
+            row.status
+          }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="date" label="APPLICATION DATE" />
@@ -32,12 +38,9 @@
             type="info"
             size="small"
             @click="handleDetailClick(scope.row.idNo)"
-          >Detail</el-button>
-          <el-dialog
-            v-model="dialogVisible"
-            title="Request detail"
-            width="30%"
+            >Detail</el-button
           >
+          <el-dialog v-model="dialogVisible" title="Request detail" width="30%">
             <div>
               <p><strong>Student ID:</strong> {{ requestDetail.studentId }}</p>
               <p><strong>Request Detail:</strong> {{ requestDetail.detail }}</p>
@@ -51,7 +54,8 @@
             type="danger"
             size="small"
             @click="handleDelete(scope.row.idNo)"
-          >Delete</el-button>
+            >Delete</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -66,7 +70,12 @@
 </template>
 
 <script>
-import {getRequests, addRequest, deleteRequest, getRequest} from '@/api/request'
+import {
+  getRequests,
+  addRequest,
+  deleteRequest,
+  getRequest,
+} from "@/api/request";
 
 export default {
   data() {
@@ -78,27 +87,27 @@ export default {
       total: 0,
       dialogVisible: false,
       requestDetail: {
-        studentId: '',
-        detail: '',
-        region: '',
-        name: '',
-        type: '',
-        fileList: []
-      }
-    }
+        studentId: "",
+        detail: "",
+        region: "",
+        name: "",
+        type: "",
+        fileList: [],
+      },
+    };
   },
 
   mounted() {
-    this.updateRequests(this.pageNum, this.pageSize)
+    this.updateRequests(this.pageNum, this.pageSize);
   },
 
   methods: {
     handleDelete(idNo) {
       // delete request based on requestid
-      deleteRequest(idNo).then(res=>{
+      deleteRequest(idNo).then((res) => {
         console.log(res.data);
-        this.updateRequests(this.pageNum, this.pageSize)
-      })
+        this.updateRequests(this.pageNum, this.pageSize);
+      });
     },
 
     handleDetailClick(idNo) {
@@ -107,7 +116,7 @@ export default {
     },
 
     showRequestDetail(requestId) {
-      getRequest(requestId, null).then(res => {
+      getRequest(requestId, null).then((res) => {
         console.log(res.data);
         this.requestDetail.studentId = res.data.data.studentId;
         this.requestDetail.detail = res.data.data.description;
@@ -117,56 +126,79 @@ export default {
         // this.requestDetail.teammates = res.data.data.teammates;
         // editableItem.subjectId = "";
         // editableItem.requestId = requestId;
-        this.requestDetail.fileList = res.data.data.attachments.map(item => {
-          return {uid: item.attachmentId, url: this.$root.$refs.form_component.convertUrlWithPrefix(item.url)}
-        })
-      })
-      console.log(this.requestDetail)
+        this.requestDetail.fileList = res.data.data.attachments.map((item) => {
+          return {
+            uid: item.attachmentId,
+            url: this.$root.$refs.form_component.convertUrlWithPrefix(item.url),
+          };
+        });
+      });
+      console.log(this.requestDetail);
     },
 
-    // WRITTEN BY DENNIS
+    addNewRequest(newRequest) {
+      // 将新请求插入表格数据的开头
+      this.tableData.unshift(newRequest);
+
+      // 如果新请求的状态是 WAITING，将其置顶
+      if (newRequest.status === "WAITING") {
+        this.tableData.sort((a, b) => {
+          if (a.status === "WAITING" && b.status !== "WAITING") {
+            return -1;
+          }
+          if (a.status !== "WAITING" && b.status === "WAITING") {
+            return 1;
+          }
+          return 0;
+        });
+      }
+      // 更新总数等其他状态信息（如果需要）
+      this.total += 1;
+    },
+
+    // 在你的 updateRequests 方法中，修改 tableData 的获取逻辑
     updateRequests(page, pageSize) {
-      // send the update request to the server and return all requests 
-      // that are still waiting to be accessed 
-      console.log('handle requests');
+      console.log("handle requests");
       const param = {
         pageNum: page,
         pageSize,
-        status: "WAITING"
-      }
+      };
       getRequests(1266288, param).then((res) => {
-        console.log(res.data)
-
-        if (res.data.data.records.length == 0 && page != 0){
-          this.pageNum = page - 1
-          this.updateRequests(this.pageNum, pageSize)
-        } else {
-          this.tableData = (res.data.data.records.length == 0 && page == 0) ? [] :
-          res.data.data.records.map(record => {
-            return {
-              idNo: record.requestId,
-              type: record.requestType,
-              name: record.requestName,
-              status: record.status,
-              date: record.submissionDate,
-              action: 'delete'
-            }
-          })
-          this.total = res.data.data.total
-          this.pageNum = res.data.data.current
-        }
-        // console.log(this.pageNum, this.pageSize)
+        console.log(res.data);
+        // 先保存等待状态的请求，然后将其从表格数据中删除
+        const waitingRequests = this.tableData.filter(
+          (item) => item.status === "WAITING"
+        );
+        this.tableData = this.tableData.filter(
+          (item) => item.status !== "WAITING"
+        );
+        // 处理请求数据，将其转换成表格数据
+        const requestData = res.data.data.records.map((record) => ({
+          idNo: record.requestId,
+          type: record.requestType,
+          name: record.requestName,
+          status: record.status,
+          date: record.submissionDate,
+          action: "delete",
+        }));
+        // 将获取到的请求数据添加到表格数据的前面
+        this.tableData = [...requestData, ...this.tableData];
+        // 将等待状态的请求重新添加到表格数据的最底部
+        this.tableData = [...this.tableData, ...waitingRequests];
+        this.total = res.data.data.total;
+        this.pageNum = res.data.data.current;
       });
     },
+
     handlePageChange(pageNum) {
       // used to handle the pagination
       this.updateRequests(pageNum, this.pageSize);
-    }
+    },
   },
   created() {
     // set componenent name
     this.$root.$refs.table_component = this;
-  }
-}
+  },
+};
 </script>
 
