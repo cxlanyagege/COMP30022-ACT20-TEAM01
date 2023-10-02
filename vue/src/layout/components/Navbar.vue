@@ -1,14 +1,17 @@
+<!-- The following code is written by Yawen Luo, the code is discribe the Navbar element-->
+
 <template>
   <div class="navbar">
     <breadcrumb class="breadcrumb-container" />
-
     <div class="right-menu">
       <div class="avatar-container" @click="showStudentProfileDialog">
-        <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" :size="45" class="vertical-center"></el-avatar>
+        <el-avatar
+          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+          :size="45"
+          class="vertical-center"
+        ></el-avatar>
       </div>
     </div>
-
-    <!-- 添加学生信息模态框 -->
     <el-dialog
       v-model="showProfileDialog"
       title="Student Profile"
@@ -16,65 +19,61 @@
       width="50%"
       center
     >
-      <!-- 引用StudentProfile组件并传递学生信息 -->
       <student-profile :student-info="studentInfo" />
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb'
-import StudentProfile from '@/components/form/StudentProfile.vue'
+import { mapGetters } from "vuex";
+import Breadcrumb from "@/components/Breadcrumb";
+import StudentProfile from "@/components/form/StudentProfile.vue";
 
 export default {
   components: {
     Breadcrumb,
-    StudentProfile
+    StudentProfile,
   },
+
   data() {
     return {
-      showProfileDialog: false, // 控制学生信息模态框的显示与隐藏
+      showProfileDialog: false,
       studentInfo: {
-        name: "John Doe", // 学生姓名
+        name: "John Doe",
         id: "1266543",
-        email: "Johndoe@student.unimelb.edu.au",// 学生年龄
-        aap: "Yes"       // 学生成绩
-        // 添加更多学生信息字段
-      }
-    }
+        email: "Johndoe@student.unimelb.edu.au",
+        aap: "Yes",
+      },
+    };
   },
+
   computed: {
-    ...mapGetters([
-      'sidebar',
-      'avatar'
-    ])
+    ...mapGetters(["sidebar", "avatar"]),
   },
+
   methods: {
     toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar')
+      this.$store.dispatch("app/toggleSideBar");
     },
     async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      await this.$store.dispatch("user/logout");
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
     },
     showStudentProfileDialog() {
-      // 点击按钮弹出学生信息模态框的方法
-      console.log("Button clicked"); // 检查方法是否被调用
-      this.showProfileDialog = true; // 显示模态框
-    }
-  }
-}
+      console.log("Button clicked");
+      this.showProfileDialog = true;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-
 .navbar {
   height: 50px;
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   margin-top: 25px;
 
   .breadcrumb-container {
@@ -102,10 +101,10 @@ export default {
 
       &.hover-effect {
         cursor: pointer;
-        transition: background .3s;
+        transition: background 0.3s;
 
         &:hover {
-          background: rgba(0, 0, 0, .025)
+          background: rgba(0, 0, 0, 0.025);
         }
       }
     }

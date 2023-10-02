@@ -1,41 +1,43 @@
+<!-- The component code was written by Yawen Luo, and Dennis Wang and He Shen were modified the 
+     front-end and back-end interaction method code at a later stage. The following code is used 
+     to build the component button elements of the sidebar. -->
+
 <template>
   <div class="custom-button-group">
-    <el-button
-      class="custom-button"
-      @click="showForm"
-    >+ Create</el-button>
+    <el-button class="custom-button" @click="showForm">+ Create</el-button>
     <el-dialog :visible.sync="formVisible" width="65%" :modal="false">
-      <strong style="font-size: 20px;" title="COMP30022 Request Form">COMP30022 Request Form</strong>
+      <strong style="font-size: 20px" title="COMP30022 Request Form"
+        >COMP30022 Request Form</strong
+      >
       <RequestForm @form-submitted="submitForm" />
     </el-dialog>
-
   </div>
 </template>
 
 <script>
-import RequestForm from '@/components/form/index.vue'
+import RequestForm from "@/components/form/index.vue";
 
 export default {
   components: {
-    RequestForm
+    RequestForm,
   },
   data() {
     return {
       formVisible: false,
-    }
+    };
   },
   methods: {
-    // ADDED BY DENNIS WANG
+    // MODIFIED BY DENNIS WANG
     showForm() {
       // reset everything in the form everytime the form is opened
-      this.formVisible = true
-      this.$root.$refs.form_component.isCheck = false
-      this.$root.$refs.form_component.form.studentId = '';
+      this.formVisible = true;
+      this.$root.$refs.form_component.isCheck = false;
+      this.$root.$refs.form_component.form.studentId = "";
       // this.$root.$refs.form_component.form.subjectCode = '';
-      this.$root.$refs.form_component.form.region = '';
-      this.$root.$refs.form_component.form.type = '';
-      this.$root.$refs.form_component.form.name = '';
-      this.$root.$refs.form_component.form.detail = '';
+      this.$root.$refs.form_component.form.region = "";
+      this.$root.$refs.form_component.form.type = "";
+      this.$root.$refs.form_component.form.name = "";
+      this.$root.$refs.form_component.form.detail = "";
       this.$root.$refs.form_component.form.fileList = [];
       this.$root.$refs.form_component.form.teammates = [];
       this.$root.$refs.form_component.form.showAdditionalOptions = false;
@@ -43,20 +45,20 @@ export default {
     submitForm(formData) {
       // 这里处理提交表单后的逻辑，formData 包含表单数据
       // 例如，您可以将数据发送到服务器
-      console.log('Form submitted with data:', formData)
+      console.log("Form submitted with data:", formData);
 
       // 使用 $nextTick 来确保在关闭表单后再隐藏
       this.$nextTick(() => {
-        this.formVisible = false
-      })
-    }
+        this.formVisible = false;
+      });
+    },
   },
   // WRITTEN BY DENNIS WANG
   created() {
     // set componenent name
     this.$root.$refs.button_component = this;
   },
-}
+};
 </script>
 
 <style scoped>

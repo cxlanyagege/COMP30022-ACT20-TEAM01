@@ -1,8 +1,16 @@
+ <!-- The following code is the framework that comes with the scaffolding, modified and 
+      edited by Yawen Luo to fit the student platform. The code describes svglcon
+      components-->
+
 <template>
+  <!-- MOFIDIED BY YAWEN LUO -->
   <div>
-    <!-- 网站logo和名字 -->
     <div class="website-header">
-      <img src="../../../../public/favicon.svg" alt="My Website Logo" class="logo">
+      <img
+        src="../../../../public/favicon.svg"
+        alt="My Website Logo"
+        class="logo"
+      />
       <span class="website-name">StuRequestHub</span>
     </div>
     <CustomButtonGroup />
@@ -32,44 +40,44 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Logo from './Logo'
-import SidebarItem from './SidebarItem'
-import variables from '@/styles/variables.scss'
-import CustomButtonGroup from './CreateButton.vue'
+import { mapGetters } from "vuex";
+import Logo from "./Logo";
+import SidebarItem from "./SidebarItem";
+import variables from "@/styles/variables.scss";
+import CustomButtonGroup from "./CreateButton.vue";
 
 export default {
   components: { SidebarItem, Logo, CustomButtonGroup },
   data() {
     return {
-      isCollapse: false
-    }
+      isCollapse: false,
+    };
   },
   computed: {
-    ...mapGetters(['sidebar']),
+    ...mapGetters(["sidebar"]),
     routes() {
-      return this.$router.options.routes
+      return this.$router.options.routes;
     },
     activeMenu() {
-      const route = this.$route
-      const { meta, path } = route
+      const route = this.$route;
+      const { meta, path } = route;
       if (meta.activeMenu) {
-        return meta.activeMenu
+        return meta.activeMenu;
       }
-      return path
+      return path;
     },
     showLogo() {
-      return this.$store.state.settings.sidebarLogo
+      return this.$store.state.settings.sidebarLogo;
     },
     variables() {
-      return variables
-    }
-  }
-}
+      return variables;
+    },
+  },
+};
 </script>
 
 <style>
-/* 样式可以根据你的需求进行调整 */
+/* MODIFIED BY YAWEN LUO */
 .website-header {
   display: flex;
   align-items: center;

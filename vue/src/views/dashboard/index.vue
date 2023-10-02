@@ -1,3 +1,5 @@
+<!-- Following code is Author by Yawen Luo, code is describe the entry page in dashboard view -->
+
 <template>
   <div class="dashboard-container">
     <Table :data="tableData" />
@@ -5,17 +7,16 @@
 </template>
 
 <script>
-import Table from '@/components/table/index'
+import Table from "@/components/table/index";
 
 export default {
   components: {
-    Table
+    Table,
   },
   data() {
     return {
-      tableData: [] // 你的表格数据
-    }
-  }
-  // 其他组件选项和方法
-}
+      tableData: [],
+    };
+  },
+};
 </script>
