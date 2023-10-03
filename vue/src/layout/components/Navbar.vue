@@ -1,16 +1,31 @@
-<!-- The following code is written by Yawen Luo, the code is discribe the Navbar element-->
-
 <template>
   <div class="navbar">
     <breadcrumb class="breadcrumb-container" />
     <div class="right-menu">
-      <div class="avatar-container" @click="showStudentProfileDialog">
-        <el-avatar
-          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-          :size="45"
-          class="vertical-center"
-        ></el-avatar>
-      </div>
+      <el-dropdown class="avatar-container" trigger="click">
+        <div class="avatar-wrapper">
+          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
+          <i class="el-icon-caret-bottom" />
+        </div>
+        <el-dropdown-menu slot="dropdown" class="user-dropdown">
+          <table>
+            <tr>
+              <td>
+                <button class="custom-button" @click="showProfileDialog = true">
+                  Student Profile
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button class="custom-button" @click="showSettingDialog = true">
+                  Setting
+                </button>
+              </td>
+            </tr>
+          </table>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
     <el-dialog
       v-model="showProfileDialog"
@@ -21,23 +36,37 @@
     >
       <student-profile :student-info="studentInfo" />
     </el-dialog>
+    <el-dialog
+      v-model="showSettingDialog"
+      title="Setting"
+      :visible.sync="showSettingDialog"
+      width="60%"
+      center
+    >
+      <Setting/>
+    </el-dialog>
   </div>
 </template>
+
+
 
 <script>
 import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import StudentProfile from "@/components/form/StudentProfile.vue";
+import Setting from "@/components/form/setting.vue";
 
 export default {
   components: {
     Breadcrumb,
     StudentProfile,
+    Setting,
   },
 
   data() {
     return {
       showProfileDialog: false,
+      showSettingDialog: false,
       studentInfo: {
         name: "John Doe",
         id: "1266543",
@@ -55,19 +84,29 @@ export default {
     toggleSideBar() {
       this.$store.dispatch("app/toggleSideBar");
     },
-    async logout() {
-      await this.$store.dispatch("user/logout");
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
-    },
-    showStudentProfileDialog() {
-      console.log("Button clicked");
+    openProfileDialog() {
       this.showProfileDialog = true;
     },
   },
 };
 </script>
 
+
 <style lang="scss" scoped>
+.custom-button {
+  background-color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 145px;
+  text-align: left;
+  color: #5a5f64;
+  &:hover {
+    background-color: rgb(225, 239, 248);
+  }
+}
+
 .navbar {
   height: 50px;
   overflow: hidden;
@@ -85,7 +124,6 @@ export default {
     float: right;
     height: 100%;
     line-height: 50px;
-    margin-right: 30px;
 
     &:focus {
       outline: none;
@@ -111,10 +149,6 @@ export default {
 
     .avatar-container {
       margin-right: 30px;
-      margin-top: 3px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
 
       .avatar-wrapper {
         margin-top: 5px;
