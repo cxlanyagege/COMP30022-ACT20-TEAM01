@@ -67,8 +67,8 @@ export default {
   justify-content: center;
   align-items: center;
   height: 80px;
-  margin-top: 25px;
-  margin-bottom: 25px;
+  margin-top: 40px;
+  margin-bottom: 60px;
 }
 
 .custom-button {
