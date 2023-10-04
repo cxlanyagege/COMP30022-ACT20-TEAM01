@@ -1,6 +1,3 @@
-<!-- The following code is the framework that comes with the scaffolding, modified and 
-    edited by Yawen Luo to fit the student platform. The code is login page view -->
-
 <template>
   <div class="login-container">
     <el-form
@@ -159,7 +156,6 @@ $cursor: #fff;
   }
 }
 
-/* MODIFIED BY YAWEN LUO */
 .login-container {
   .el-input {
     display: inline-block;

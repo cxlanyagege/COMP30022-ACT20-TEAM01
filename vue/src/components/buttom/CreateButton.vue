@@ -1,4 +1,4 @@
-<!-- The component code was written by Yawen Luo, and Dennis Wang and He Shen were modified the 
+<!-- The component code was written by Yawen Luo, Dennis Wang was modified the 
      front-end and back-end interaction method code at a later stage. The following code is used 
      to build the component button elements of the sidebar. -->
 
@@ -21,13 +21,15 @@ export default {
   components: {
     RequestForm,
   },
+
   data() {
     return {
       formVisible: false,
     };
   },
+
+  // MODIFIED BY DENNIS WANG
   methods: {
-    // MODIFIED BY DENNIS WANG
     showForm() {
       // reset everything in the form everytime the form is opened
       this.formVisible = true;
@@ -43,17 +45,12 @@ export default {
       this.$root.$refs.form_component.form.showAdditionalOptions = false;
     },
     submitForm(formData) {
-      // 这里处理提交表单后的逻辑，formData 包含表单数据
-      // 例如，您可以将数据发送到服务器
       console.log("Form submitted with data:", formData);
-
-      // 使用 $nextTick 来确保在关闭表单后再隐藏
       this.$nextTick(() => {
         this.formVisible = false;
       });
     },
   },
-  // WRITTEN BY DENNIS WANG
   created() {
     // set componenent name
     this.$root.$refs.button_component = this;

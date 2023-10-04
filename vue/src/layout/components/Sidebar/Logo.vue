@@ -26,12 +26,14 @@
 // MODIFIED BY YAWEN LUO
 export default {
   name: "SidebarLogo",
+  
   props: {
     collapse: {
       type: Boolean,
       required: true,
     },
   },
+
   data() {
     return {
       title: "StuRequestHub",

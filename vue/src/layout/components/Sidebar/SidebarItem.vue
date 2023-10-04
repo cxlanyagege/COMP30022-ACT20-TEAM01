@@ -3,7 +3,6 @@
       in to sidebar -->
 
 <template>
-  <!-- MODIFIED BY YAWEN LUO -->
   <div v-if="!item.hidden">
     <template
       v-if="
@@ -24,7 +23,6 @@
         </el-menu-item>
       </app-link>
     </template>
-
     <el-submenu
       v-else
       ref="subMenu"
@@ -62,7 +60,6 @@ export default {
   components: { Item, AppLink },
   mixins: [FixiOSBug],
   props: {
-    // route object
     item: {
       type: Object,
       required: true,
@@ -91,18 +88,15 @@ export default {
           return true;
         }
       });
-
       // When there is only one child router, the child router is displayed by default
       if (showingChildren.length === 1) {
         return true;
       }
-
       // Show parent if there are no child router to display
       if (showingChildren.length === 0) {
         this.onlyOneChild = { ...parent, path: "", noShowingChildren: true };
         return true;
       }
-
       return false;
     },
     resolvePath(routePath) {

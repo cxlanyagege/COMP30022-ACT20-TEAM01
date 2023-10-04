@@ -1,5 +1,3 @@
-<!-- The following code is the framework that comes with the scaffolding -->
-
 <template>
   <component :is="type" v-bind="linkProps(to)">
     <slot />
@@ -16,6 +14,7 @@ export default {
       required: true,
     },
   },
+
   computed: {
     isExternal() {
       return isExternal(this.to);
@@ -27,6 +26,7 @@ export default {
       return "router-link";
     },
   },
+  
   methods: {
     linkProps(to) {
       if (this.isExternal) {

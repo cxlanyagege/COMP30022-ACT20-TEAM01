@@ -1,6 +1,6 @@
  <!-- The following code is the framework that comes with the scaffolding, modified and 
-      edited by Yawen Luo to fit the student platform. The code describes mostly Breadcrumb's 
-      components-->
+      edited by Yawen Luo to fit the student platform. The code describes Breadcrumb 
+      component-->
 
 <template>
   <el-breadcrumb class="app-breadcrumb" separator="/">
@@ -26,16 +26,19 @@ export default {
       levelList: null,
     };
   },
+
   watch: {
     $route() {
       this.getBreadcrumb();
     },
   },
+
   created() {
     this.getBreadcrumb();
   },
+
+  // MODIFIED BY YAWEN LUO
   methods: {
-    // MODIFIED BY YAWEN LUO
     getBreadcrumb() {
       let matched = this.$route.matched.filter(
         (item) => item.meta && item.meta.title

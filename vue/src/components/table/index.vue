@@ -1,12 +1,10 @@
-<!-- The component code was written by Yawen Luo, and Dennis Wang and He Shen were modified the 
+<!-- The component code was written by Yawen Luo, Dennis Wang was modified the 
      front-end and back-end interaction method code at a later stage. The following code is used 
-     to build the component table elements of the dashboard. -->
+     to build the component request table elements. -->
 
 <template>
   <div class="app-container">
-    <el-scrollbar
-      height="300px"
-    >
+    <el-scrollbar height="300px">
       <el-table
         v-loading="listLoading"
         :data="combinedData"
@@ -42,23 +40,31 @@
               @click="handleDetailClick(scope.row.idNo)"
               >Detail</el-button
             >
-            <el-dialog 
-              v-model="dialogVisible" 
-              title="Request detail" 
-              :visible.sync="dialogVisible" 
+            <el-dialog
+              v-model="dialogVisible"
+              title="Request detail"
+              :visible.sync="dialogVisible"
               width="50%"
             >
               <div>
-                <p><strong>Student ID:</strong> {{ requestDetail.studentId }}</p>
-                <p><strong>Request Detail:</strong> {{ requestDetail.detail }}</p>
+                <p>
+                  <strong>Student ID:</strong> {{ requestDetail.studentId }}
+                </p>
+                <p>
+                  <strong>Request Detail:</strong> {{ requestDetail.detail }}
+                </p>
                 <p><strong>Request Type:</strong> {{ requestDetail.region }}</p>
                 <p><strong>Rqeuest Name:</strong> {{ requestDetail.name }}</p>
                 <p><strong>Task Type:</strong> {{ requestDetail.type }}</p>
 
-                <p v-if="requestDetail.fileList.length > 0"><strong>Attachments:</strong></p>
+                <p v-if="requestDetail.fileList.length > 0">
+                  <strong>Attachments:</strong>
+                </p>
                 <ul v-if="requestDetail.fileList.length > 0">
                   <li v-for="file in requestDetail.fileList" :key="file.uid">
-                    <a :href="file.url" target="_blank">{{ file.url.substr(uploadURL.length, file.url.length) }}</a>
+                    <a :href="file.url" target="_blank">{{
+                      file.url.substr(uploadURL.length, file.url.length)
+                    }}</a>
                   </li>
                 </ul>
               </div>
@@ -68,27 +74,21 @@
               type="danger"
               size="small"
               @click="handleDelete(scope.row.idNo)"
-              >Delete</el-button>
+              >Delete</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
     </el-scrollbar>
   </div>
-  <!-- <el-pagination
-    :current-page="pageNum"
-    :page-size="pageSize"
-    :total="total"
-    layout="prev, pager, next"
-    @current-change="handlePageChange"
-  /> -->
 </template>
 
 <script>
 import {
-getRequests,
-addRequest,
-deleteRequest,
-getRequest,
+  getRequests,
+  addRequest,
+  deleteRequest,
+  getRequest,
 } from "@/api/request";
 import { uploadURL } from "@/config/config";
 
@@ -98,10 +98,6 @@ export default {
       waitingData: [],
       processedData: [],
       listLoading: false,
-      // pageNum: 1,
-      // pageSize: 5,
-      // total: 0,
-      // hasMore: true,
       dialogVisible: false,
       requestDetail: {
         studentId: "",
@@ -133,12 +129,10 @@ export default {
         this.updateRequests();
       });
     },
-
     handleDetailClick(idNo) {
       this.dialogVisible = true;
       this.showRequestDetail(idNo);
     },
-
     showRequestDetail(requestId) {
       getRequest(requestId, null).then((res) => {
         console.log(res.data);
@@ -148,36 +142,35 @@ export default {
         this.requestDetail.name = res.data.data.requestName;
         this.requestDetail.type = res.data.data.taskType;
         // this.requestDetail.teammates = res.data.data.teammates;
-        this.requestDetail.fileList = res.data.data.attachments.map(item => {
-          return {uid: item.attachmentId, url: this.$root.$refs.form_component.convertUrlWithPrefix(item.url)}
-        })
-      })
-      console.log(this.requestDetail)
+        this.requestDetail.fileList = res.data.data.attachments.map((item) => {
+          return {
+            uid: item.attachmentId,
+            url: this.$root.$refs.form_component.convertUrlWithPrefix(item.url),
+          };
+        });
+      });
+      console.log(this.requestDetail);
     },
-
-    // 在你的 updateRequests 方法中，修改 tableData 的获取逻辑
     updateRequests() {
       console.log("handle requests");
-
       const param1 = {
-        status: "WAITING"
+        status: "WAITING",
       };
       getRequests(1266288, param1).then((res) => {
         console.log(res.data);
-
-        if (res.data.data.length === 0){
+        if (res.data.data.length === 0) {
           this.waitingData = [];
         } else {
-          const requestData = res.data.data.map(record => {
+          const requestData = res.data.data.map((record) => {
             return {
               idNo: record.requestId,
               type: record.requestType,
               name: record.requestName,
               status: record.status,
               date: record.submissionDate,
-              action: 'delete'
-            }
-          })
+              action: "delete",
+            };
+          });
           requestData.sort((a, b) => {
             const dateA = new Date(a.date);
             const dateB = new Date(b.date);
@@ -186,26 +179,24 @@ export default {
           this.waitingData = requestData;
         }
       });
-
       const param2 = {
-        status: "OTHER"
+        status: "OTHER",
       };
       getRequests(1266288, param2).then((res) => {
         console.log(res.data);
-
-        if (res.data.data.length === 0){
+        if (res.data.data.length === 0) {
           this.processedData = [];
         } else {
-          const requestData = res.data.data.map(record => {
+          const requestData = res.data.data.map((record) => {
             return {
               idNo: record.requestId,
               type: record.requestType,
               name: record.requestName,
               status: record.status,
               date: record.submissionDate,
-              action: 'delete'
-            }
-          })
+              action: "delete",
+            };
+          });
           requestData.sort((a, b) => {
             const dateA = new Date(a.date);
             const dateB = new Date(b.date);
@@ -215,22 +206,16 @@ export default {
         }
       });
     },
-
     handleScroll(e) {
-      const bottomOfContainer = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-      console.log(bottomOfContainer)
+      const bottomOfContainer =
+        e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+      console.log(bottomOfContainer);
       if (bottomOfContainer) {
         this.updateRequests();
       }
     },
-
-    // handlePageChange(pageNum) {
-    //   // used to handle the pagination
-    //   this.updateRequests(pageNum, this.pageSize);
-    // },
   },
   created() {
-    // set componenent name
     this.$root.$refs.table_component = this;
   },
 };
@@ -238,7 +223,7 @@ export default {
 
 <style>
 .loading-indicator {
-text-align: center;
-padding: 10px;
+  text-align: center;
+  padding: 10px;
 }
 </style>
