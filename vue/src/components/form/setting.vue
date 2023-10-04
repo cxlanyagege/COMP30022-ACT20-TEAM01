@@ -14,8 +14,9 @@
         </template>
       </el-table-column>
     </el-table>
-    <br>
+    <br />
     <h3>Time Preferences</h3>
+    <span>Set the time you want to receive email</span>
     <el-time-picker
       is-range
       v-model="notificationTime"
@@ -23,6 +24,7 @@
       start-placeholder="Start Time"
       end-placeholder="Finish Time"
       placeholder="Select Time Range"
+      style="margin-top: 10px"
     >
     </el-time-picker>
   </div>
@@ -43,7 +45,7 @@ export default {
         },
         { notificationType: "When the request is deleted", isEnabled: true },
       ],
-      notificationTime: ["08:00", "18:00"]
+      notificationTime: ["08:00", "18:00"],
     };
   },
 };
