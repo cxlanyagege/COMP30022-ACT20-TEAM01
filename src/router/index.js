@@ -56,14 +56,27 @@ export const constantRoutes = [
   },
 
   {
-    path: '/Authority',
+    path: '/PER-Request',
     component: Layout,
     children: [
       {
         path: 'index',
-        name: 'Authority',
-        component: () => import('@/views/authority/index'),
-        meta: { title: 'Authority', icon: 'el-icon-s-help' }
+        name: 'PER-Request',
+        component: () => import('@/views/requestAuthority/index'),
+        meta: { title: 'PER-Request', icon: 'el-icon-s-operation' }
+      }
+    ]
+  },
+
+  {
+    path: '/PER-Tutor',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'PER-Tutor',
+        component: () => import('@/views/tutorAuthority/index'),
+        meta: { title: 'PER-Tutor', icon: 'el-icon-s-help' }
       }
     ]
   },
