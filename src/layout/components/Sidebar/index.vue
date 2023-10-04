@@ -1,3 +1,5 @@
+<!-- The following code is the framework that comes with the scaffolding
+modified and edited by Lanruo Su, Xuan Zhang -->
 <template>
   <div>
     <!-- 网站logo和名字 -->
@@ -59,9 +61,6 @@ export default {
     },
     variables() {
       return variables
-    },
-    isCollapse() {
-      return !this.sidebar.opened
     }
   }
 }
