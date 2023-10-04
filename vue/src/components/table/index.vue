@@ -4,87 +4,104 @@
 
 <template>
   <div class="app-container">
-    <el-table
-      v-loading="listLoading"
-      :data="tableData"
-      element-loading-text="Loading"
-      border
-      fit
-      highlight-current-row
-      stripe
-      style="width: 100%"
+    <el-scrollbar
+      height="300px"
     >
-      <el-table-column prop="idNo" label="ID NO." />
-      <el-table-column prop="type" label="REQUEST TYPE" />
-      <el-table-column prop="name" label="REQUEST NAME" />
-      <el-table-column label="STATUS" prop="status">
-        <template slot-scope="{ row }">
-          <el-tag v-if="row.status === 'WAITING'" type="warning">{{
-            row.status
-          }}</el-tag>
-          <el-tag v-else-if="row.status === 'APPROVED'" type="success">{{
-            row.status
-          }}</el-tag>
-          <el-tag v-else-if="row.status === 'REJECTED'" type="danger">{{
-            row.status
-          }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="date" label="APPLICATION DATE" />
-      <el-table-column label="ACTION">
-        <template slot-scope="scope">
-          <!-- showRequestDetail(scope.row.idNo) -->
-          <el-button
-            type="info"
-            size="small"
-            @click="handleDetailClick(scope.row.idNo)"
-            >Detail</el-button
-          >
-          <el-dialog v-model="dialogVisible" title="Request detail" width="30%">
-            <div>
-              <p><strong>Student ID:</strong> {{ requestDetail.studentId }}</p>
-              <p><strong>Request Detail:</strong> {{ requestDetail.detail }}</p>
-              <p><strong>Request Type:</strong> {{ requestDetail.region }}</p>
-              <p><strong>Rqeuest Name:</strong> {{ requestDetail.name }}</p>
-              <p><strong>Task Type:</strong> {{ requestDetail.type }}</p>
-            </div>
-          </el-dialog>
-          <el-divider direction="vertical" />
-          <el-button
-            type="danger"
-            size="small"
-            @click="handleDelete(scope.row.idNo)"
-            >Delete</el-button
-          >
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-pagination
-      :current-page="pageNum"
-      :page-size="pageSize"
-      :total="total"
-      layout="prev, pager, next"
-      @current-change="handlePageChange"
-    />
+      <el-table
+        v-loading="listLoading"
+        :data="combinedData"
+        element-loading-text="Loading"
+        border
+        fit
+        highlight-current-row
+        stripe
+        style="width: 100%"
+      >
+        <el-table-column prop="idNo" label="ID NO." />
+        <el-table-column prop="type" label="REQUEST TYPE" />
+        <el-table-column prop="name" label="REQUEST NAME" />
+        <el-table-column label="STATUS" prop="status">
+          <template slot-scope="{ row }">
+            <el-tag v-if="row.status === 'WAITING'" type="warning">{{
+              row.status
+            }}</el-tag>
+            <el-tag v-else-if="row.status === 'APPROVED'" type="success">{{
+              row.status
+            }}</el-tag>
+            <el-tag v-else-if="row.status === 'REJECTED'" type="danger">{{
+              row.status
+            }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="date" label="APPLICATION DATE" />
+        <el-table-column label="ACTION">
+          <template slot-scope="scope">
+            <el-button
+              type="info"
+              size="small"
+              @click="handleDetailClick(scope.row.idNo)"
+              >Detail</el-button
+            >
+            <el-dialog 
+              v-model="dialogVisible" 
+              title="Request detail" 
+              :visible.sync="dialogVisible" 
+              width="50%"
+            >
+              <div>
+                <p><strong>Student ID:</strong> {{ requestDetail.studentId }}</p>
+                <p><strong>Request Detail:</strong> {{ requestDetail.detail }}</p>
+                <p><strong>Request Type:</strong> {{ requestDetail.region }}</p>
+                <p><strong>Rqeuest Name:</strong> {{ requestDetail.name }}</p>
+                <p><strong>Task Type:</strong> {{ requestDetail.type }}</p>
+
+                <p v-if="requestDetail.fileList.length > 0"><strong>Attachments:</strong></p>
+                <ul v-if="requestDetail.fileList.length > 0">
+                  <li v-for="file in requestDetail.fileList" :key="file.uid">
+                    <a :href="file.url" target="_blank">{{ file.url.substr(uploadURL.length, file.url.length) }}</a>
+                  </li>
+                </ul>
+              </div>
+            </el-dialog>
+            <el-divider direction="vertical" />
+            <el-button
+              type="danger"
+              size="small"
+              @click="handleDelete(scope.row.idNo)"
+              >Delete</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-scrollbar>
   </div>
+  <!-- <el-pagination
+    :current-page="pageNum"
+    :page-size="pageSize"
+    :total="total"
+    layout="prev, pager, next"
+    @current-change="handlePageChange"
+  /> -->
 </template>
 
 <script>
 import {
-  getRequests,
-  addRequest,
-  deleteRequest,
-  getRequest,
+getRequests,
+addRequest,
+deleteRequest,
+getRequest,
 } from "@/api/request";
+import { uploadURL } from "@/config/config";
 
 export default {
   data() {
     return {
-      tableData: [],
+      waitingData: [],
+      processedData: [],
       listLoading: false,
-      pageNum: 1,
-      pageSize: 5,
-      total: 0,
+      // pageNum: 1,
+      // pageSize: 5,
+      // total: 0,
+      // hasMore: true,
       dialogVisible: false,
       requestDetail: {
         studentId: "",
@@ -94,11 +111,18 @@ export default {
         type: "",
         fileList: [],
       },
+      uploadURL: uploadURL,
     };
   },
 
+  computed: {
+    combinedData() {
+      return [...this.waitingData, ...this.processedData];
+    },
+  },
+
   mounted() {
-    this.updateRequests(this.pageNum, this.pageSize);
+    this.updateRequests();
   },
 
   methods: {
@@ -106,7 +130,7 @@ export default {
       // delete request based on requestid
       deleteRequest(idNo).then((res) => {
         console.log(res.data);
-        this.updateRequests(this.pageNum, this.pageSize);
+        this.updateRequests();
       });
     },
 
@@ -124,76 +148,86 @@ export default {
         this.requestDetail.name = res.data.data.requestName;
         this.requestDetail.type = res.data.data.taskType;
         // this.requestDetail.teammates = res.data.data.teammates;
-        // editableItem.subjectId = "";
-        // editableItem.requestId = requestId;
-        this.requestDetail.fileList = res.data.data.attachments.map((item) => {
-          return {
-            uid: item.attachmentId,
-            url: this.$root.$refs.form_component.convertUrlWithPrefix(item.url),
-          };
-        });
-      });
-      console.log(this.requestDetail);
-    },
-
-    addNewRequest(newRequest) {
-      // 将新请求插入表格数据的开头
-      this.tableData.unshift(newRequest);
-
-      // 如果新请求的状态是 WAITING，将其置顶
-      if (newRequest.status === "WAITING") {
-        this.tableData.sort((a, b) => {
-          if (a.status === "WAITING" && b.status !== "WAITING") {
-            return -1;
-          }
-          if (a.status !== "WAITING" && b.status === "WAITING") {
-            return 1;
-          }
-          return 0;
-        });
-      }
-      // 更新总数等其他状态信息（如果需要）
-      this.total += 1;
+        this.requestDetail.fileList = res.data.data.attachments.map(item => {
+          return {uid: item.attachmentId, url: this.$root.$refs.form_component.convertUrlWithPrefix(item.url)}
+        })
+      })
+      console.log(this.requestDetail)
     },
 
     // 在你的 updateRequests 方法中，修改 tableData 的获取逻辑
-    updateRequests(page, pageSize) {
+    updateRequests() {
       console.log("handle requests");
-      const param = {
-        pageNum: page,
-        pageSize,
+
+      const param1 = {
+        status: "WAITING"
       };
-      getRequests(1266288, param).then((res) => {
+      getRequests(1266288, param1).then((res) => {
         console.log(res.data);
-        // 先保存等待状态的请求，然后将其从表格数据中删除
-        const waitingRequests = this.tableData.filter(
-          (item) => item.status === "WAITING"
-        );
-        this.tableData = this.tableData.filter(
-          (item) => item.status !== "WAITING"
-        );
-        // 处理请求数据，将其转换成表格数据
-        const requestData = res.data.data.records.map((record) => ({
-          idNo: record.requestId,
-          type: record.requestType,
-          name: record.requestName,
-          status: record.status,
-          date: record.submissionDate,
-          action: "delete",
-        }));
-        // 将获取到的请求数据添加到表格数据的前面
-        this.tableData = [...requestData, ...this.tableData];
-        // 将等待状态的请求重新添加到表格数据的最底部
-        this.tableData = [...this.tableData, ...waitingRequests];
-        this.total = res.data.data.total;
-        this.pageNum = res.data.data.current;
+
+        if (res.data.data.length === 0){
+          this.waitingData = [];
+        } else {
+          const requestData = res.data.data.map(record => {
+            return {
+              idNo: record.requestId,
+              type: record.requestType,
+              name: record.requestName,
+              status: record.status,
+              date: record.submissionDate,
+              action: 'delete'
+            }
+          })
+          requestData.sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            return dateB - dateA;
+          });
+          this.waitingData = requestData;
+        }
+      });
+
+      const param2 = {
+        status: "OTHER"
+      };
+      getRequests(1266288, param2).then((res) => {
+        console.log(res.data);
+
+        if (res.data.data.length === 0){
+          this.processedData = [];
+        } else {
+          const requestData = res.data.data.map(record => {
+            return {
+              idNo: record.requestId,
+              type: record.requestType,
+              name: record.requestName,
+              status: record.status,
+              date: record.submissionDate,
+              action: 'delete'
+            }
+          })
+          requestData.sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            return dateB - dateA;
+          });
+          this.processedData = requestData;
+        }
       });
     },
 
-    handlePageChange(pageNum) {
-      // used to handle the pagination
-      this.updateRequests(pageNum, this.pageSize);
+    handleScroll(e) {
+      const bottomOfContainer = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+      console.log(bottomOfContainer)
+      if (bottomOfContainer) {
+        this.updateRequests();
+      }
     },
+
+    // handlePageChange(pageNum) {
+    //   // used to handle the pagination
+    //   this.updateRequests(pageNum, this.pageSize);
+    // },
   },
   created() {
     // set componenent name
@@ -202,3 +236,9 @@ export default {
 };
 </script>
 
+<style>
+.loading-indicator {
+text-align: center;
+padding: 10px;
+}
+</style>

@@ -20,7 +20,7 @@
           :key="index"
           @mouseover="highlightRow(index)"
           @mouseout="clearHighlight(index)"
-          @click="toggleSelection(index)"
+          @click="toggleSelection(index, type)"
           :class="{
             highlighted: highlightedRows[index],
             selected: isSelected(index),
@@ -54,6 +54,10 @@ export default {
       ],
       highlightedRows: [],
       clickedRows: [],
+      tableData1: [],
+      tableData2: [],
+      tempData1: this.$root.$refs.table_component.waitingData,
+      tempData2: this.$root.$refs.table_component.processedData,
     };
   },
 
@@ -78,6 +82,16 @@ export default {
   },
 
   methods: {
+    filterRequests(requestType) {
+      this.tableData1 = this.tempData1.filter(item => {
+        return item.type === requestType;
+      })
+      this.tableData2 = this.tempData2.filter(item => {
+        return item.type === requestType;
+      })
+      this.$root.$refs.table_component.waitingData = this.tableData1;
+      this.$root.$refs.table_component.processedData = this.tableData2;
+    },
     highlightRow(index) {
       if (!this.clickedRowIndex) {
         this.$set(this.highlightedRows, index, true);
@@ -88,11 +102,14 @@ export default {
         this.$set(this.highlightedRows, index, false);
       }
     },
-    toggleSelection(index) {
+    toggleSelection(index, type) {
       if (this.selectedRowIndex === index) {
         this.selectedRowIndex = null;
+        this.$root.$refs.table_component.waitingData = this.tempData1;
+        this.$root.$refs.table_component.processedData = this.tempData2;
       } else {
         this.selectedRowIndex = index;
+        this.filterRequests(type.name);
       }
       this.clearHighlightRowsExcept(index);
     },

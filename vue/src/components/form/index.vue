@@ -9,7 +9,7 @@
         <el-input v-model="form.studentId" />
       </el-form-item>
       <el-form-item label="Request Type">
-        <el-select v-model="form.region" placeholder="Please select type">
+        <el-select v-model="form.region" placeholder="Please select type" @change="handleRequestTypeChange()">
           <el-option label="Assignment" value="Assignment" />
           <el-option label="Test" value="Test" />
           <el-option label="Exam" value="Exam" />
@@ -139,8 +139,7 @@ export default {
           this.$message(res.data.msg)
           // after successfully saving the request, it should be shown on the
           // web page as well, so update the request table here
-          this.$root.$refs.table_component.updateRequests(this.$root.$refs.table_component.pageNum,
-                            this.$root.$refs.table_component.pageSize);
+          this.$root.$refs.table_component.updateRequests();
         } else {
           this.$message("Fail to submit!")
         }
@@ -149,6 +148,11 @@ export default {
       // console.log('Form submitted with data:', param)
 
       // this.$message('Submit successful!')
+    },
+    handleRequestTypeChange(){
+      this.form.region = ""
+      this.form.type = ""
+      this.showAdditionalOptions = false
     },
     onCancel() {
       this.$message({
