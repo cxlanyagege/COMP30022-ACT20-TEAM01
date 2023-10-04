@@ -17,6 +17,7 @@
     <br />
     <h3>Time Preferences</h3>
     <span>Set the time you want to receive email</span>
+    <br />
     <el-time-picker
       is-range
       v-model="notificationTime"
