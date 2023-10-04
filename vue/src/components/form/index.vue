@@ -17,7 +17,6 @@
         <el-select
           v-model="form.region"
           placeholder="Please select type"
-          @change="handleRequestTypeChange()"
         >
           <el-option label="Assignment" value="Assignment" />
           <el-option label="Test" value="Test" />
@@ -74,10 +73,10 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit" v-if="!isCheck"
+        <el-button type="primary" @click="onSubmit"
           >Create</el-button
         >
-        <el-button @click="onCancel" v-if="!isCheck">Cancel</el-button>
+        <el-button @click="onCancel">Cancel</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -87,6 +86,8 @@
 import { addRequest } from "@/api/request";
 import listTable from "@/components/table/index.vue";
 import { attachmentBaseURL, uploadURL } from "@/config/config";
+import { EventBus } from "@/utils/event-bus"
+// import { updateRequests } from "@/components/table/index.vue";
 
 export default {
   components: {
@@ -107,7 +108,6 @@ export default {
         teammates: [],
       },
       uploadURL: uploadURL,
-      isCheck: false,
     };
   },
 
@@ -124,6 +124,12 @@ export default {
         this.form.showAdditionalOptions = false;
       }
     },
+  },
+
+  created() {
+    EventBus.$on('update-form', (newForm) => {
+      this.form = newForm;
+    });
   },
 
   // MODIFIED BY DENNIS WANG
@@ -164,7 +170,7 @@ export default {
           this.$message(res.data.msg);
           // after successfully saving the request, it should be shown on the
           // web page as well, so update the request table here
-          this.$root.$refs.table_component.updateRequests();
+          this.$root.$refs.table_component.updateRequests(); // ?????
         } else {
           this.$message("Fail to submit!");
         }
@@ -224,9 +230,6 @@ export default {
     removeTeammate(index) {
       this.form.teammates.splice(index, 1);
     },
-  },
-  created() {
-    this.$root.$refs.form_component = this;
   },
 };
 </script>

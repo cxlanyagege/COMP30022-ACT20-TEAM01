@@ -86,11 +86,11 @@
 <script>
 import {
   getRequests,
-  addRequest,
   deleteRequest,
   getRequest,
 } from "@/api/request";
-import { uploadURL } from "@/config/config";
+import { attachmentBaseURL, uploadURL } from "@/config/config";
+import { EventBus } from "@/utils/event-bus"
 
 export default {
   data() {
@@ -118,10 +118,17 @@ export default {
   },
 
   mounted() {
-    this.updateRequests();
+    this.updateRequests().then(() => {
+      console.log(this.waitingData)
+      EventBus.$emit("copy-data-event", { waitingData: this.waitingData, processedData: this.processedData });
+    });
   },
 
   methods: {
+    updateTableData(tableData) {
+      this.waitingData = tableData.waitingData;
+      this.processedData = tableData.processedData;
+    },
     handleDelete(idNo) {
       // delete request based on requestid
       deleteRequest(idNo).then((res) => {
@@ -145,18 +152,21 @@ export default {
         this.requestDetail.fileList = res.data.data.attachments.map((item) => {
           return {
             uid: item.attachmentId,
-            url: this.$root.$refs.form_component.convertUrlWithPrefix(item.url),
+            url: this.convertUrlWithPrefix(item.url),
           };
         });
       });
       console.log(this.requestDetail);
+    },
+    convertUrlWithPrefix(url) {
+      return attachmentBaseURL + url;
     },
     updateRequests() {
       console.log("handle requests");
       const param1 = {
         status: "WAITING",
       };
-      getRequests(1266288, param1).then((res) => {
+      const request1 = getRequests(1266288, param1).then((res) => {
         console.log(res.data);
         if (res.data.data.length === 0) {
           this.waitingData = [];
@@ -182,7 +192,7 @@ export default {
       const param2 = {
         status: "OTHER",
       };
-      getRequests(1266288, param2).then((res) => {
+      const request2 = getRequests(1266288, param2).then((res) => {
         console.log(res.data);
         if (res.data.data.length === 0) {
           this.processedData = [];
@@ -205,20 +215,24 @@ export default {
           this.processedData = requestData;
         }
       });
-    },
-    handleScroll(e) {
-      const bottomOfContainer =
-        e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-      console.log(bottomOfContainer);
-      if (bottomOfContainer) {
-        this.updateRequests();
-      }
+
+    return Promise.all([request1, request2]);
     },
   },
   created() {
+    // set componenent name
     this.$root.$refs.table_component = this;
-  },
+    EventBus.$on("update-data", (data) => {
+      this.waitingData = data.waitingData;
+      this.processedData = data.processedData;
+      console.log(this.waitingData, this.processedData)
+    })
+  }
 };
+
+export const updateTableData = function() {
+  this.updateTableData
+}
 </script>
 
 <style>

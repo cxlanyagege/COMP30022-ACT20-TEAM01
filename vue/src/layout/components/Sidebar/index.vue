@@ -42,7 +42,11 @@ import { mapGetters } from "vuex";
 import Logo from "./Logo";
 import SidebarItem from "./SidebarItem";
 import variables from "@/styles/variables.scss";
+import listTable from "@/components/table/index.vue";
 import CustomButtonGroup from "@/components/buttom/CreateButton.vue";
+import Vue from 'vue';
+import { updateTableData } from "@/components/table/index.vue";
+import { EventBus } from "@/utils/event-bus"
 
 export default {
   data() {
@@ -58,12 +62,12 @@ export default {
       clickedRows: [],
       tableData1: [],
       tableData2: [],
-      tempData1: this.$root.$refs.table_component.waitingData,
-      tempData2: this.$root.$refs.table_component.processedData,
+      tempData1: [], // ??????
+      tempData2: [], // ??????
     };
   },
 
-  components: { SidebarItem, Logo, CustomButtonGroup },
+  components: { SidebarItem, Logo, CustomButtonGroup, listTable },
 
   computed: {
     ...mapGetters(["sidebar"]),
@@ -83,6 +87,13 @@ export default {
     },
   },
 
+  mounted() {
+    EventBus.$on("copy-data-event", (data) => {
+      this.tempData1 = data.waitingData;
+      this.tempData2 = data.processedData;
+    });
+  },
+
   methods: {
     filterRequests(requestType) {
       this.tableData1 = this.tempData1.filter(item => {
@@ -91,8 +102,8 @@ export default {
       this.tableData2 = this.tempData2.filter(item => {
         return item.type === requestType;
       })
-      this.$root.$refs.table_component.waitingData = this.tableData1;
-      this.$root.$refs.table_component.processedData = this.tableData2;
+      console.log(this.tableData1, this.tableData2)
+      EventBus.$emit("update-data", { waitingData: this.tableData1, processedData: this.tableData2 });
     },
     highlightRow(index) {
       if (!this.clickedRowIndex) {
@@ -107,8 +118,7 @@ export default {
     toggleSelection(index, type) {
       if (this.selectedRowIndex === index) {
         this.selectedRowIndex = null;
-        this.$root.$refs.table_component.waitingData = this.tempData1;
-        this.$root.$refs.table_component.processedData = this.tempData2;
+        EventBus.$emit("update-data", { waitingData: this.tempData1, processedData: this.tempData2 });
       } else {
         this.selectedRowIndex = index;
         this.filterRequests(type.name);

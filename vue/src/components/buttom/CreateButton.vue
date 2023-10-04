@@ -16,6 +16,9 @@
 
 <script>
 import RequestForm from "@/components/form/index.vue";
+import { updateForm } from "@/components/form/index.vue";
+import Vue from 'vue';
+import { EventBus } from "@/utils/event-bus"
 
 export default {
   components: {
@@ -33,16 +36,17 @@ export default {
     showForm() {
       // reset everything in the form everytime the form is opened
       this.formVisible = true;
-      this.$root.$refs.form_component.isCheck = false;
-      this.$root.$refs.form_component.form.studentId = "";
-      // this.$root.$refs.form_component.form.subjectCode = '';
-      this.$root.$refs.form_component.form.region = "";
-      this.$root.$refs.form_component.form.type = "";
-      this.$root.$refs.form_component.form.name = "";
-      this.$root.$refs.form_component.form.detail = "";
-      this.$root.$refs.form_component.form.fileList = [];
-      this.$root.$refs.form_component.form.teammates = [];
-      this.$root.$refs.form_component.form.showAdditionalOptions = false;
+      const form = {
+        studentId: "",
+        region: "",
+        showAdditionalOptions: false,
+        type: "",
+        name: "",
+        detail: "",
+        fileList: [],
+        teammates: [],
+      }
+      EventBus.$emit('update-form', form);
     },
     submitForm(formData) {
       console.log("Form submitted with data:", formData);
@@ -50,10 +54,6 @@ export default {
         this.formVisible = false;
       });
     },
-  },
-  created() {
-    // set componenent name
-    this.$root.$refs.button_component = this;
   },
 };
 </script>
