@@ -1,4 +1,4 @@
-<!-- writen by Lanruo Su -->
+<!-- written by Lanruo Su -->
 <template>
   <div class="app-container">
     <!-- Authority Table -->

@@ -3,15 +3,6 @@
 
     <breadcrumb class="breadcrumb-container" />
 
-    <!-- add searching bar -->
-    <div class="search-container">
-      <el-input
-        v-model="searchKeyword"
-        placeholder="Search..."
-        @input="handleSearch"
-      />
-    </div>
-
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -24,12 +15,14 @@
               Home
             </el-dropdown-item>
           </router-link>
+          <!--
           <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
             <el-dropdown-item>Github</el-dropdown-item>
           </a>
           <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
             <el-dropdown-item>Docs</el-dropdown-item>
           </a>
+          -->
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">Log Out</span>
           </el-dropdown-item>
@@ -51,7 +44,6 @@ export default {
   },
   data() {
     return {
-      searchKeyword: '' // 用于存储搜索关键词
     }
   },
   computed: {
@@ -67,10 +59,6 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-    },
-    handleSearch() {
-      // 在这里处理搜索逻辑，可以根据 searchKeyword 过滤内容
-      // 例如，可以使用 this.searchKeyword 来过滤数据
     }
   }
 }
@@ -93,7 +81,7 @@ export default {
     float: left;
     margin-top: 5px;
     margin-bottom: 5px;
-    margin-left: 1030px; 
+    margin-left: 1030px;
   }
 
   .right-menu {

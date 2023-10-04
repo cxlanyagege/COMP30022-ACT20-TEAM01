@@ -1,4 +1,4 @@
-<!-- writeen by Xuan Zhang (main dashboard functions) and Lanruo Su (Filter funtions, subID, AAPs) -->
+<!-- written by Xuan Zhang (main dashboard functions) and Lanruo Su (Filter functions, subID, AAPs) -->
 <template>
   <div>
     <div>
