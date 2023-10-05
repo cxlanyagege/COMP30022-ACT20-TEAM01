@@ -24,7 +24,6 @@ export default {
   },
   methods: {
     applyFilter(filterCondition) {
-      this.$emit('filter', filterCondition); // 将筛选条件发送给父组件
       // filter according to "filterCondition"
       if (filterCondition === 'Assignment') {
         this.filteredData = this.tableData.filter(item => item.reqType === 'Assignment')

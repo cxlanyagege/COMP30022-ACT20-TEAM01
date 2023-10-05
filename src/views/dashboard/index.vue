@@ -14,11 +14,7 @@ export default {
     Filterrequest,
     Table
   },
-  data() {
-    return {
-      filteredData: [] // 过滤后的数据
-    };
-  },
+  
   methods: {
     applyFilter(filterCondition) {
       // 过滤数据的逻辑

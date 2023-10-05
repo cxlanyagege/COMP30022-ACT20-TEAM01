@@ -1,7 +1,7 @@
 <template>
     <div>
     <el-table
-      :data="filteredData"
+      :data="tableData"
       style="width: 100%; top: 28px"
       border
       stripe
@@ -195,12 +195,8 @@ export default {
       }],
     }
   },
-  props: {
-    filteredData: Array // 接收父组件传递的过滤后的数据
-  },
   methods: {
     handleFlagClick(row) {
-        this.$emit('flagClick', row); // 将点击事件发送给父组件
       if (!row.flagClicked) {
         // mark the clicked flag as clicked
         this.flagClicked = !this.flagClicked
