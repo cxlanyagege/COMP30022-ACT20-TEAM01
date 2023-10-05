@@ -18,7 +18,7 @@
       </div>
       <div class="profile-item">
         <label>AAP Beneficiaries: </label>
-        <span>{{ studentInfo.aap === "Yes" ? "Yes" : "NO" }}</span>
+        <span>{{ studentInfo.aap === "Yes" ? "Yes" : "No" }}</span>
       </div>
       <div class="profile-item">
         <label>AAP Documentation: </label>
@@ -34,11 +34,14 @@ export default {
     studentInfo: {
       type: Object,
       required: true,
-      fileData: null
+    },
+    fileData: {
+      default: null,
     },
   },
 };
 </script>
+
 
 <style scoped>
 .student-profile {
