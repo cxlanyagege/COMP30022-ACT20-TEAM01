@@ -1,5 +1,5 @@
 <template>
-    <div>
+  <div>
     <el-table
       :data="tableData"
       style="width: 100%; top: 28px"
@@ -45,7 +45,7 @@
         prop="id"
       >
         <template slot-scope="{ row }">
-            <el-button type="text" @click="showStudentProfile(row)">{{ row.id }}</el-button>
+          <el-button type="text" @click="showStudentProfile(row)">{{ row.id }}</el-button>
         </template>
       </el-table-column>
       <el-table-column
@@ -71,15 +71,6 @@
         min-width="60"
         prop="appDate"
       >
-      </el-table-column>
-      <el-table-column
-        label="AAPs"
-        min-width="30"
-        prop="AAPs"
-      >
-        <template slot-scope="{ row }">
-          <el-button v-if="row.AAPs === 'Yes'" icon="el-icon-document" circle></el-button>
-        </template>
       </el-table-column>
       <el-table-column label="Status" prop="status" min-width="60">
         <template slot-scope="{ row }">
@@ -125,7 +116,6 @@
     />
   </div>
 </template>
-
 
 <style>
   .demo-table-expand .el-form-item span {
@@ -222,7 +212,7 @@ export default {
         status: 'UNASSESSED',
         flagClicked: false,
         decision: 'Approved'
-      }],
+      }]
     }
   },
   methods: {
@@ -253,8 +243,7 @@ export default {
         this.selectedRow.decision = 'Approved';
         // 关闭确认对话框
         this.approvalConfirmationDialogVisible = false;
-  }
-
+      }
     },
     handleRejectClick(row) {
       // comfirmation window pop out
