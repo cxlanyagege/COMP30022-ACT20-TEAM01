@@ -44,6 +44,9 @@
         label="ID No."
         prop="id"
       >
+        <template slot-scope="{ row }">
+            <el-button type="text" @click="showStudentProfile(row)">{{ row.id }}</el-button>
+        </template>
       </el-table-column>
       <el-table-column
         label="Subject ID"
@@ -112,6 +115,9 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog v-if="showProfileDialog" title="Student Profile" :visible.sync="showProfileDialog">
+      <student-profile :studentInfo="selectedStudentInfo" :fileData="selectedFileData" />
+    </el-dialog>
   </div>
 </template>
 
@@ -144,9 +150,17 @@
 </style>
 
 <script>
+import StudentProfile from "@/components/Forms/studentProfile.vue";
+
 export default {
+  components: {
+    StudentProfile,
+  },
   data() {
     return {
+      showProfileDialog: false,
+      selectedStudentInfo: null,
+      selectedFileData: null,
       tableData: [{
         id: '1266704',
         subID: 'COMP30022',
@@ -196,6 +210,14 @@ export default {
     }
   },
   methods: {
+    showStudentProfile(row) {
+      this.selectedStudentInfo = row;
+      this.selectedFileData = row.files; // 这里假设files属性包含文件信息
+      this.showProfileDialog = true;
+    },
+    handleIdClick(row) {
+    // 处理ID按钮的点击事件
+    }, 
     handleFlagClick(row) {
       if (!row.flagClicked) {
         // mark the clicked flag as clicked
