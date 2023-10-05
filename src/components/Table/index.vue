@@ -41,7 +41,7 @@
       </el-table-column>
       <el-table-column
         min-width="40"
-        label="ID No."
+        label="Student ID"
         prop="id"
       >
         <template slot-scope="{ row }">
