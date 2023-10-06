@@ -170,12 +170,20 @@ export default {
       this.form.showAdditionalOptions = false;
       this.form.fileList = [];
       this.form.teammates = [];
+      this.clearUploadList();
       // console.log(this.form.fileList)
     });
   },
 
   // MODIFIED BY DENNIS WANG
   methods: {
+    clearUploadList() {
+      const uploadList = document.querySelector('.el-upload-list');
+      if (uploadList) {
+        uploadList.innerHTML = '';
+      }
+    },
+
     onSubmit() {
       const currentDate = new Date();
       // construct a formData to finalise all the information in the
