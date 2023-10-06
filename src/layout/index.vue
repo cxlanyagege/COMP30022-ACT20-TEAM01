@@ -1,3 +1,5 @@
+<!-- The following code is the framework that comes with the scaffolding
+modified and edited by Lanruo Su -->
 <template>
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
@@ -35,7 +37,6 @@ export default {
     },
     classObj() {
       return {
-        hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened,
         withoutAnimation: this.sidebar.withoutAnimation,
         mobile: this.device === 'mobile'
@@ -81,10 +82,6 @@ export default {
     z-index: 9;
     width: calc(100% - #{$sideBarWidth});
     transition: width 0.28s;
-  }
-
-  .hideSidebar .fixed-header {
-    width: calc(100% - 54px)
   }
 
   .mobile .fixed-header {

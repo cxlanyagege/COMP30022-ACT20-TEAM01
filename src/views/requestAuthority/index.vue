@@ -38,19 +38,19 @@
         </template>
       </el-table-column>
     </el-table>
-
   </div>
 </template>
 
 <script>
-// import AuthorityTable from ''
+import { EventBus } from '@/views/tutorAuthority/index.vue'
 
 export default {
   methods: {
     handleSwitchChange(row, column, value) {
-      // 在这里可以根据需要更新row的值
-      // 例如：如果value为'No'，可以将row中对应的数据更新为'No'，以便在tutorAuthority表格中禁用相关的Checkbox
-      row[column.property] = value
+       // 更新开关状态
+      row[column] = value
+      // 触发事件，传递状态信息
+      EventBus.$emit('assignment-switch-changed', value)
     }
   },
 
@@ -58,11 +58,11 @@ export default {
     return {
       tableData: [
         {
-          Assignment: 'Yes',
-          Quiz: 'Yes',
-          Exam: 'Yes',
-          Personal: 'Yes',
-          Others: 'No'
+          Assignment: true,
+          Quiz: false,
+          Exam: true,
+          Personal: true,
+          Others: false
         }
       ],
       listLoading: false

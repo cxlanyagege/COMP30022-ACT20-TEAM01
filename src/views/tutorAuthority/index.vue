@@ -19,33 +19,39 @@
         <template slot-scope="{ row }">
           <el-row>
             <el-col :span="4" style="width: 26%;">
-              <el-checkbox v-model="row.authority[0]" label="Assignment" :disabled="isDisabled(row.Assignment)" @change="handleCheckboxChange(row, 0)">Assignment</el-checkbox>
+              <el-checkbox v-model="row.authority.Assignment" label="Assignment" :disabled="isAssignmentDisabled" @change="handleCheckboxChange(row, 0) ">Assignment</el-checkbox>
             </el-col>
             <el-col :span="4" style="width: 18%;">
-              <el-checkbox v-model="row.authority[1]" label="Quiz" :disabled="isDisabled(row.Quiz)" @change="handleCheckboxChange(row, 1)">Quiz</el-checkbox>
+              <el-checkbox v-model="row.authority.Quiz" label="Quiz" :disabled="isQuizDisabled" @change="handleCheckboxChange(row, 1)">Quiz</el-checkbox>
             </el-col>
             <el-col :span="4" style="width: 18%;">
-              <el-checkbox v-model="row.authority[2]" label="Exam" :disabled="isDisabled(row.Exam)" @change="handleCheckboxChange(row, 2)">Exam</el-checkbox>
+              <el-checkbox v-model="row.authority.Exam" label="Exam" :disabled="isExamDisabled" @change="handleCheckboxChange(row, 2)">Exam</el-checkbox>
             </el-col>
             <el-col :span="4" style="width: 20%;">
-              <el-checkbox v-model="row.authority[3]" label="Personal" :disabled="isDisabled(row.Personal)" @change="handleCheckboxChange(row, 3)">Personal</el-checkbox>
+              <el-checkbox v-model="row.authority.Personal" label="Personal" :disabled="isPersonalDisabled" @change="handleCheckboxChange(row, 3)">Personal</el-checkbox>
             </el-col>
             <el-col :span="4" style="width: 18%;">
-              <el-checkbox v-model="row.authority[4]" label="Others" :disabled="isDisabled(row.Others)" @change="handleCheckboxChange(row, 4)">Others</el-checkbox>
+              <el-checkbox v-model="row.authority.Others" label="Others" :disabled="isOthersDisabled" @change="handleCheckboxChange(row, 4)">Others</el-checkbox>
             </el-col>
           </el-row>
         </template>
       </el-table-column>
     </el-table>
-
   </div>
 </template>
 
 <script>
-// import AuthorityTable from ''
+import { EventBus } from '@/views/requestAuthority/index.vue'
 
 export default {
   methods: {
+    // 在组件创建时监听事件总线的事件
+    created() {
+      EventBus.$on('assignment-switch-changed', (value) => {
+        // 根据接收到的状态信息来更新禁用状态
+        this.isAssignmentDisabled = value === 'No'
+      })
+    },
     handleCheckboxChange(row, index) {
       if (row.authority === undefined) {
         row.authority = [] // 如果authority字段尚未定义，初始化为一个空数组
@@ -60,9 +66,20 @@ export default {
       // 执行其他操作或更新数据
       console.log(`勾选后的authority值: ${row.authority}`)
     },
-    isDisabled(value) {
-      // 如果value为'No'，返回true，表示应该禁用Checkbox
-      return value === 'No'
+    // 根据 views/requestAuthority/index.vue 组件的数据来禁用/启用复选框
+    updateAssignmentDisabled() {
+      this.isAssignmentDisabled = !this.requestAuthorityData.tableData[0].Assignment
+    },
+    mounted() {
+    // 在组件挂载后调用更新禁用状态的方法
+      this.updateAssignmentDisabled()
+    }
+  },
+
+  computed: {
+    // 获取 views/requestAuthority/index.vue 组件的数据
+    requestAuthorityData() {
+      return this.$refs.requestAuthority.$data
     }
   },
 
@@ -98,7 +115,12 @@ export default {
         }
 
       ],
-      listLoading: false
+      listLoading: false,
+      isAssignmentDisabled: false, // 用于控制禁用状态
+      isQuizDisabled: false,
+      isExamDisabled: false, // 用于控制禁用状态
+      isPersonalDisabled: false,
+      isOthersDisabled: false
     }
   }
 }
