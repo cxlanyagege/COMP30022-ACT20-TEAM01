@@ -125,10 +125,6 @@ export default {
   },
 
   methods: {
-    updateTableData(tableData) {
-      this.waitingData = tableData.waitingData;
-      this.processedData = tableData.processedData;
-    },
     handleDelete(idNo) {
       // delete request based on requestid
       deleteRequest(idNo).then((res) => {
@@ -221,7 +217,7 @@ export default {
   },
   created() {
     // set componenent name
-    this.$root.$refs.table_component = this;
+    // this.$root.$refs.table_component = this;
     EventBus.$on("update-data", (data) => {
       this.waitingData = data.waitingData;
       this.processedData = data.processedData;
@@ -229,10 +225,6 @@ export default {
     })
   }
 };
-
-export const updateTableData = function() {
-  this.updateTableData
-}
 </script>
 
 <style>

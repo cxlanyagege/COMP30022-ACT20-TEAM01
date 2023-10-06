@@ -16,8 +16,6 @@
 
 <script>
 import RequestForm from "@/components/form/index.vue";
-import { updateForm } from "@/components/form/index.vue";
-import Vue from 'vue';
 import { EventBus } from "@/utils/event-bus"
 
 export default {
@@ -31,28 +29,27 @@ export default {
     };
   },
 
+  mounted() {
+    EventBus.$on("close-form", () => {
+      this.formVisible = false;
+    })
+    EventBus.$on("request-saved", () => {
+      this.formVisible = false;
+    })
+  },
+
   // MODIFIED BY DENNIS WANG
   methods: {
     showForm() {
       // reset everything in the form everytime the form is opened
+      EventBus.$emit("update-form");
       this.formVisible = true;
-      const form = {
-        studentId: "",
-        region: "",
-        showAdditionalOptions: false,
-        type: "",
-        name: "",
-        detail: "",
-        fileList: [],
-        teammates: [],
-      }
-      EventBus.$emit('update-form', form);
     },
-    submitForm(formData) {
-      console.log("Form submitted with data:", formData);
-      this.$nextTick(() => {
-        this.formVisible = false;
-      });
+    submitForm() {
+      this.formVisible = false;
+      // this.$nextTick(() => {
+      //   this.formVisible = false;
+      // });
     },
   },
 };

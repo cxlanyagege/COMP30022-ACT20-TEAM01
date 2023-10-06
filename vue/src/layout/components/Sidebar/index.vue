@@ -42,10 +42,7 @@ import { mapGetters } from "vuex";
 import Logo from "./Logo";
 import SidebarItem from "./SidebarItem";
 import variables from "@/styles/variables.scss";
-import listTable from "@/components/table/index.vue";
 import CustomButtonGroup from "@/components/buttom/CreateButton.vue";
-import Vue from 'vue';
-import { updateTableData } from "@/components/table/index.vue";
 import { EventBus } from "@/utils/event-bus"
 
 export default {
@@ -60,14 +57,12 @@ export default {
       ],
       highlightedRows: [],
       clickedRows: [],
-      tableData1: [],
-      tableData2: [],
-      tempData1: [], // ??????
-      tempData2: [], // ??????
+      tableData: [],
+      tempData: [],
     };
   },
 
-  components: { SidebarItem, Logo, CustomButtonGroup, listTable },
+  components: { SidebarItem, Logo, CustomButtonGroup },
 
   computed: {
     ...mapGetters(["sidebar"]),
@@ -89,21 +84,16 @@ export default {
 
   mounted() {
     EventBus.$on("copy-data-event", (data) => {
-      this.tempData1 = data.waitingData;
-      this.tempData2 = data.processedData;
+      this.tempData = data
     });
   },
 
   methods: {
     filterRequests(requestType) {
-      this.tableData1 = this.tempData1.filter(item => {
+      this.tableData = this.tempData.filter(item => {
         return item.type === requestType;
       })
-      this.tableData2 = this.tempData2.filter(item => {
-        return item.type === requestType;
-      })
-      console.log(this.tableData1, this.tableData2)
-      EventBus.$emit("update-data", { waitingData: this.tableData1, processedData: this.tableData2 });
+      EventBus.$emit("update-data", this.tableData);
     },
     highlightRow(index) {
       if (!this.clickedRowIndex) {
@@ -118,7 +108,7 @@ export default {
     toggleSelection(index, type) {
       if (this.selectedRowIndex === index) {
         this.selectedRowIndex = null;
-        EventBus.$emit("update-data", { waitingData: this.tempData1, processedData: this.tempData2 });
+        EventBus.$emit("update-data", this.tempData);
       } else {
         this.selectedRowIndex = index;
         this.filterRequests(type.name);

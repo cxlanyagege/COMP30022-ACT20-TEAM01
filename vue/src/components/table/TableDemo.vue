@@ -9,17 +9,32 @@
     >
       <el-table-column type="expand">
         <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="Student ID">
-              <span>1266504</span>
+          <el-form label-position="left" inline class="demo-table-expand" label-width="150px">
+            <el-form-item label="Submission Date">
+              <span>{{ props.row.date }}</span>
             </el-form-item>
             <br>
+            <template v-if="props.row.workType != null">
+              <el-form-item label="Request specific">
+                <span>{{ props.row.workType }}</span>
+              </el-form-item>
+            </template>
+            <br>
             <el-form-item label="Detail">
-              <span>一堆文字bilibaldfjsdnfdjvnsdvksdnva</span>
+              <span>{{ props.row.detail }}</span>
             </el-form-item>
             <br>
             <el-form-item label="File">
-              <span>{{ props.row.shop }}</span>
+              <template v-if="props.row.fileList.length > 0">
+                <li v-for="file in props.row.fileList" :key="file.uid">
+                  <a :href="file.url" target="_blank">
+                    <span style="color: rgb(0, 85, 255);">{{ file.url.substr(uploadURL.length, file.url.length) }}</span>
+                  </a>
+                </li>
+              </template>
+              <template v-else>
+                No file uploaded
+              </template>
             </el-form-item>
             <br>
             <el-form-item label="Addition">
@@ -75,35 +90,15 @@
 </template>
 
 <script>
+import { deleteRequest, getRequests } from '@/api/request';
+import { EventBus } from '@/utils/event-bus';
+import { attachmentBaseURL, uploadURL } from '@/config/config';
+
 export default {
   data() {
     return {
-      tableData: [
-        {
-          idNo: "123476",
-          type: "Personal",
-          name: "AAP Certification",
-          status: "APPROVED",
-        },
-        {
-          idNo: "123456",
-          type: "Assignment",
-          name: "Assignment 2 Extension",
-          status: "WAITING",
-        },
-        {
-          idNo: "123466",
-          type: "Test",
-          name: "Quiz Remark",
-          status: "WAITING",
-        },
-        {
-          idNo: "123486",
-          type: "Personal",
-          name: "Absence of Workshop",
-          status: "REJECTED",
-        },
-      ],
+      tableData: [],
+      uploadURL: uploadURL
     };
   },
   computed: {
@@ -111,29 +106,100 @@ export default {
       const waitingRows = this.tableData.filter(
         (row) => row.status === "WAITING"
       );
+      waitingRows.sort((a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        return dateB - dateA;
+      });
       const nonWaitingRows = this.tableData.filter(
         (row) => row.status !== "WAITING"
       );
+      nonWaitingRows.sort((a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        return dateB - dateA;
+      });
       return waitingRows.concat(nonWaitingRows);
     },
   },
+  mounted() {
+    this.updateRequests().then(() => {
+      EventBus.$emit("copy-data-event", this.tableData);
+    });
+  },
   methods: {
-    deleteRow(row) {
-      const index = this.tableData.indexOf(row);
-      if (index !== -1) {
-        this.tableData.splice(index, 1);
-      }
+    updateRequests() {
+      console.log("handle requests");
+      const request1 = getRequests(1266288, null).then((res) => {
+        console.log(res.data);
+        if (res.data.data.length === 0) {
+          this.tableData = [];
+        } else {
+          const requestData = res.data.data.map((record) => {
+            return {
+              idNo: record.requestId,
+              type: record.requestType,
+              name: record.requestName,
+              workType: record.workType,
+              status: record.status,
+              detail: record.description,
+              fileList: record.attachments.map((item) => {
+                return {
+                  uid: item.attachmentId,
+                  url: this.convertUrlWithPrefix(item.url),
+                };
+              }),
+              date: record.submissionDate,
+              // action: "delete",
+            };
+          });
+          this.tableData = requestData;
+        }
+      });
+    return Promise.all([request1]);
     },
-    addNewRequest() {
+
+
+    deleteRow(row) {
+      deleteRequest(row.idNo).then(() => {
+        const index = this.tableData.indexOf(row);
+        if (index !== -1) {
+          this.tableData.splice(index, 1);
+        }
+      })
+    },
+
+    convertUrlWithPrefix(url) {
+      return attachmentBaseURL + url;
+    },
+
+    addNewRequest(data) {
       const newRequest = {
-        idNo: "123XYZ", // 你可以设置适当的值
-        type: "Assignment", // 你可以设置适当的值
-        name: "New Request", // 你可以设置适当的值
-        status: "WAITING",
+        idNo: data.requestId, 
+        type: data.requestType,
+        workType: data.workType, 
+        name: data.requestName, 
+        status: data.status,
+        detail: data.description,
+        date: data.submissionDate,
+        fileList: data.attachments.map((item) => {
+          return {
+            uid: item.attachmentId,
+            url: this.convertUrlWithPrefix(item.url),
+          };
+        })
       };
       this.tableData.unshift(newRequest);
     },
   },
+  created() {
+    EventBus.$on("update-data", (data) => {
+      this.tableData = data;
+    })
+    EventBus.$on("add-request", (data) => {
+      this.addNewRequest(data);
+    })
+  }
 };
 </script>
 

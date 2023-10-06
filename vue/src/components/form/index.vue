@@ -8,12 +8,13 @@
       ref="form"
       :label-position="labelPosition"
       :model="form"
-      label-width="120px"
+      :rules="rules"
+      label-width="140px"
     >
-      <el-form-item label="Student ID">
+      <el-form-item label="Student ID" required>
         <el-input v-model="form.studentId" />
       </el-form-item>
-      <el-form-item label="Request Type">
+      <el-form-item label="Request Type" required>
         <el-select
           v-model="form.region"
           placeholder="Please select type"
@@ -32,13 +33,28 @@
           form.region === 'Exam'
         "
         label="Task Type"
+        required
       >
         <el-radio-group v-model="form.type">
           <el-radio label="individual">Individual</el-radio>
           <el-radio label="Group">Group</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="form.type === 'Group'" label="Teammate">
+      <el-form-item
+        v-if="
+          form.type === 'individual' ||
+          form.type === 'Group'
+        "
+        label="More specific? :)"
+        required
+      >
+        <el-radio-group v-model="form.workType">
+          <el-radio label="Extension">Extension</el-radio>
+          <el-radio label="Remark">Remark</el-radio>
+          <el-radio label="Other">Other</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item v-if="form.type === 'Group'" label="Teammate" required>
         <div v-for="(email, index) in form.teammates" :key="index">
           <el-input v-model="form.teammates[index]" />
           <el-button @click="removeTeammate(index)">Remove</el-button>
@@ -51,7 +67,7 @@
           placeholder="e.g. Assignment 2 Extension/Remark/Others"
         />
       </el-form-item>
-      <el-form-item label="Request Detail">
+      <el-form-item label="Request Detail" required>
         <el-input v-model="form.detail" type="textarea" />
       </el-form-item>
 
@@ -67,7 +83,7 @@
         >
           <el-button size="small" type="primary">Click to Upload</el-button>
           <div slot="tip" class="el-upload__tip">
-            You can upload any file format
+            You can upload any file format up to 5MB
           </div>
         </el-upload>
       </el-form-item>
@@ -87,7 +103,7 @@ import { addRequest } from "@/api/request";
 import listTable from "@/components/table/index.vue";
 import { attachmentBaseURL, uploadURL } from "@/config/config";
 import { EventBus } from "@/utils/event-bus"
-// import { updateRequests } from "@/components/table/index.vue";
+// import { FormInstance, FormRules } from 'element-plus'
 
 export default {
   components: {
@@ -102,12 +118,29 @@ export default {
         region: "",
         showAdditionalOptions: false,
         type: "",
+        workType: "",
         name: "",
         detail: "",
         fileList: [],
         teammates: [],
       },
       uploadURL: uploadURL,
+      rules: {
+        studentId: [
+          {
+            required: true,
+            message: 'Please enter the student id',
+            trigger: 'blur',
+          }
+        ],
+        region: [
+          {
+            required: true,
+            message: 'Please select the request type',
+            trigger: 'change',
+          }
+        ],
+      }
     };
   },
 
@@ -126,9 +159,18 @@ export default {
     },
   },
 
-  created() {
-    EventBus.$on('update-form', (newForm) => {
-      this.form = newForm;
+  mounted() {
+    EventBus.$on("update-form", () => {
+      this.form.studentId = "";
+      this.form.region = "";
+      this.form.type = "";
+      this.form.workType = "";
+      this.form.name = "";
+      this.form.detail = "";
+      this.form.showAdditionalOptions = false;
+      this.form.fileList = [];
+      this.form.teammates = [];
+      // console.log(this.form.fileList)
     });
   },
 
@@ -148,6 +190,7 @@ export default {
       };
       if (this.form.showAdditionalOptions) {
         formData.type = this.form.type;
+        formData.workType = this.form.workType;
       }
       formData.teammates = this.form.teammates;
       let param = {
@@ -158,6 +201,7 @@ export default {
         requestType: formData.requestType,
         requestName: formData.requestName,
         taskType: formData.type,
+        workType: formData.workType,
         teammates: formData.teammates,
         attachments: formData.fileList.map((item) => {
           return { url: this.convertUrlWithoutPrefix(item.url) };
@@ -170,11 +214,14 @@ export default {
           this.$message(res.data.msg);
           // after successfully saving the request, it should be shown on the
           // web page as well, so update the request table here
-          this.$root.$refs.table_component.updateRequests(); // ?????
+          EventBus.$emit('add-request', res.data.data)
+          EventBus.$emit("request-saved")
+          // this.$root.$refs.table_component.updateRequests();
         } else {
           this.$message("Fail to submit!");
         }
       });
+
     },
     handleRequestTypeChange(){
     this.form.region = ""
@@ -182,10 +229,7 @@ export default {
     this.showAdditionalOptions = false
     },
     onCancel() {
-      this.$message({
-        message: "Cancel!",
-        type: "warning",
-      });
+      EventBus.$emit("close-form");
     },
     // WRITTEN BY DENNIS WANG
     // used to show the files on the form page, given access to
