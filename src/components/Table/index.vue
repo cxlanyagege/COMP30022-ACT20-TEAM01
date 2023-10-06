@@ -1,5 +1,5 @@
 <template>
-    <div>
+  <div>
     <el-table
       :data="tableData"
       style="width: 100%; top: 28px"
@@ -41,11 +41,11 @@
       </el-table-column>
       <el-table-column
         min-width="40"
-        label="ID No."
+        label="Student ID"
         prop="id"
       >
         <template slot-scope="{ row }">
-            <el-button type="text" @click="showStudentProfile(row)">{{ row.id }}</el-button>
+          <el-button type="text" @click="showStudentProfile(row)">{{ row.id }}</el-button>
         </template>
       </el-table-column>
       <el-table-column
@@ -71,15 +71,6 @@
         min-width="60"
         prop="appDate"
       >
-      </el-table-column>
-      <el-table-column
-        label="AAPs"
-        min-width="30"
-        prop="AAPs"
-      >
-        <template slot-scope="{ row }">
-          <el-button v-if="row.AAPs === 'Yes'" icon="el-icon-document" circle></el-button>
-        </template>
       </el-table-column>
       <el-table-column label="Status" prop="status" min-width="60">
         <template slot-scope="{ row }">
@@ -118,9 +109,13 @@
     <el-dialog v-if="showProfileDialog" title="Student Profile" :visible.sync="showProfileDialog">
       <student-profile :studentInfo="selectedStudentInfo" :fileData="selectedFileData" />
     </el-dialog>
+    <ConfirmationDialog
+      :visible.sync="approveDialogVisible"
+      :form.sync="approveForm"
+      @confirm="handleApprove"
+    />
   </div>
 </template>
-
 
 <style>
   .demo-table-expand .el-form-item span {
@@ -151,13 +146,20 @@
 
 <script>
 import StudentProfile from "@/components/Forms/studentProfile.vue";
+import ConfirmationDialog from "@/components/Forms/confirmationDialog.vue";
 
 export default {
   components: {
     StudentProfile,
+    ConfirmationDialog
   },
   data() {
     return {
+      approveDialogVisible: false,
+        approveForm: {
+        message: '',
+        date: ''
+        },
       showProfileDialog: false,
       selectedStudentInfo: null,
       selectedFileData: null,
@@ -172,7 +174,8 @@ export default {
         reqDetail: 'Hi, I would like to apply for A1 extension',
         files: 'N/A',
         status: 'APPROVE',
-        flagClicked: false
+        flagClicked: false,
+        decision: 'Approved'
       }, {
         id: '1266705',
         subID: 'COMP30026',
@@ -183,7 +186,8 @@ export default {
         reqDetail: 'HI, I would like to apply for Remarking my MST',
         files: 'N/A',
         status: 'UNASSESSED',
-        flagClicked: false
+        flagClicked: false,
+        decision: 'Approved'
       }, {
         id: '1266706',
         subID: 'COMP30023',
@@ -194,7 +198,8 @@ export default {
         reqDetail: 'HI, I would like tp apply for remarking my exam',
         files: 'N/A',
         status: 'UNASSESSED',
-        flagClicked: false
+        flagClicked: false,
+        decision: 'Approved'
       }, {
         id: '1266704',
         subID: 'COMP20008',
@@ -205,19 +210,17 @@ export default {
         reqDetail: 'Hi, I would like to ask about my AAP certification stuff',
         files: 'N/A',
         status: 'UNASSESSED',
-        flagClicked: false
-      }],
+        flagClicked: false,
+        decision: 'Approved'
+      }]
     }
   },
   methods: {
     showStudentProfile(row) {
       this.selectedStudentInfo = row;
-      this.selectedFileData = row.files; // 这里假设files属性包含文件信息
+      this.selectedFileData = row.files;
       this.showProfileDialog = true;
     },
-    handleIdClick(row) {
-    // 处理ID按钮的点击事件
-    }, 
     handleFlagClick(row) {
       if (!row.flagClicked) {
         // mark the clicked flag as clicked
@@ -227,16 +230,20 @@ export default {
       }``
     },
     handleApproveClick(row) {
-      // pop out the confirmation window
-      this.$confirm('Do you confirm your selection?(Approve)', 'Warning', {
-        confirmButtonText: 'Send',
-        cancelButtonText: 'Cancel',
-        type: 'success'
-      }).then(() => {
-        // click confirm for approve
-        row.status = 'APPROVE'
-      }).catch(() => {
-      })
+      this.approveForm.message = '';
+      this.approveForm.date = '';
+      this.selectedRow = row;
+      this.approveDialogVisible = true;
+    },
+    handleApprove() {
+      const { message, date } = this.approveForm;
+      if (message && date) {
+        // 更新状态和决定为'APPROVE'
+        this.selectedRow.status = 'APPROVE';
+        this.selectedRow.decision = 'Approved';
+        // 关闭确认对话框
+        this.approvalConfirmationDialogVisible = false;
+      }
     },
     handleRejectClick(row) {
       // comfirmation window pop out
@@ -250,7 +257,7 @@ export default {
       }).catch(() => {
         // user cancel the button
       })
-    },
+    }
   }
 }
 </script>
