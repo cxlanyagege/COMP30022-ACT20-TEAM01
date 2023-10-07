@@ -31,7 +31,6 @@ function unregisterRoutes() {
   })
 }
 
-// for mock server
 const responseFake = (url, type, respond) => {
   return {
     url: new RegExp(`${process.env.VUE_APP_BASE_API}${url}`),
@@ -44,8 +43,6 @@ const responseFake = (url, type, respond) => {
 }
 
 module.exports = app => {
-  // parse app.body
-  // https://expressjs.com/en/4x/api.html#req.body
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({
     extended: true
@@ -55,17 +52,14 @@ module.exports = app => {
   var mockRoutesLength = mockRoutes.mockRoutesLength
   var mockStartIndex = mockRoutes.mockStartIndex
 
-  // watch files, hot reload mock server
   chokidar.watch(mockDir, {
     ignored: /mock-server/,
     ignoreInitial: true
   }).on('all', (event, path) => {
     if (event === 'change' || event === 'add') {
       try {
-        // remove mock routes stack
         app._router.stack.splice(mockStartIndex, mockRoutesLength)
 
-        // clear routes cache
         unregisterRoutes()
 
         const mockRoutes = registerRoutes(app)

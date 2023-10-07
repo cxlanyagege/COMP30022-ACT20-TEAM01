@@ -18,22 +18,11 @@
       </div>
       <div class="profile-item">
         <label>AAP Beneficiaries: </label>
-        <span>{{ studentInfo.aap }}</span>
+        <span>{{ studentInfo.aap === "Yes" ? "Yes" : "No" }}</span>
       </div>
       <div class="profile-item">
         <label>AAP Documentation: </label>
-        <span v-if="studentInfo.aap === 'Yes'">{{ studentInfo.aap }}</span>
-        <span v-else>NA</span>
-        <el-upload
-          v-if="studentInfo.aap === 'Yes'"
-          class="upload-demo"
-          action="/your-upload-api-endpoint"
-          :on-success="handleSuccess"
-          :on-error="handleError"
-          :accept="'*'">
-          <el-button size="small" type="primary">Click to Upload</el-button>
-          <div slot="tip" class="el-upload__tip">You can upload any file format</div>
-        </el-upload>
+        <span>{{ fileData ? fileData.name : "NA" }}</span>
       </div>
     </div>
   </div>
@@ -44,25 +33,15 @@ export default {
   props: {
     studentInfo: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
+    fileData: {
+      default: null,
+    },
   },
-  handleRemove(file, fileList) {
-    console.log(file, fileList);
-  },
-  handlePreview(file) {
-    console.log(file);
-  },
-  handleExceed(files, fileList) {
-    this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-  },
-  beforeRemove(file, fileList) {
-    return this.$confirm(`确定移除 ${ file.name }？`);
-  },
-  handleError() {
-  }
-}
+};
 </script>
+
 
 <style scoped>
 .student-profile {

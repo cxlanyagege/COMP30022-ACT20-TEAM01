@@ -1,152 +1,236 @@
-<!-- The component code was written by Yawen Luo, and Dennis Wang and He Shen were modified the 
+<!-- The component code was written by Yawen Luo, Dennis Wang was modified the 
      front-end and back-end interaction method code at a later stage. The following code is used 
-     to build the component table elements of the dashboard. -->
+     to build the component request table elements. -->
 
 <template>
   <div class="app-container">
-    <el-table
-      v-loading="listLoading"
-      :data="tableData"
-      element-loading-text="Loading"
-      border
-      fit
-      highlight-current-row
-      stripe
-      style="width: 100%"
-    >
-      <el-table-column prop="idNo" label="ID NO." />
-      <el-table-column prop="type" label="REQUEST TYPE" />
-      <el-table-column prop="name" label="REQUEST NAME" />
-      <el-table-column label="STATUS" prop="status">
-        <template slot-scope="{ row }">
-          <el-tag v-if="row.status === 'WAITING'" type="warning">{{ row.status }}</el-tag>
-          <el-tag v-else-if="row.status === 'APPROVED'" type="success">{{ row.status }}</el-tag>
-          <el-tag v-else-if="row.status === 'REJECTED'" type="danger">{{ row.status }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="date" label="APPLICATION DATE" />
-      <el-table-column label="ACTION">
-        <template slot-scope="scope">
-          <el-button
-            type="info"
-            size="small"
-            @click="showRequestDetail(scope.row.idNo)"
-          >Detail</el-button>
-          <el-divider direction="vertical" />
-          <el-button
-            type="danger"
-            size="small"
-            @click="handleDelete(scope.row.idNo)"
-          >Delete</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-pagination
-      :current-page="pageNum"
-      :page-size="pageSize"
-      :total="total"
-      layout="prev, pager, next"
-      @current-change="handlePageChange"
-    />
+    <el-scrollbar height="300px">
+      <el-table
+        v-loading="listLoading"
+        :data="combinedData"
+        element-loading-text="Loading"
+        border
+        fit
+        highlight-current-row
+        stripe
+        style="width: 100%"
+      >
+        <el-table-column prop="idNo" label="ID NO." />
+        <el-table-column prop="type" label="REQUEST TYPE" />
+        <el-table-column prop="name" label="REQUEST NAME" />
+        <el-table-column label="STATUS" prop="status">
+          <template slot-scope="{ row }">
+            <el-tag v-if="row.status === 'WAITING'" type="warning">{{
+              row.status
+            }}</el-tag>
+            <el-tag v-else-if="row.status === 'APPROVED'" type="success">{{
+              row.status
+            }}</el-tag>
+            <el-tag v-else-if="row.status === 'REJECTED'" type="danger">{{
+              row.status
+            }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="date" label="APPLICATION DATE" />
+        <el-table-column label="ACTION">
+          <template slot-scope="scope">
+            <el-button
+              type="info"
+              size="small"
+              @click="handleDetailClick(scope.row.idNo)"
+              >Detail</el-button
+            >
+            <el-dialog
+              v-model="dialogVisible"
+              title="Request detail"
+              :visible.sync="dialogVisible"
+              width="50%"
+            >
+              <div>
+                <p>
+                  <strong>Student ID:</strong> {{ requestDetail.studentId }}
+                </p>
+                <p>
+                  <strong>Request Detail:</strong> {{ requestDetail.detail }}
+                </p>
+                <p><strong>Request Type:</strong> {{ requestDetail.region }}</p>
+                <p><strong>Rqeuest Name:</strong> {{ requestDetail.name }}</p>
+                <p><strong>Task Type:</strong> {{ requestDetail.type }}</p>
+
+                <p v-if="requestDetail.fileList.length > 0">
+                  <strong>Attachments:</strong>
+                </p>
+                <ul v-if="requestDetail.fileList.length > 0">
+                  <li v-for="file in requestDetail.fileList" :key="file.uid">
+                    <a :href="file.url" target="_blank">{{
+                      file.url.substr(uploadURL.length, file.url.length)
+                    }}</a>
+                  </li>
+                </ul>
+              </div>
+            </el-dialog>
+            <el-divider direction="vertical" />
+            <el-button
+              type="danger"
+              size="small"
+              @click="handleDelete(scope.row.idNo)"
+              >Delete</el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-scrollbar>
   </div>
 </template>
 
 <script>
-import {getRequests, addRequest, deleteRequest, getRequest} from '@/api/request'
+import {
+  getRequests,
+  deleteRequest,
+  getRequest,
+} from "@/api/request";
+import { attachmentBaseURL, uploadURL } from "@/config/config";
+import { EventBus } from "@/utils/event-bus"
 
 export default {
   data() {
     return {
-      tableData: [],
+      waitingData: [],
+      processedData: [],
       listLoading: false,
-      pageNum: 1,
-      pageSize: 5,
-      total: 0,
-    }
+      dialogVisible: false,
+      requestDetail: {
+        studentId: "",
+        detail: "",
+        region: "",
+        name: "",
+        type: "",
+        fileList: [],
+      },
+      uploadURL: uploadURL,
+    };
   },
+
+  computed: {
+    combinedData() {
+      return [...this.waitingData, ...this.processedData];
+    },
+  },
+
   mounted() {
-    // show the request list when the component's been added to DOM
-    this.updateRequests(this.pageNum, this.pageSize)
+    this.updateRequests().then(() => {
+      console.log(this.waitingData)
+      EventBus.$emit("copy-data-event", { waitingData: this.waitingData, processedData: this.processedData });
+    });
   },
 
   methods: {
-    // MODIFIED BY DENNIS
     handleDelete(idNo) {
       // delete request based on requestid
-      deleteRequest(idNo).then(res=>{
+      deleteRequest(idNo).then((res) => {
         console.log(res.data);
-        this.updateRequests(this.pageNum, this.pageSize)
-      })
+        this.updateRequests();
+      });
     },
-
-    // MODIFIED BY DENNIS
+    handleDetailClick(idNo) {
+      this.dialogVisible = true;
+      this.showRequestDetail(idNo);
+    },
     showRequestDetail(requestId) {
-      // get the details of a specified request when student
-      // want to check the content of it
-      this.$root.$refs.button_component.formVisible = true;
-      this.$root.$refs.form_component.isCheck = true;
-      getRequest(requestId, null).then(res => {
+      getRequest(requestId, null).then((res) => {
         console.log(res.data);
-        this.$root.$refs.form_component.form.studentId = res.data.data.studentId;
-        this.$root.$refs.form_component.form.detail = res.data.data.description;
-        this.$root.$refs.form_component.form.region = res.data.data.requestType;
-        this.$root.$refs.form_component.form.name = res.data.data.requestName;
-        this.$root.$refs.form_component.form.email = false;
-        this.$root.$refs.form_component.form.type = res.data.data.taskType;
-        // editableItem.subjectId = "";
-        // editableItem.requestId = requestId;
-        this.$root.$refs.form_component.form.fileList = res.data.data.attachments.map(item => {
-          return {uid: item.attachmentId, url: this.$root.$refs.form_component.convertUrlWithPrefix(item.url)}
-        })
-      })
+        this.requestDetail.studentId = res.data.data.studentId;
+        this.requestDetail.detail = res.data.data.description;
+        this.requestDetail.region = res.data.data.requestType;
+        this.requestDetail.name = res.data.data.requestName;
+        this.requestDetail.type = res.data.data.taskType;
+        // this.requestDetail.teammates = res.data.data.teammates;
+        this.requestDetail.fileList = res.data.data.attachments.map((item) => {
+          return {
+            uid: item.attachmentId,
+            url: this.convertUrlWithPrefix(item.url),
+          };
+        });
+      });
+      console.log(this.requestDetail);
     },
-
-    // WRITTEN BY DENNIS & HE SHEN
-    updateRequests(page, pageSize) {
-      // send the update request to the server and return all requests 
-      // that are still waiting to be accessed 
-      console.log('handle requests');
-      const param = {
-        pageNum: page,
-        pageSize,
-        status: "WAITING"
-      }
-      const userId = this.$store.getters.id
-      getRequests(userId, param).then((res) => {
-        console.log(res.data)
-
-        if (res.data.data.records.length == 0 && page != 0){
-          this.pageNum = page - 1
-          this.updateRequests(this.pageNum, pageSize)
+    convertUrlWithPrefix(url) {
+      return attachmentBaseURL + url;
+    },
+    updateRequests() {
+      console.log("handle requests");
+      const param1 = {
+        status: "WAITING",
+      };
+      const userId = this.$store.getters.id;
+      const request1 = getRequests(userId, param1).then((res) => {
+        console.log(res.data);
+        if (res.data.data.length === 0) {
+          this.waitingData = [];
         } else {
-          this.tableData = (res.data.data.records.length == 0 && page == 0) ? [] :
-          res.data.data.records.map(record => {
+          const requestData = res.data.data.map((record) => {
             return {
               idNo: record.requestId,
               type: record.requestType,
               name: record.requestName,
               status: record.status,
               date: record.submissionDate,
-              action: 'delete'
-            }
-          })
-          this.total = res.data.data.total
-          this.pageNum = res.data.data.current
+              action: "delete",
+            };
+          });
+          requestData.sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            return dateB - dateA;
+          });
+          this.waitingData = requestData;
         }
-        // console.log(this.pageNum, this.pageSize)
       });
-    },
+      const param2 = {
+        status: "OTHER",
+      };
+      const request2 = getRequests(userId, param2).then((res) => {
+        console.log(res.data);
+        if (res.data.data.length === 0) {
+          this.processedData = [];
+        } else {
+          const requestData = res.data.data.map((record) => {
+            return {
+              idNo: record.requestId,
+              type: record.requestType,
+              name: record.requestName,
+              status: record.status,
+              date: record.submissionDate,
+              action: "delete",
+            };
+          });
+          requestData.sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            return dateB - dateA;
+          });
+          this.processedData = requestData;
+        }
+      });
 
-    // WRITTEN BY DENNIS
-    handlePageChange(pageNum) {
-      // used to handle the pagination
-      this.updateRequests(pageNum, this.pageSize);
-    }
+    return Promise.all([request1, request2]);
+    },
   },
   created() {
     // set componenent name
-    this.$root.$refs.table_component = this;
+    // this.$root.$refs.table_component = this;
+    EventBus.$on("update-data", (data) => {
+      this.waitingData = data.waitingData;
+      this.processedData = data.processedData;
+      console.log(this.waitingData, this.processedData)
+    })
   }
-}
+};
 </script>
 
+<style>
+.loading-indicator {
+  text-align: center;
+  padding: 10px;
+}
+</style>

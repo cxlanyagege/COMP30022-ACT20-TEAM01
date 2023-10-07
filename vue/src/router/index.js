@@ -1,4 +1,4 @@
-/* // The following code is the framework that comes with the scaffolding, modified and 
+/* The following code is the framework that comes with the scaffolding, modified and 
 edited by Yawen Luo to fit the student platform. The code is the router in the paltfrom */
 
 import Vue from 'vue'
@@ -33,35 +33,19 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
-  
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/history',
-    children: [
-      {
-        path: 'history',
-        name: 'History',
-        component: () => import('@/views/history/index'),
-        meta: { title: 'History', icon: 'tree' }
-      }
-    ]
-  },
-
-  // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
 
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
 const router = createRouter()
+
 export function resetRouter() {
   const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
+  router.matcher = newRouter.matcher
 }
 
 export default router

@@ -1,15 +1,24 @@
-<!-- The component code was written by Yawen Luo, and Dennis Wang and He Shen were modified the 
-     front-end and back-end interaction method code at a later stage. The following code is used to build the 
-     component form elements of the Bashboard. -->
+<!-- The component code was written by Yawen Luo, Dennis Wang was modified the 
+     front-end and back-end interaction method code at a later stage. The following code is used 
+     to create the request form compoent. -->
 
 <template>
   <div class="app-container">
-    <el-form ref="form" :label-position="labelPosition" :model="form" label-width="120px">
-      <el-form-item label="Student ID">
+    <el-form
+      ref="form"
+      :label-position="labelPosition"
+      :model="form"
+      :rules="rules"
+      label-width="140px"
+    >
+      <el-form-item label="Student ID" required>
         <el-input v-model="form.studentId" />
       </el-form-item>
-      <el-form-item label="Request Type">
-        <el-select v-model="form.region" placeholder="Please select type">
+      <el-form-item label="Request Type" required>
+        <el-select
+          v-model="form.region"
+          placeholder="Please select type"
+        >
           <el-option label="Assignment" value="Assignment" />
           <el-option label="Test" value="Test" />
           <el-option label="Exam" value="Exam" />
@@ -17,13 +26,35 @@
           <el-option label="Others" value="Others" />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="form.region === 'Test'|| form.region === 'Assignment' || form.region === 'Exam'" label="Task Type">
+      <el-form-item
+        v-if="
+          form.region === 'Test' ||
+          form.region === 'Assignment' ||
+          form.region === 'Exam'
+        "
+        label="Task Type"
+        required
+      >
         <el-radio-group v-model="form.type">
           <el-radio label="individual">Individual</el-radio>
           <el-radio label="Group">Group</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="form.type === 'Group'" label="Teammate">
+      <el-form-item
+        v-if="
+          form.type === 'individual' ||
+          form.type === 'Group'
+        "
+        label="More specific? :)"
+        required
+      >
+        <el-radio-group v-model="form.workType">
+          <el-radio label="Extension">Extension</el-radio>
+          <el-radio label="Remark">Remark</el-radio>
+          <el-radio label="Other">Other</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item v-if="form.type === 'Group'" label="Teammate" required>
         <div v-for="(email, index) in form.teammates" :key="index">
           <el-input v-model="form.teammates[index]" />
           <el-button @click="removeTeammate(index)">Remove</el-button>
@@ -31,12 +62,12 @@
         <el-button @click="addTeammate">Add Student Email</el-button>
       </el-form-item>
       <el-form-item label="Request Name">
-        <el-input v-model="form.name" />
+        <el-input
+          v-model="form.name"
+          placeholder="e.g. Assignment 2 Extension/Remark/Others"
+        />
       </el-form-item>
-      <el-form-item label="Email Alerts">
-        <el-switch v-model="form.email" />
-      </el-form-item>
-      <el-form-item label="Request Detail">
+      <el-form-item label="Request Detail" required>
         <el-input v-model="form.detail" type="textarea" />
       </el-form-item>
       <el-form-item label="Upload File">
@@ -50,78 +81,126 @@
           :accept="'*'"
         >
           <el-button size="small" type="primary">Click to Upload</el-button>
-          <div slot="tip" class="el-upload__tip">You can upload any file format</div>
+          <div slot="tip" class="el-upload__tip">
+            You can upload any file format up to 5MB
+          </div>
         </el-upload>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit" v-if="!isCheck">Create</el-button>
-        <el-button @click="onCancel" v-if="!isCheck">Cancel</el-button>
+        <el-button type="primary" @click="onSubmit"
+          >Create</el-button
+        >
+        <el-button @click="onCancel">Cancel</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import {addRequest} from '@/api/request'
-import listTable from '@/components/table/index.vue'
-import {attachmentBaseURL, uploadURL} from '@/config/config'
+import { addRequest } from "@/api/request";
+import listTable from "@/components/table/index.vue";
+import { attachmentBaseURL, uploadURL } from "@/config/config";
+import { EventBus } from "@/utils/event-bus"
+// import { FormInstance, FormRules } from 'element-plus'
 
 export default {
   components: {
-    listTable
+    listTable,
   },
+
   data() {
     return {
-      labelPosition: 'left',
+      labelPosition: "left",
       form: {
-        studentId: '',
-        subjectCode: '',
-        region: '',
+        studentId: "",
+        subjectCode: "",
+        region: "",
         showAdditionalOptions: false,
-        type: '',
-        name: '',
-        email: false,
-        detail: '',
+        type: "",
+        workType: "",
+        name: "",
+        detail: "",
         fileList: [],
-        teammates: []
+        teammates: [],
       },
       uploadURL: uploadURL,
-      isCheck: false
-    }
+      rules: {
+        studentId: [
+          {
+            required: true,
+            message: 'Please enter the student id',
+            trigger: 'blur',
+          }
+        ],
+        region: [
+          {
+            required: true,
+            message: 'Please select the request type',
+            trigger: 'change',
+          }
+        ],
+      }
+    };
   },
+
   watch: {
-    'form.region'(newValue) {
+    "form.region"(newValue) {
       // update showAdditionOptions based on the region
-      if (newValue === "Test" || newValue === "Assignment" || newValue === "Exam"){
+      if (
+        newValue === "Test" ||
+        newValue === "Assignment" ||
+        newValue === "Exam"
+      ) {
         this.form.showAdditionalOptions = true;
       } else {
         this.form.showAdditionalOptions = false;
       }
-    }
+    },
   },
+
+  mounted() {
+    EventBus.$on("update-form", () => {
+      this.form.studentId = "";
+      this.form.region = "";
+      this.form.type = "";
+      this.form.workType = "";
+      this.form.name = "";
+      this.form.detail = "";
+      this.form.showAdditionalOptions = false;
+      this.form.fileList = [];
+      this.form.teammates = [];
+      this.clearUploadList();
+      // console.log(this.form.fileList)
+    });
+  },
+
+  // MODIFIED BY DENNIS WANG
   methods: {
-    // MODIFIED BY DENNIS WANG & HE SHEN
+    clearUploadList() {
+      const uploadList = document.querySelector('.el-upload-list');
+      if (uploadList) {
+        uploadList.innerHTML = '';
+      }
+    },
+
     onSubmit() {
       const currentDate = new Date();
       // construct a formData to finalise all the information in the
-      // form, used later to pass data to the request 
+      // form, used later to pass data to the request
       const formData = {
         studentId: this.form.studentId,
         subjectId: this.form.subjectCode,
         requestType: this.form.region,
         submissionDate: currentDate,
-        // email: this.form.email,
         description: this.form.detail,
         fileList: this.form.fileList,
-        requestName: this.form.name
-      }
-
+        requestName: this.form.name,
+      };
       if (this.form.showAdditionalOptions) {
-        formData.type = this.form.type
+        formData.type = this.form.type;
+        formData.workType = this.form.workType;
       }
-
-      formData.teammates = this.form.teammates
-
+      formData.teammates = this.form.teammates;
       let param = {
         description: formData.description,
         studentId: formData.studentId,
@@ -130,76 +209,78 @@ export default {
         requestType: formData.requestType,
         requestName: formData.requestName,
         taskType: formData.type,
-        attachments: formData.fileList.map(item => {
-          return {url: this.convertUrlWithoutPrefix(item.url)}
-        })
-      } // send the add request to the server to save the request
+        workType: formData.workType,
+        teammates: formData.teammates,
+        attachments: formData.fileList.map((item) => {
+          return { url: this.convertUrlWithoutPrefix(item.url) };
+        }),
+      }; // send the add request to the server to save the request
       // info in the DB
-      addRequest(param).then(res => {
+      addRequest(param).then((res) => {
         console.log(res.data);
-        if (res.data.code == 0){
-          this.$message(res.data.msg)
+        if (res.data.code == 0) {
+          this.$message(res.data.msg);
           // after successfully saving the request, it should be shown on the
           // web page as well, so update the request table here
-          this.$root.$refs.table_component.updateRequests(this.$root.$refs.table_component.pageNum,
-                            this.$root.$refs.table_component.pageSize);
+          EventBus.$emit('add-request', res.data.data)
+          EventBus.$emit("request-saved")
+          // this.$root.$refs.table_component.updateRequests();
         } else {
-          this.$message("Fail to submit!")
+          this.$message("Fail to submit!");
         }
-      })
+      });
 
-      // console.log('Form submitted with data:', param)
-
-      // this.$message('Submit successful!')
+    },
+    handleRequestTypeChange(){
+    this.form.region = ""
+    this.form.type = ""
+    this.showAdditionalOptions = false
     },
 
     // MODIFIED BY DENNIS WANG
     onCancel() {
-      this.$message({
-        message: 'Cancel!',
-        type: 'warning'
-      })
+      EventBus.$emit("close-form");
     },
-    // used to show the files on the form page, given access to 
+    // WRITTEN BY DENNIS WANG
+    // used to show the files on the form page, given access to
     // the file from the client side
     convertUrlWithPrefix(url) {
       return attachmentBaseURL + url;
     },
     // used to store the data in the server side as it doesn't
     // require extra address to access
-    convertUrlWithoutPrefix(url){
+    convertUrlWithoutPrefix(url) {
       return url.substr(attachmentBaseURL.length, url.length);
     },
     // handle files uploaded successfully
     handleSuccess(response, file, fileList) {
-      // console.log(fileList)
-      // push all the files uploaded into the fileList
       this.form.fileList.push({
         uid: file.raw.uid,
-        url: this.convertUrlWithPrefix(response.data)
-      })
-      console.log(this.form.fileList)
-      this.$message.success('File uploaded successfully')
+        url: this.convertUrlWithPrefix(response.data),
+      });
+      console.log(this.form.fileList);
+      this.$message.success("File uploaded successfully");
     },
     handleError(err) {
       if (err && err.response && err.response.data) {
-        const errorMessage = err.response.data.error
-        this.$message.error('File upload failed: ' + errorMessage)
+        const errorMessage = err.response.data.error;
+        this.$message.error("File upload failed: " + errorMessage);
       } else {
-        this.$message.error('File upload failed')
+        this.$message.error("File upload failed");
       }
     },
-    // remove all the files removed by the client from the fileList
-    handleRemove(file, files){
-      // console.log(file, files)
-      this.form.fileList = this.form.fileList.filter(item => item.uid != file.uid);
-      console.log(this.form.fileList)
+    // WRITTEN BY DENNIS WANG
+    handleRemove(file, files) {
+      this.form.fileList = this.form.fileList.filter(
+        (item) => item.uid != file.uid
+      );
+      console.log(this.form.fileList);
     },
     addTeammate() {
-      this.form.teammates.push('')
+      this.form.teammates.push("");
     },
     removeTeammate(index) {
-      this.form.teammates.splice(index, 1)
+      this.form.teammates.splice(index, 1);
     },
     // get student id
     getCurrentUserId() {
@@ -220,5 +301,5 @@ export default {
     // set current subject id
     this.form.subjectCode = this.getCurrentSubjectId;
   },
-}
+};
 </script>

@@ -1,4 +1,5 @@
 <!-- Following code is Author by Yawen Luo, code is describe the entry page in dashboard view -->
+
 <template>
   <div class="dashboard-container">
     <Table :data="tableData" />
@@ -6,16 +7,17 @@
 </template>
 
 <script>
-import Table from '@/components/table/index'
+import Table from "@/components/table/TableDemo.vue";
 
 export default {
   components: {
-    Table
+    Table,
   },
+  
   data() {
     return {
-      tableData: []
-    }
-  }
-}
+      tableData: [],
+    };
+  },
+};
 </script>
