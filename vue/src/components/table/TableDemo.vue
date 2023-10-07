@@ -130,7 +130,8 @@ export default {
   methods: {
     updateRequests() {
       console.log("handle requests");
-      const request1 = getRequests(1266288, null).then((res) => {
+      const userId = this.$store.getters.id;
+      const request1 = getRequests(userId, null).then((res) => {
         console.log(res.data);
         if (res.data.data.length === 0) {
           this.tableData = [];

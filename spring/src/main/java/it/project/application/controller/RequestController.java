@@ -2,8 +2,8 @@
  * Class Name: RequestController
  * Description: Controller for handling request manipulations
  * 
- * Author: Dennis Wang
- * Date: 2023/9/23
+ * Author: Dennis Wang & He Shen
+ * Date: 2023/10/8
  */
 
 package it.project.application.controller;
@@ -40,36 +40,39 @@ public class RequestController {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RequestController.class);
 
     @GetMapping("/getRequests/{studentId}")
-    public Result getRequests(@PathVariable int studentId, @RequestParam(defaultValue = "waiting") String status,
+    public Result getRequests(@PathVariable int studentId, 
+                              @RequestParam(required = false) String status,
                               @RequestParam(defaultValue = "1") int pageNum,
                               @RequestParam(defaultValue = "20") int pageSize){
         log.info("{}", studentId);
         // Create a Page object with the desired page number and page size
         Page<Request> page = new Page<Request>(pageNum, pageSize);
-
+    
         // Create a query wrapper filter the records with the specified studentId
         QueryWrapper<Request> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("studentId", studentId);
-        if (Objects.equals(status, "WAITING")){
+        if (status != null && !status.isEmpty()){
             queryWrapper.eq("status", status);
-        } else {
-            queryWrapper.ne("status", "WAITING");
         }
-
+        
+    
         // query the database with pagination and the query condition
         IPage<Request> pageResult = requestService.page(page, queryWrapper);
-
+    
         // convert the requests into specified form to return to the client side
-        List voList = pageResult.getRecords().stream().map(request -> {
+        List<RequestVo> voList = pageResult.getRecords().stream().map(request -> {
             RequestVo requestVo = new RequestVo();
             BeanUtils.copyProperties(request, requestVo);
+
+            // Get the attachments for the current request
+            List<Attachment> attachmentsForRequest = attachmentService.getByRequestId(request.getRequestId());
+            requestVo.setAttachments(attachmentsForRequest);
+
             return requestVo;
         }).collect(Collectors.toList());
-
-        pageResult.setRecords(voList);
-
-        return Result.success(pageResult);
-    }
+    
+        return Result.success(voList);  // directly returning the list of RequestVo
+    }    
 
     @GetMapping("/getRequestDetail/{requestId}")
     public Result getRequestDetail(@PathVariable int requestId){
