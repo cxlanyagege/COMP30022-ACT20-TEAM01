@@ -246,8 +246,8 @@ export default {
       }
     },
     handleRejectClick(row) {
-      // comfirmation window pop out
-      this.$confirm('Do you confim your selection?(Reject)', 'Warning', {
+      // confirmation window pop out
+      this.$confirm('Do you confirm your selection?(Reject)', 'Warning', {
         confirmButtonText: 'Send',
         cancelButtonText: 'Cancel',
         type: 'warning'

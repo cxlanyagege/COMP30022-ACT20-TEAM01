@@ -1,7 +1,7 @@
 <!-- written by Lanruo Su -->
 <template>
   <div class="app-container">
-    <!-- Authority Table -->
+    <!-- Request Authority Table -->
     <el-table
       v-loading="listLoading"
       :data="tableData"
@@ -47,7 +47,7 @@ import { EventBus } from '@/views/tutorAuthority/index.vue'
 export default {
   methods: {
     handleSwitchChange(row, column, value) {
-       // 更新开关状态
+      // 更新开关状态
       row[column] = value
       // 触发事件，传递状态信息
       EventBus.$emit('assignment-switch-changed', value)
