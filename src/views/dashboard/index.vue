@@ -1,7 +1,7 @@
 <template>
   <div>
     <Filterrequest @filter="applyFilter" /> <!-- 监听FilterComponent的filter事件 -->
-    <Table :filteredData="filteredData" @flagClick="handleFlagClick" /> <!-- 监听TableComponent的flagClick事件 -->
+    <Table :tableData="tableData" @flagClick="handleFlagClick" /> <!-- 监听TableComponent的flagClick事件 -->
   </div>
 </template>
 
