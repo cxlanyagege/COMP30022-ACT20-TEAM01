@@ -299,7 +299,7 @@ export default {
     this.form.studentId = this.getCurrentUserId()
 
     // set current subject id
-    this.form.subjectCode = this.getCurrentSubjectId;
+    this.form.subjectCode = this.getCurrentSubjectId();
   },
 };
 </script>

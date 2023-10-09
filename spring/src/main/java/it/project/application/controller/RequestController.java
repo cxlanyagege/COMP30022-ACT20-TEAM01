@@ -24,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController // RestFul
@@ -50,7 +49,7 @@ public class RequestController {
     
         // Create a query wrapper filter the records with the specified studentId
         QueryWrapper<Request> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("studentId", studentId);
+        queryWrapper.eq("student_id", studentId);
         if (status != null && !status.isEmpty()){
             queryWrapper.eq("status", status);
         }
@@ -79,7 +78,7 @@ public class RequestController {
         RequestVo requestVo = new RequestVo();
         Request request = requestService.getById(requestId);
         QueryWrapper query = new QueryWrapper();
-        query.eq("requestId", request.getRequestId());
+        query.eq("request_id", request.getRequestId());
         List<Attachment> attachments = attachmentService.list(query);
         BeanUtils.copyProperties(request, requestVo);
         requestVo.setAttachments(attachments);

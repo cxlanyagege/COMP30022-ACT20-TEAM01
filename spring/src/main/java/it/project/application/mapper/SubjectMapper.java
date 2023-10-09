@@ -19,6 +19,6 @@ import it.project.application.entity.Subject;
 
 @Mapper
 public interface SubjectMapper extends BaseMapper<Subject> {
-    @Select("SELECT * FROM subject WHERE SubjectId = #{id}")
+    @Select("SELECT * FROM subject WHERE subject_id = #{id}")
     Subject findById(Long id);
 }

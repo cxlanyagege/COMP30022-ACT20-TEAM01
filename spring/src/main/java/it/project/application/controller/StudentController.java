@@ -49,7 +49,7 @@ public class StudentController {
             data.put("id", studentId);
             data.put("name", student.getName());
             data.put("email", student.getEmail());
-            data.put("avatar", "Avatar");
+            data.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
 
             response.put("code", 20000);
             response.put("data", data);
