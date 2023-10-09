@@ -14,29 +14,14 @@
 export default {
   data() {
     return {
-      filteredData: [] // 过滤后的数据
-    };
-  },
-  created() {
-    // initialize the filtering to "All"
-    this.applyFilter('All')
+      filterCondition: 'All'
+    }
   },
   methods: {
     applyFilter(filterCondition) {
       // filter according to "filterCondition"
-      if (filterCondition === 'Assignment') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Assignment')
-      } else if (filterCondition === 'Test') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Test')
-      } else if (filterCondition === 'Exam') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Exam')
-      } else if (filterCondition === 'Personal') {
-        this.filteredData = this.tableData.filter(item => item.taskType === 'Personal')
-      } else if (filterCondition === 'Others') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Others')
-      } else {
-        this.filteredData = this.tableData
-      }
+      this.filterCondition = filterCondition
+      this.$emit('filter', filterCondition)
     }
   }
 }

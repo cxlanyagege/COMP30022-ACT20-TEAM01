@@ -139,108 +139,52 @@
 </style>
 
 <script>
-import StudentProfile from "@/components/Forms/studentProfile.vue";
-import ConfirmationDialog from "@/components/Forms/confirmationDialog.vue";
+import StudentProfile from '@/components/Forms/studentProfile.vue'
+import ConfirmationDialog from '@/components/Forms/confirmationDialog.vue'
 
 export default {
   components: {
     StudentProfile,
     ConfirmationDialog
   },
+  props: {
+    tableData: Array
+  },
   data() {
     return {
       approveDialogVisible: false,
-        approveForm: {
+      approveForm: {
         message: '',
         date: ''
-        },
+      },
       showProfileDialog: false,
       selectedStudentInfo: null,
-      selectedFileData: null,
-      tableData: [{
-        id: '1266704',
-        subID: 'COMP30022',
-        appDate: '01/01/2024',
-        AAPs: 'Yes',
-        reqType: 'Assignment',
-        taskType: 'Individual',
-        reqName: 'A1 extension',
-        reqDetail: 'Hi, I would like to apply for A1 extension',
-        files: 'N/A',
-        status: 'APPROVE',
-        flagClicked: false,
-        decision: 'Approved',
-        morespecific: 'Extension'
-      }, {
-        id: '1266705',
-        subID: 'COMP30026',
-        appDate: '01/01/2024',
-        reqType: 'Test',
-        taskType: 'N/A',
-        reqName: 'Remarking MST',
-        reqDetail: 'HI, I would like to apply for Remarking my MST',
-        files: 'N/A',
-        status: 'UNASSESSED',
-        flagClicked: false,
-        decision: 'Approved',
-        morespecific: 'Remark'
-      }, {
-        id: '1266706',
-        subID: 'COMP30023',
-        appDate: '01/01/2024',
-        reqType: 'Exam',
-        taskType: 'N/A',
-        reqName: 'Exam remark',
-        reqDetail: 'HI, I would like tp apply for remarking my exam',
-        files: 'N/A',
-        status: 'UNASSESSED',
-        flagClicked: false,
-        decision: 'Approved',
-        morespecific: 'Remark'
-      }, {
-        id: '1266704',
-        subID: 'COMP20008',
-        appDate: '01/01/2024',
-        reqType: 'Others',
-        taskType: 'N/A',
-        reqName: 'AAP certification',
-        reqDetail: 'Hi, I would like to ask about my AAP certification stuff',
-        files: 'N/A',
-        status: 'UNASSESSED',
-        flagClicked: false,
-        decision: 'Approved',
-        morespecific: 'Others'
-      }]
+      selectedFileData: null
     }
   },
   methods: {
     showStudentProfile(row) {
-      this.selectedStudentInfo = row;
-      this.selectedFileData = row.files;
-      this.showProfileDialog = true;
+      this.selectedStudentInfo = row
+      this.selectedFileData = row.files
+      this.showProfileDialog = true
     },
     handleFlagClick(row) {
-      if (!row.flagClicked) {
-        // mark the clicked flag as clicked
-        this.flagClicked = !this.flagClicked
-        // move the current row to the front
-        this.tableData = [row, ...this.tableData.filter(item => item !== row)]
-      }``
+      this.$emit('flagClick', row)
     },
     handleApproveClick(row) {
-      this.approveForm.message = '';
-      this.approveForm.date = '';
-      this.selectedRow = row;
-      this.approveDialogVisible = true;
+      this.approveForm.message = ''
+      this.approveForm.date = ''
+      this.selectedRow = row
+      this.approveDialogVisible = true
     },
     handleApprove() {
-      const { message, date } = this.approveForm;
+      const { message, date } = this.approveForm
       if (message && date) {
         // 更新状态和决定为'APPROVE'
-        this.selectedRow.status = 'APPROVE';
-        this.selectedRow.decision = 'Approved';
+        this.selectedRow.status = 'APPROVE'
+        this.selectedRow.decision = 'Approved'
         // 关闭确认对话框
-        this.approvalConfirmationDialogVisible = false;
+        this.approvalConfirmationDialogVisible = false
       }
     },
     handleRejectClick(row) {
