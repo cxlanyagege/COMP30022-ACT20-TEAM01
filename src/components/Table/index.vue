@@ -9,29 +9,23 @@
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="Student ID">
-              <span>{{ props.row.id }}</span>
-            </el-form-item>
-            <el-form-item label="Subject ID">
-              <span>{{ props.row.subID }}</span>
-            </el-form-item>
-            <el-form-item label="Application Date">
-              <span>{{ props.row.appDate }}</span>
-            </el-form-item>
-            <el-form-item label="AAPs">
-              <span>{{ props.row.AAPs }}</span>
-            </el-form-item>
             <el-form-item label="Request Type">
               <span>{{ props.row.reqType }}</span>
             </el-form-item>
             <el-form-item label="Task Type">
               <span>{{ props.row.taskType }}</span>
             </el-form-item>
+            <el-form-item label="More specific">
+              <span>{{ props.row.morespecific }}</span>
+            </el-form-item>
             <el-form-item label="Request Name">
               <span>{{ props.row.reqName }}</span>
             </el-form-item>
             <el-form-item label="Request Details">
               <span>{{ props.row.reqDetail }}</span>
+            </el-form-item>
+            <el-form-item label="AAPs">
+              <span>{{ props.row.AAPs }}</span>
             </el-form-item>
             <el-form-item label="Attached Files">
               <span>{{ props.row.files }}</span>
@@ -175,7 +169,8 @@ export default {
         files: 'N/A',
         status: 'APPROVE',
         flagClicked: false,
-        decision: 'Approved'
+        decision: 'Approved',
+        morespecific: 'Extension'
       }, {
         id: '1266705',
         subID: 'COMP30026',
@@ -187,7 +182,8 @@ export default {
         files: 'N/A',
         status: 'UNASSESSED',
         flagClicked: false,
-        decision: 'Approved'
+        decision: 'Approved',
+        morespecific: 'Remark'
       }, {
         id: '1266706',
         subID: 'COMP30023',
@@ -199,7 +195,8 @@ export default {
         files: 'N/A',
         status: 'UNASSESSED',
         flagClicked: false,
-        decision: 'Approved'
+        decision: 'Approved',
+        morespecific: 'Remark'
       }, {
         id: '1266704',
         subID: 'COMP20008',
@@ -211,7 +208,8 @@ export default {
         files: 'N/A',
         status: 'UNASSESSED',
         flagClicked: false,
-        decision: 'Approved'
+        decision: 'Approved',
+        morespecific: 'Others'
       }]
     }
   },
