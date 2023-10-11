@@ -3,7 +3,7 @@
  * Description: Controller for handling request manipulations
  * 
  * Author: Dennis Wang & He Shen
- * Date: 2023/10/8
+ * Date: 2023/10/11
  */
 
 package it.project.application.controller;
@@ -23,7 +23,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController // RestFul
@@ -93,7 +95,21 @@ public class RequestController {
         BeanUtils.copyProperties(requestForm, request);
         request.setStatus("WAITING");
         requestService.saveMain(request, requestForm.getAttachments()); // save into the database
-        return Result.success("Request submitted successfully!");
+
+        // Response with matched subject entity
+        Map<String, Object> data = new HashMap<>();
+
+        // Copy request into response data structure
+        data.put("requestId", request.getRequestId());
+        data.put("requestType", request.getRequestType());
+        data.put("workType", request.getWorkType());
+        data.put("requestName", request.getRequestName());
+        data.put("status", request.getStatus());
+        data.put("description", request.getDescription());
+        data.put("submissionDate", request.getSubmissionDate());
+        data.put("attachments", requestForm.getAttachments());
+
+        return Result.success("Request submitted successfully!", data);
     }
 
     @DeleteMapping("/deleteRequest/{requestId}")

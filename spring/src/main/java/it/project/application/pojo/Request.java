@@ -2,8 +2,8 @@
  * Class Name: Request
  * Description: Pojo for Request
  * 
- * Author: Dennis Wang
- * Date: 2023/9/23
+ * Author: Dennis Wang & He Shen
+ * Date: 2023/10/11
  */
 
 package it.project.application.pojo;
@@ -27,6 +27,6 @@ public class Request {
     private String subjectId;
     private String requestType;
     private String taskType;
+    private String workType;
     private String requestName;
-
 }

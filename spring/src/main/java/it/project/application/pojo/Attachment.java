@@ -2,8 +2,8 @@
  * Class Name: Attachment
  * Description: Pojo for Attachment
  * 
- * Author: Dennis Wang
- * Date: 2023/9/23
+ * Author: Dennis Wang & He Shen
+ * Date: 2023/10/11
  */
 
 package it.project.application.pojo;

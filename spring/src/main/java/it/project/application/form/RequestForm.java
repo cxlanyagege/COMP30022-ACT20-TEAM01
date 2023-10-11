@@ -2,8 +2,8 @@
  * Class Name: RequestFrom
  * Description: Generic form for request data
  * 
- * Author: Dennis Wang
- * Date: 2023/9/23
+ * Author: Dennis Wang & He Shen
+ * Date: 2023/10/11
  */
 
 package it.project.application.form;
@@ -26,6 +26,7 @@ public class RequestForm {
     private String requestType;
     private String requestName;
     private String taskType;
+    private String workType;
     private List<Attachment> attachments;
     
 }
