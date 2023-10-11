@@ -11,9 +11,6 @@
       :rules="rules"
       label-width="140px"
     >
-      <el-form-item label="Student ID" required>
-        <el-input v-model="form.studentId" />
-      </el-form-item>
       <el-form-item label="Request Type" required>
         <el-select
           v-model="form.region"
@@ -203,8 +200,8 @@ export default {
       formData.teammates = this.form.teammates;
       let param = {
         description: formData.description,
-        studentId: formData.studentId,
-        subjectId: formData.subjectCode,
+        studentId: this.getCurrentUserId(),
+        subjectId: this.getCurrentSubjectId(),
         submissionDate: formData.submissionDate,
         requestType: formData.requestType,
         requestName: formData.requestName,
@@ -294,12 +291,6 @@ export default {
   created() {
     // set componenent name
     this.$root.$refs.form_component = this;
-
-    // set current student id
-    this.form.studentId = this.getCurrentUserId()
-
-    // set current subject id
-    this.form.subjectCode = this.getCurrentSubjectId();
   },
 };
 </script>

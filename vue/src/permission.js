@@ -31,8 +31,9 @@ router.beforeEach(async(to, from, next) => {
         next()
       } else {
         try {
-          // get user info
+          // get user and subject info
           await store.dispatch('user/getInfo')
+          await store.dispatch('subject/getSubjectInfo')
           next()
         } catch (error) {
           // remove token and go to login page to re-login

@@ -16,7 +16,7 @@ import lombok.Data;
 @TableName("Attachment")
 public class Attachment {
 
-    @TableId("attachmentId") // primary key
+    @TableId("attachment_id") // primary key
     private Integer attachmentId;
     private String url;
     private Integer requestId;

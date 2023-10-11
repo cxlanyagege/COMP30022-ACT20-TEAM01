@@ -28,7 +28,7 @@ public class AttachmentServiceImpl extends ServiceImpl<AttachmentMapper, Attachm
     @Override
     public List<Attachment> getByRequestId(Integer requestId) {
         QueryWrapper<Attachment> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("requestId", requestId);
+        queryWrapper.eq("request_id", requestId);
         return attachmentMapper.selectList(queryWrapper);
     }
 }

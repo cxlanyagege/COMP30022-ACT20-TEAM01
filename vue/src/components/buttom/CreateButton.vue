@@ -6,19 +6,22 @@
   <div class="custom-button-group">
     <el-button class="custom-button" @click="showForm">+ Create</el-button>
     <el-dialog :visible.sync="formVisible" width="65%" :modal="false">
-      <strong style="font-size: 20px" title="COMP30022 Request Form"
-        >COMP30022 Request Form</strong
-      >
+      <strong style="font-size: 20px;" :title="subjectName + ' Request Form'">{{ subjectName }} Request Form</strong>
       <RequestForm @form-submitted="submitForm" />
     </el-dialog>
   </div>
 </template>
 
 <script>
-import RequestForm from "@/components/form/index.vue";
+import RequestForm from "@/components/form/index.vue"
 import { EventBus } from "@/utils/event-bus"
+import { mapGetters } from 'vuex'
 
 export default {
+  computed: {
+    ...mapGetters(['subjectName'])
+  },
+
   components: {
     RequestForm,
   },
