@@ -1,6 +1,18 @@
+# Ask the user for build type
+$buildType = Read-Host "Please enter build type (stage or prod)"
+
 # Change directory to vue to build the project
 cd .\vue\
-npm run build:stage
+
+# Decide npm build type based on user input
+if ($buildType -eq "stage") {
+    npm run build:stage
+} elseif ($buildType -eq "prod") {
+    npm run build:prod
+} else {
+    Write-Host "Invalid build type entered. Please enter either 'stage' or 'prod'."
+    exit 1
+}
 
 # Check build status
 if ($LASTEXITCODE -ne 0) {
@@ -32,6 +44,11 @@ cd .\spring\
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Spring Boot build failed"
     exit 1
+}
+
+# Generate other properties files if needed
+if ($buildType -eq "prod") {
+    Copy-Item .\src\main\resources\production.properties .\build\libs\application.properties
 }
 
 # Go back to project root directory
