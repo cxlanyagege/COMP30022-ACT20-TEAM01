@@ -8,7 +8,7 @@
       <el-form-item label="Confirmation Message" class="custom-label-size">
         <el-input v-model="form.message" placeholder="Enter confirmation message" ></el-input>
       </el-form-item>
-      <el-form-item label="Confirmation Time" class="custom-label-size">
+      <el-form-item label="Confirmation Time" class="custom-label-size" v-if="shouldShowDate">
         <el-date-picker v-model="form.date" type="datetime" placeholder="Select date and time" ></el-date-picker>
       </el-form-item>
     </el-form>
@@ -29,7 +29,13 @@
 export default {
   props: {
     visible: Boolean,
-    form: Object
+    form: Object,
+    requestType: String
+  },
+  computed: {
+    shouldShowDate() {
+      return this.requestType === 'Extension';  // Show the date input only if the request type is 'Extension'
+    }
   },
   methods: {
     handleCancel() {
