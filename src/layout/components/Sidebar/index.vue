@@ -26,6 +26,18 @@ modified and edited by Lanruo Su, Xuan Zhang -->
             :item="route"
             :base-path="route.path"
           />
+
+          <el-button
+            v-for="(requestType, index) in requestTypes"
+            :key="requestType.subID"
+            @click="filterRequests(requestType.subID)"
+            :class="{ selected: isSelected(requestType.subID) }"
+            :style="{ color: requestType.color, textAlign: 'center' }"
+          >
+            <span class="dot" :style="{ backgroundColor: requestType.color }"></span>
+            {{ requestType.subID }}
+          </el-button>
+
         </el-menu>
       </el-scrollbar>
     </div>
@@ -37,20 +49,18 @@ import { mapGetters } from 'vuex'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
+import { EventBus } from '@/utils/EventBus'
 
 export default {
   components: { SidebarItem, Logo },
   computed: {
-    ...mapGetters([
-      'sidebar'
-    ]),
+    ...mapGetters(['sidebar']),
     routes() {
       return this.$router.options.routes
     },
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
-      // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
         return meta.activeMenu
       }
@@ -62,6 +72,42 @@ export default {
     variables() {
       return variables
     }
+  },
+  data() {
+    return {
+      requestTypes: [
+        { subID: 'COMP30023', color: 'rgb(52, 152, 219)' },
+        { subID: 'COMP30022', color: 'rgb(46, 204, 113)' },
+        { subID: 'COMP30026', color: 'rgb(243, 156, 18)' },
+        { subID: 'COMP20008', color: 'rgb(155, 89, 182)' }
+      ],
+      selectedRowIndex: null
+    }
+  },
+  methods: {
+    filterRequests(subjectId) {
+      if (this.selectedRowIndex === subjectId) {
+        this.selectedRowIndex = null
+        EventBus.$emit('update-data', this.tempData)
+      } else {
+        this.selectedRowIndex = subjectId
+        this.tableData = this.tempData.filter(item => {
+          return item.subID === subjectId
+        })
+        EventBus.$emit('update-data', this.tableData)
+      }
+    },
+    isSelected(subjectId) {
+      return this.selectedRowIndex === subjectId
+    }
+  },
+  mounted() {
+    // Fetch and store your request data
+    // Example: this.requests = fetchDataFromServer();
+    EventBus.$on('copy-data-event', (data) => {
+      this.tempData = data
+      this.tableData = data // Store the request data
+    })
   }
 }
 </script>
@@ -88,4 +134,17 @@ export default {
   font-size: 18px;
   font-weight: bold;
 }
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.subject-id-filter {
+  text-align: center; /* 如果需要居中对齐 */
+}
+
 </style>
