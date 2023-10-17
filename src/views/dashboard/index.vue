@@ -112,6 +112,8 @@ export default {
         this.flagClicked = !this.flagClicked
         // move the current row to the front
         this.tableData = [row, ...this.tableData.filter(item => item !== row)]
+        // refresh the data
+        this.applyFilter(this.filterCondition)
       }
     }
   }
