@@ -36,13 +36,13 @@ export default {
         appDate: '01/01/2024',
         reqType: 'Test',
         taskType: 'N/A',
-        reqName: 'MST extension',
-        reqDetail: 'HI, I would like to apply for MST extension',
+        reqName: 'Remarking MST',
+        reqDetail: 'HI, I would like to apply for Remarking my MST',
         files: 'N/A',
         status: 'UNASSESSED',
         flagClicked: false,
         decision: 'Approved',
-        morespecific: 'Extension'
+        morespecific: 'Remark'
       }, {
         id: '1266706',
         subID: 'COMP30023',
