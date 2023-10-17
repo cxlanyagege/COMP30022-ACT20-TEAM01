@@ -106,6 +106,7 @@
     <ConfirmationDialog
       :visible.sync="approveDialogVisible"
       :form.sync="approveForm"
+      :requestType="selectedRow ? selectedRow.morespecific : ''"
       @confirm="handleApprove"
     />
   </div>
@@ -159,7 +160,8 @@ export default {
       },
       showProfileDialog: false,
       selectedStudentInfo: null,
-      selectedFileData: null
+      selectedFileData: null,
+      selectedRow: null
     }
   },
   methods: {
