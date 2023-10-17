@@ -26,18 +26,25 @@ modified and edited by Lanruo Su, Xuan Zhang -->
             :item="route"
             :base-path="route.path"
           />
-
+        <div style="margin-top: 30px;">
           <el-button
             v-for="(requestType, index) in requestTypes"
             :key="requestType.subID"
             @click="filterRequests(requestType.subID)"
             :class="{ selected: isSelected(requestType.subID) }"
-            :style="{ color: requestType.color, textAlign: 'center' }"
+            :style="{ 
+              color: requestType.color, 
+              textAlign: 'center', 
+              'margin-left': '10px',
+              'margin-top': '10px',
+              'background-color': '#304156de',
+              'font-size': '13px'
+            }"
           >
             <span class="dot" :style="{ backgroundColor: requestType.color }"></span>
             {{ requestType.subID }}
           </el-button>
-
+        </div>
         </el-menu>
       </el-scrollbar>
     </div>
@@ -76,10 +83,10 @@ export default {
   data() {
     return {
       requestTypes: [
-        { subID: 'COMP30023', color: 'rgb(52, 152, 219)' },
+        { subID: 'COMP30023', color: 'rgb(96, 191, 255)' },
         { subID: 'COMP30022', color: 'rgb(46, 204, 113)' },
         { subID: 'COMP30026', color: 'rgb(243, 156, 18)' },
-        { subID: 'COMP20008', color: 'rgb(155, 89, 182)' }
+        { subID: 'COMP20008', color: 'rgb(196, 106, 239)' }
       ],
       selectedRowIndex: null
     }
@@ -126,7 +133,7 @@ export default {
 
 .logo {
   width: 30px;
-  height: auto;
+  height:  ;
   margin-right: 20px;
 }
 
