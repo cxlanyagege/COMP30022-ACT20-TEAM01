@@ -37,8 +37,22 @@ out/
 .vscode/
 
 ### macOS ###
+.DS_Store
 **/.DS_Store
-spring/src/main/resources/static/favicon.svg
 
 ### Non-Vue Static ###
-spring/src/main/resources/static
+src/main/resources/static
+
+### Node.js ###
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+tests/**/coverage/
+
+### Others ###
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

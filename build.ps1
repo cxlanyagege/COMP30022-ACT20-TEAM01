@@ -1,9 +1,6 @@
 # Ask the user for build type
 $buildType = Read-Host "Please enter build type (stage or prod)"
 
-# Change directory to vue to build the project
-cd .\vue\
-
 # Decide npm build type based on user input
 if ($buildType -eq "stage") {
     npm run build:stage
@@ -20,11 +17,8 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-# Go back to previous directory
-cd ..
-
 # Define the static folder path
-$staticFolderPath = ".\spring\src\main\resources\static\"
+$staticFolderPath = ".\src\main\resources\static\"
 
 # Remove all files in the spring static folder if it exists
 if (Test-Path -Path $staticFolderPath -PathType Container) {
@@ -34,10 +28,9 @@ if (Test-Path -Path $staticFolderPath -PathType Container) {
 }
 
 # Move dist to spring static folder
-Copy-Item -Recurse .\vue\dist\* .\spring\src\main\resources\static\
+Copy-Item -Recurse .\dist\* .\src\main\resources\static\
 
-# Switch to spring directory and build with gradle
-cd .\spring\
+# Build spring with gradle
 .\gradlew.bat clean build
 
 # Check gradle build status
@@ -50,6 +43,3 @@ if ($LASTEXITCODE -ne 0) {
 if ($buildType -eq "prod") {
     Copy-Item .\src\main\resources\production.properties .\build\libs\application.properties
 }
-
-# Go back to project root directory
-cd ..
