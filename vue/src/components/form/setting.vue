@@ -1,5 +1,3 @@
- <!-- 自己写的 -->
- 
 <template>
   <div class="settings-page">
     <h3>Notification Settings</h3>
@@ -10,7 +8,7 @@
       ></el-table-column>
       <el-table-column prop="isEnabled" label="Enable" width="120">
         <template slot-scope="scope">
-          <el-switch v-model="scope.row.isEnabled"></el-switch>
+          <el-switch v-model="scope.row.isEnabled" @change="updateSetting"></el-switch>
         </template>
       </el-table-column>
     </el-table>
@@ -32,6 +30,8 @@
 </template>
 
 <script>
+import { updateStudentPreference } from "@/api/entity";
+
 export default {
   data() {
     return {
@@ -49,6 +49,22 @@ export default {
       notificationTime: ["08:00", "18:00"],
     };
   },
+
+  // method written by Dennis, used to update the user preference
+  // on receiving the emails
+  methods: {
+    updateSetting() {
+      let param = {
+        createRequest: this.notificationSettings[0].isEnabled,
+        processRequest: this.notificationSettings[1].isEnabled,
+        deleteRequest: this.notificationSettings[2].isEnabled
+      }
+      // can change the id to the id in student profile
+      updateStudentPreference(1266288, param).then((res) => {
+        console.log(res);
+      })
+    }
+  }
 };
 </script>
 

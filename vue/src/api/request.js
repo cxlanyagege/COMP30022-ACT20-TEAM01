@@ -1,3 +1,5 @@
+// file written by Dennis, used to call api to make interaction with the 
+// backend
 import { deleteAction, getAction, postAction, putAction } from '@/utils/communication';
 
 export const addRequest = (param) => postAction("/api/saveRequest", param)
