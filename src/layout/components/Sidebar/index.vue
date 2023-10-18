@@ -26,25 +26,25 @@ modified and edited by Lanruo Su, Xuan Zhang -->
             :item="route"
             :base-path="route.path"
           />
-        <div style="margin-top: 30px;">
-          <el-button
-            v-for="(requestType, index) in requestTypes"
-            :key="requestType.subID"
-            @click="filterRequests(requestType.subID)"
-            :class="{ selected: isSelected(requestType.subID) }"
-            :style="{ 
-              color: requestType.color, 
-              textAlign: 'center', 
-              'margin-left': '10px',
-              'margin-top': '10px',
-              'background-color': '#304156de',
-              'font-size': '13px'
-            }"
-          >
-            <span class="dot" :style="{ backgroundColor: requestType.color }"></span>
-            {{ requestType.subID }}
-          </el-button>
-        </div>
+          <div style="margin-top: 30px;">
+            <el-button
+              v-for="requestType in requestTypes"
+              :key="requestType.subID"
+              :class="{ selected: isSelected(requestType.subID) }"
+              :style="{
+                color: requestType.color,
+                textAlign: 'center',
+                'margin-left': '10px',
+                'margin-top': '10px',
+                'background-color': '#304156de',
+                'font-size': '13px'
+              }"
+              @click="filterRequests(requestType.subID)"
+            >
+              <span class="dot" :style="{ backgroundColor: requestType.color }"></span>
+              {{ requestType.subID }}
+            </el-button>
+          </div>
         </el-menu>
       </el-scrollbar>
     </div>
@@ -52,7 +52,7 @@ modified and edited by Lanruo Su, Xuan Zhang -->
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
@@ -60,8 +60,22 @@ import { EventBus } from '@/utils/EventBus'
 
 export default {
   components: { SidebarItem, Logo },
+  data() {
+    return {
+      isCollapse: false,
+      requestTypes: [
+        { subID: 'COMP30023', color: 'rgb(96, 191, 255)' },
+        { subID: 'COMP30022', color: 'rgb(46, 204, 113)' },
+        { subID: 'COMP30026', color: 'rgb(243, 156, 18)' },
+        { subID: 'COMP20008', color: 'rgb(196, 106, 239)' }
+      ],
+      selectedRowIndex: null
+    }
+  },
   computed: {
     ...mapGetters(['sidebar']),
+    ...mapState(['tableData']), // 获取tableData从store
+    // 添加一个computed属性用于过滤请求类型
     routes() {
       return this.$router.options.routes
     },
@@ -80,41 +94,22 @@ export default {
       return variables
     }
   },
-  data() {
-    return {
-      requestTypes: [
-        { subID: 'COMP30023', color: 'rgb(96, 191, 255)' },
-        { subID: 'COMP30022', color: 'rgb(46, 204, 113)' },
-        { subID: 'COMP30026', color: 'rgb(243, 156, 18)' },
-        { subID: 'COMP20008', color: 'rgb(196, 106, 239)' }
-      ],
-      selectedRowIndex: null
-    }
-  },
-  methods: {
-    filterRequests(subjectId) {
-      if (this.selectedRowIndex === subjectId) {
-        this.selectedRowIndex = null
-        EventBus.$emit('update-data', this.tempData)
-      } else {
-        this.selectedRowIndex = subjectId
-        this.tableData = this.tempData.filter(item => {
-          return item.subID === subjectId
-        })
-        EventBus.$emit('update-data', this.tableData)
-      }
-    },
-    isSelected(subjectId) {
-      return this.selectedRowIndex === subjectId
-    }
-  },
   mounted() {
     // Fetch and store your request data
     // Example: this.requests = fetchDataFromServer();
     EventBus.$on('copy-data-event', (data) => {
       this.tempData = data
-      this.tableData = data // Store the request data
+      this.tableData = data
     })
+  },
+  methods: {
+    filterRequests(subID) {
+      this.selectedRowIndex = subID
+      EventBus.$emit('filter', subID) // 触发 filter 事件并传递 subID
+    },
+    isSelected(subID) {
+      return this.selectedRowIndex === subID
+    }
   }
 }
 </script>

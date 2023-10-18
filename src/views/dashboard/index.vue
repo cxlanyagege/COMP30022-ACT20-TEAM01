@@ -8,6 +8,7 @@
 <script>
 import Filterrequest from '@/components/Filterrequest/index'
 import Table from '@/components/Table/index'
+import { EventBus } from '@/utils/EventBus'
 
 export default {
   components: {
@@ -74,10 +75,6 @@ export default {
       filteredData: []
     }
   },
-  created() {
-    // initialize the filtering to "All"
-    this.applyFilter('All')
-  },
   computed: {
     // 使用计算属性来根据筛选条件过滤数据
     filteredData() {
@@ -87,6 +84,14 @@ export default {
         return this.tableData.filter(item => item.reqType === this.filterCondition)
       }
     }
+  },
+  created() {
+    // initialize the filtering to "All"
+    this.applyFilter('All')
+    // 监听 EventBus 上的 filter 事件
+    EventBus.$on('filter', (subID) => {
+      this.filterRequests(subID)
+    })
   },
   methods: {
     applyFilter(filterCondition) {
@@ -98,7 +103,7 @@ export default {
         this.filteredData = this.tableData.filter(item => item.reqType === 'Test')
       } else if (filterCondition === 'Exam') {
         this.filteredData = this.tableData.filter(item => item.reqType === 'Exam')
-      } else if (filterCondition === 'Individual') {
+      } else if (filterCondition === 'Personal') {
         this.filteredData = this.tableData.filter(item => item.taskType === 'Individual')
       } else if (filterCondition === 'Others') {
         this.filteredData = this.tableData.filter(item => item.reqType === 'Others')
@@ -114,6 +119,13 @@ export default {
         this.tableData = [row, ...this.tableData.filter(item => item !== row)]
         // refresh the data
         this.applyFilter(this.filterCondition)
+      }
+    },
+    filterRequests(subID) {
+      if (subID === null || subID === 'All') {
+        this.filteredData = this.tableData
+      } else {
+        this.filteredData = this.tableData.filter(item => item.subID === subID)
       }
     }
   }
