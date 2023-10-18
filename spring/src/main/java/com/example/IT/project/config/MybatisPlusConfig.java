@@ -1,4 +1,4 @@
-package com.example.IT.project.config;
+package com.example.it.project.config;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MybatisPlusConfig {
-
     @Bean
     public MybatisPlusInterceptor paginationInnerInterceptor(){
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();

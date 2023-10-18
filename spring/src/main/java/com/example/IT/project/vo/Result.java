@@ -1,4 +1,4 @@
-package com.example.IT.project.vo;
+package com.example.it.project.vo;
 
 public class Result<T> {
     public int code;

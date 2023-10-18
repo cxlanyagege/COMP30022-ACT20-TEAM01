@@ -1,6 +1,6 @@
-package com.example.IT.project.service.Impl;
+package com.example.it.project.service.Impl;
 
-import com.example.IT.project.service.IStorageService;
+import com.example.it.project.service.IStorageService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,4 +1,4 @@
-package com.example.IT.project.pojo;
+package com.example.it.project.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

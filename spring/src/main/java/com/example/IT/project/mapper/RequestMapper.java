@@ -1,7 +1,7 @@
-package com.example.IT.project.mapper;
+package com.example.it.project.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.example.IT.project.pojo.Request;
+import com.example.it.project.pojo.Request;
 
 public interface RequestMapper extends BaseMapper<Request> {
 }

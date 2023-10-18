@@ -1,6 +1,6 @@
-package com.example.IT.project.vo;
+package com.example.it.project.vo;
 
-import com.example.IT.project.pojo.Attachment;
+import com.example.it.project.pojo.Attachment;
 import lombok.Data;
 
 import java.sql.Date;
@@ -19,5 +19,7 @@ public class RequestVo {
     private String requestName;
     private Integer requestId;
     private String taskType;
+    private String workType;
     private List<Attachment> attachments;
+    private List<String> teammates;
 }

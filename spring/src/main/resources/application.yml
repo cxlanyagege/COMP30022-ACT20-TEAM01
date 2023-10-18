@@ -1,6 +1,9 @@
 spring:
   application:
     name: Server
+  servlet:
+    multipart:
+      max-file-size: 5MB
 
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/student_requests
@@ -8,6 +11,26 @@ spring:
     password: 54!45L^i
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  mail:
+    host: smtp.gmail.com           # SMTP server host
+    port: 587                      # Port for the SMTP server
+    username: student.request.hub.demo@gmail.com # Your email username
+    password: xkvxvjiwtmegvhjm # Your email password
+    properties:
+      mail:
+        smtp:
+          auth: true                # Enable SMTP authentication
+          starttls:
+            enable: true            # Enable STARTTLS for secure communication
+
+      # Additional email properties (optional)
+      protocol: smtp                 # Email protocol (smtp or smtps)
+      debug: false                   # Enable debugging (set to true for troubleshooting)
+
 upload:
-  localPath: /Users/wangzeyu/Desktop/IT Project/IT-project/test uploaded attachments/
+  localPath: /Users/wangzeyu/Desktop/it-project/test_local_upload
   accessPath: /upload/
+
+lti:
+  consumerKey: sturequesthub_itproject_act20_team01
+  sharedSecret: f9Dh7sd1Gk8oP4nQz6jWc3aRb0xLm2Yv

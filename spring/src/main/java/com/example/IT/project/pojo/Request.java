@@ -1,4 +1,4 @@
-package com.example.IT.project.pojo;
+package com.example.it.project.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -19,5 +19,6 @@ public class Request {
     private String subjectId;
     private String requestType;
     private String taskType;
+    private String workType;
     private String requestName;
 }

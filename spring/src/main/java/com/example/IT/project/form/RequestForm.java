@@ -1,6 +1,6 @@
-package com.example.IT.project.form;
+package com.example.it.project.form;
 
-import com.example.IT.project.pojo.Attachment;
+import com.example.it.project.pojo.Attachment;
 import lombok.Data;
 
 import java.sql.Date;
@@ -17,5 +17,7 @@ public class RequestForm {
     private String requestType;
     private String requestName;
     private String taskType;
+    private String workType;
     private List<Attachment> attachments;
+    private List<String> teammates;
 }

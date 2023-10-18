@@ -1,11 +1,11 @@
-package com.example.IT.project.service.Impl;
+package com.example.it.project.service.Impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.IT.project.mapper.AttachmentMapper;
-import com.example.IT.project.mapper.RequestMapper;
-import com.example.IT.project.pojo.Attachment;
-import com.example.IT.project.pojo.Request;
-import com.example.IT.project.service.IRequestService;
+import com.example.it.project.mapper.AttachmentMapper;
+import com.example.it.project.mapper.RequestMapper;
+import com.example.it.project.pojo.Attachment;
+import com.example.it.project.pojo.Request;
+import com.example.it.project.service.IRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
