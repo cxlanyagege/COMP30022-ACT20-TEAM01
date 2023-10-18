@@ -1,7 +1,7 @@
 /**
  * JS Name: api/subject.js
  * Description: Subject information request api
- * 
+ *
  * Author: He Shen
  * Date: 2023/9/23
  */

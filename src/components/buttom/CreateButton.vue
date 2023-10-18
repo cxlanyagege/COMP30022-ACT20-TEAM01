@@ -1,5 +1,5 @@
-<!-- The component code was written by Yawen Luo, Dennis Wang was modified the 
-     front-end and back-end interaction method code at a later stage. The following code is used 
+<!-- The component code was written by Yawen Luo, Dennis Wang was modified the
+     front-end and back-end interaction method code at a later stage. The following code is used
      to build the component button elements of the sidebar. -->
 
 <template>
@@ -13,31 +13,31 @@
 </template>
 
 <script>
-import RequestForm from "@/components/form/index.vue"
-import { EventBus } from "@/utils/event-bus"
+import RequestForm from '@/components/form/index.vue'
+import { EventBus } from '@/utils/event-bus'
 import { mapGetters } from 'vuex'
 
 export default {
-  computed: {
-    ...mapGetters(['subjectName'])
-  },
-
   components: {
-    RequestForm,
+    RequestForm
   },
 
   data() {
     return {
-      formVisible: false,
-    };
+      formVisible: false
+    }
+  },
+
+  computed: {
+    ...mapGetters(['subjectName'])
   },
 
   mounted() {
-    EventBus.$on("close-form", () => {
-      this.formVisible = false;
+    EventBus.$on('close-form', () => {
+      this.formVisible = false
     })
-    EventBus.$on("request-saved", () => {
-      this.formVisible = false;
+    EventBus.$on('request-saved', () => {
+      this.formVisible = false
     })
   },
 
@@ -45,17 +45,17 @@ export default {
   methods: {
     showForm() {
       // reset everything in the form everytime the form is opened
-      EventBus.$emit("update-form");
-      this.formVisible = true;
+      EventBus.$emit('update-form')
+      this.formVisible = true
     },
     submitForm() {
-      this.formVisible = false;
+      this.formVisible = false
       // this.$nextTick(() => {
       //   this.formVisible = false;
       // });
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>

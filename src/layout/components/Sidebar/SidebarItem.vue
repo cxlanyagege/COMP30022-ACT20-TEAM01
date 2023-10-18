@@ -1,4 +1,4 @@
- <!-- The following code is the framework that comes with the scaffolding, modified and 
+ <!-- The following code is the framework that comes with the scaffolding, modified and
       edited by Yawen Luo to fit the student platform. The code is to combined all elements
       in to sidebar -->
 
@@ -8,8 +8,8 @@
     <template
       v-if="
         hasOneShowingChild(item.children, item) &&
-        (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
-        !item.alwaysShow
+          (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
+          !item.alwaysShow
       "
     >
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
@@ -50,65 +50,65 @@
 </template>
 
 <script>
-import path from "path";
-import { isExternal } from "@/utils/validate";
-import Item from "./Item";
-import AppLink from "./Link";
-import FixiOSBug from "./FixiOSBug";
+import path from 'path'
+import { isExternal } from '@/utils/validate'
+import Item from './Item'
+import AppLink from './Link'
+import FixiOSBug from './FixiOSBug'
 
 export default {
-  name: "SidebarItem",
+  name: 'SidebarItem',
   components: { Item, AppLink },
   mixins: [FixiOSBug],
   props: {
     item: {
       type: Object,
-      required: true,
+      required: true
     },
     isNest: {
       type: Boolean,
-      default: false,
+      default: false
     },
     basePath: {
       type: String,
-      default: "",
-    },
+      default: ''
+    }
   },
   data() {
-    this.onlyOneChild = null;
-    return {};
+    this.onlyOneChild = null
+    return {}
   },
   methods: {
     // MODIFIED BY YAWEN LUO
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter((item) => {
         if (item.hidden) {
-          return false;
+          return false
         } else {
-          this.onlyOneChild = item;
-          return true;
+          this.onlyOneChild = item
+          return true
         }
-      });
+      })
       // When there is only one child router, the child router is displayed by default
       if (showingChildren.length === 1) {
-        return true;
+        return true
       }
       // Show parent if there are no child router to display
       if (showingChildren.length === 0) {
-        this.onlyOneChild = { ...parent, path: "", noShowingChildren: true };
-        return true;
+        this.onlyOneChild = { ...parent, path: '', noShowingChildren: true }
+        return true
       }
-      return false;
+      return false
     },
     resolvePath(routePath) {
       if (isExternal(routePath)) {
-        return routePath;
+        return routePath
       }
       if (isExternal(this.basePath)) {
-        return this.basePath;
+        return this.basePath
       }
-      return path.resolve(this.basePath, routePath);
-    },
-  },
-};
+      return path.resolve(this.basePath, routePath)
+    }
+  }
+}
 </script>

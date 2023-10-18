@@ -1,4 +1,4 @@
- <!-- The following code is the framework that comes with the scaffolding, modified and 
+ <!-- The following code is the framework that comes with the scaffolding, modified and
       edited by Yawen Luo to fit the student platform. The code describes svglcon
       components-->
 
@@ -26,7 +26,7 @@ export default {
       default: ''
     }
   },
-  
+
   computed: {
     // MUDIFIED BY YAWEN LUO
     isExternal() {

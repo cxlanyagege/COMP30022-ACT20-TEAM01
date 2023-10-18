@@ -1,4 +1,4 @@
- <!-- The following code is the framework that comes with the scaffolding, modified and 
+ <!-- The following code is the framework that comes with the scaffolding, modified and
       edited by Yawen Luo to fit the student platform. The code describes logo components
       on the student web page -->
 
@@ -11,11 +11,11 @@
         class="sidebar-logo-link"
         to="/"
       >
-        <img v-if="logo" :src="logo" class="sidebar-logo" />
+        <img v-if="logo" :src="logo" class="sidebar-logo">
         <h1 v-else class="sidebar-title">{{ title }}</h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo" />
+        <img v-if="logo" :src="logo" class="sidebar-logo">
         <h1 class="sidebar-title">{{ title }}</h1>
       </router-link>
     </transition>
@@ -25,22 +25,22 @@
 <script>
 // MODIFIED BY YAWEN LUO
 export default {
-  name: "SidebarLogo",
-  
+  name: 'SidebarLogo',
+
   props: {
     collapse: {
       type: Boolean,
-      required: true,
-    },
+      required: true
+    }
   },
 
   data() {
     return {
-      title: "StuRequestHub",
-      logo: "https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png",
-    };
-  },
-};
+      title: 'StuRequestHub',
+      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

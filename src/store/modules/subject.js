@@ -1,7 +1,6 @@
 /**
  * JS Name: store/modules/subject.js
  * Description: Subject information storing
- * 
  * Author: He Shen
  * Date: 2023/9/23
  */

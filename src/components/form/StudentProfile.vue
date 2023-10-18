@@ -1,4 +1,4 @@
-<!-- The component code was written by Yawen Luo. This code is used to display the 
+<!-- The component code was written by Yawen Luo. This code is used to display the
      form element component of the student's personal information -->
 
 <template>
@@ -33,15 +33,15 @@ export default {
   props: {
     studentInfo: {
       type: Object,
-      required: true,
+      required: true
     },
     fileData: {
-      default: null,
-    },
-  },
-};
+      type: [File],
+      default: null
+    }
+  }
+}
 </script>
-
 
 <style scoped>
 .student-profile {

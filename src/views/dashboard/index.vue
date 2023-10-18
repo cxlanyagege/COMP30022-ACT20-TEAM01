@@ -7,17 +7,16 @@
 </template>
 
 <script>
-import Table from "@/components/table/TableDemo.vue";
+import Table from '@/components/table/TableDemo.vue'
 
 export default {
   components: {
-    Table,
+    Table
   },
-  
   data() {
     return {
-      tableData: [],
-    };
-  },
-};
+      tableData: []
+    }
+  }
+}
 </script>

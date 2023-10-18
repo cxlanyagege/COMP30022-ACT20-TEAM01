@@ -1,7 +1,6 @@
-import axios from "axios";
+import axios from 'axios'
 
-axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
-
+axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL
 
 export const getAction = (url, params) => {
   return axios({
@@ -12,11 +11,11 @@ export const getAction = (url, params) => {
 }
 
 export const postAction = (url, data) => {
-    return axios({
-        url: url,
-        method: 'post',
-        data
-    })
+  return axios({
+    url: url,
+    method: 'post',
+    data
+  })
 }
 
 export const putAction = (url, data) => {

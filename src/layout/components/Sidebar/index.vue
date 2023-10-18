@@ -1,5 +1,5 @@
  <!-- 自己写的 -->
- 
+
 <template>
   <!-- MOFIDIED BY YAWEN LUO -->
   <div>
@@ -8,7 +8,7 @@
         src="../../../../public/favicon.svg"
         alt="My Website Logo"
         class="logo"
-      />
+      >
       <span class="website-name">StuRequestHub</span>
     </div>
     <CustomButtonGroup />
@@ -18,18 +18,18 @@
     <div>
       <ul class="request-filter">
         <li
-          class="request-li"
           v-for="(type, index) in requestTypes"
           :key="index"
-          @mouseover="highlightRow(index)"
-          @mouseout="clearHighlight(index)"
-          @click="toggleSelection(index, type)"
+          class="request-li"
           :class="{
             highlighted: highlightedRows[index],
             selected: isSelected(index),
           }"
+          @mouseover="highlightRow(index)"
+          @mouseout="clearHighlight(index)"
+          @click="toggleSelection(index, type)"
         >
-          <span class="dot" :style="{ backgroundColor: type.color }"></span>
+          <span class="dot" :style="{ backgroundColor: type.color }" />
           {{ type.name }}
         </li>
       </ul>
@@ -37,99 +37,95 @@
   </div>
 </template>
 
-
 <script>
-import { mapGetters } from "vuex";
-import Logo from "./Logo";
-import SidebarItem from "./SidebarItem";
-import variables from "@/styles/variables.scss";
-import CustomButtonGroup from "@/components/buttom/CreateButton.vue";
-import { EventBus } from "@/utils/event-bus"
+import { mapGetters } from 'vuex'
+import variables from '@/styles/variables.scss'
+import CustomButtonGroup from '@/components/buttom/CreateButton.vue'
+import { EventBus } from '@/utils/event-bus'
 
 export default {
+
+  components: { CustomButtonGroup },
   data() {
     return {
       requestTypes: [
-        { name: "Assignment", color: "rgb(52, 152, 219)" },
-        { name: "Test", color: "rgb(46, 204, 113)" },
-        { name: "Exam", color: "rgb(243, 156, 18)" },
-        { name: "Personal", color: "rgb(231, 76, 60)" },
-        { name: "Others", color: "rgb(155, 89, 182)" },
+        { name: 'Assignment', color: 'rgb(52, 152, 219)' },
+        { name: 'Test', color: 'rgb(46, 204, 113)' },
+        { name: 'Exam', color: 'rgb(243, 156, 18)' },
+        { name: 'Personal', color: 'rgb(231, 76, 60)' },
+        { name: 'Others', color: 'rgb(155, 89, 182)' }
       ],
       highlightedRows: [],
       clickedRows: [],
       tableData: [],
-      tempData: [],
-    };
+      tempData: []
+    }
   },
 
-  components: { SidebarItem, Logo, CustomButtonGroup },
-
   computed: {
-    ...mapGetters(["sidebar"]),
+    ...mapGetters(['sidebar']),
     activeMenu() {
-      const route = this.$route;
-      const { meta, path } = route;
+      const route = this.$route
+      const { meta, path } = route
       if (meta.activeMenu) {
-        return meta.activeMenu;
+        return meta.activeMenu
       }
-      return path;
+      return path
     },
     showLogo() {
-      return this.$store.state.settings.sidebarLogo;
+      return this.$store.state.settings.sidebarLogo
     },
     variables() {
-      return variables;
-    },
+      return variables
+    }
   },
 
   mounted() {
-    EventBus.$on("copy-data-event", (data) => {
+    EventBus.$on('copy-data-event', (data) => {
       this.tempData = data
-    });
+    })
   },
 
   methods: {
     filterRequests(requestType) {
       this.tableData = this.tempData.filter(item => {
-        return item.type === requestType;
+        return item.type === requestType
       })
-      EventBus.$emit("update-data", this.tableData);
+      EventBus.$emit('update-data', this.tableData)
     },
     highlightRow(index) {
       if (!this.clickedRowIndex) {
-        this.$set(this.highlightedRows, index, true);
+        this.$set(this.highlightedRows, index, true)
       }
     },
     clearHighlight(index) {
       if (!this.clickedRowIndex) {
-        this.$set(this.highlightedRows, index, false);
+        this.$set(this.highlightedRows, index, false)
       }
     },
     toggleSelection(index, type) {
       if (this.selectedRowIndex === index) {
-        this.selectedRowIndex = null;
-        EventBus.$emit("update-data", this.tempData);
+        this.selectedRowIndex = null
+        EventBus.$emit('update-data', this.tempData)
       } else {
-        this.selectedRowIndex = index;
-        this.filterRequests(type.name);
+        this.selectedRowIndex = index
+        this.filterRequests(type.name)
       }
-      this.clearHighlightRowsExcept(index);
+      this.clearHighlightRowsExcept(index)
     },
     isSelected(index) {
-      return this.selectedRowIndex === index;
+      return this.selectedRowIndex === index
     },
     clearHighlightRowsExcept(index) {
       for (let i = 0; i < this.highlightedRows.length; i++) {
         if (i !== index) {
-          this.$set(this.highlightedRows, i, false);
+          this.$set(this.highlightedRows, i, false)
         }
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
-
 
 <style>
 .website-header {

@@ -5,7 +5,6 @@ import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-  
   // base url = base url + request url
   baseURL: process.env.VUE_APP_API_BASE_URL,
 

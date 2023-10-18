@@ -1,5 +1,5 @@
-<!-- The component code was written by Yawen Luo, Dennis Wang was modified the 
-     front-end and back-end interaction method code at a later stage. The following code is used 
+<!-- The component code was written by Yawen Luo, Dennis Wang was modified the
+     front-end and back-end interaction method code at a later stage. The following code is used
      to create the request form compoent. -->
 
 <template>
@@ -26,8 +26,8 @@
       <el-form-item
         v-if="
           form.region === 'Test' ||
-          form.region === 'Assignment' ||
-          form.region === 'Exam'
+            form.region === 'Assignment' ||
+            form.region === 'Exam'
         "
         label="Task Type"
         required
@@ -40,7 +40,7 @@
       <el-form-item
         v-if="
           form.type === 'individual' ||
-          form.type === 'Group'
+            form.type === 'Group'
         "
         label="More specific? :)"
         required
@@ -84,9 +84,10 @@
         </el-upload>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit"
-          >Create</el-button
-        >
+        <el-button
+          type="primary"
+          @click="onSubmit"
+        >Create</el-button>
         <el-button @click="onCancel">Cancel</el-button>
       </el-form-item>
     </el-form>
@@ -94,31 +95,26 @@
 </template>
 
 <script>
-import { addRequest } from "@/api/request";
-import listTable from "@/components/table/index.vue";
-import { attachmentBaseURL, uploadURL } from "@/config/config";
-import { EventBus } from "@/utils/event-bus"
-// import { FormInstance, FormRules } from 'element-plus'
+import { addRequest } from '@/api/request'
+import { attachmentBaseURL, uploadURL } from '@/config/config'
+import { EventBus } from '@/utils/event-bus'
 
 export default {
-  components: {
-    listTable,
-  },
 
   data() {
     return {
-      labelPosition: "left",
+      labelPosition: 'left',
       form: {
-        studentId: "",
-        subjectCode: "",
-        region: "",
+        studentId: '',
+        subjectCode: '',
+        region: '',
         showAdditionalOptions: false,
-        type: "",
-        workType: "",
-        name: "",
-        detail: "",
+        type: '',
+        workType: '',
+        name: '',
+        detail: '',
         fileList: [],
-        teammates: [],
+        teammates: []
       },
       uploadURL: uploadURL,
       rules: {
@@ -126,62 +122,66 @@ export default {
           {
             required: true,
             message: 'Please enter the student id',
-            trigger: 'blur',
+            trigger: 'blur'
           }
         ],
         region: [
           {
             required: true,
             message: 'Please select the request type',
-            trigger: 'change',
+            trigger: 'change'
           }
-        ],
+        ]
       }
-    };
+    }
   },
 
   watch: {
-    "form.region"(newValue) {
+    'form.region'(newValue) {
       // update showAdditionOptions based on the region
       if (
-        newValue === "Test" ||
-        newValue === "Assignment" ||
-        newValue === "Exam"
+        newValue === 'Test' ||
+        newValue === 'Assignment' ||
+        newValue === 'Exam'
       ) {
-        this.form.showAdditionalOptions = true;
+        this.form.showAdditionalOptions = true
       } else {
-        this.form.showAdditionalOptions = false;
+        this.form.showAdditionalOptions = false
       }
-    },
+    }
   },
 
   mounted() {
-    EventBus.$on("update-form", () => {
-      this.form.studentId = "";
-      this.form.region = "";
-      this.form.type = "";
-      this.form.workType = "";
-      this.form.name = "";
-      this.form.detail = "";
-      this.form.showAdditionalOptions = false;
-      this.form.fileList = [];
-      this.form.teammates = [];
-      this.clearUploadList();
+    EventBus.$on('update-form', () => {
+      this.form.studentId = ''
+      this.form.region = ''
+      this.form.type = ''
+      this.form.workType = ''
+      this.form.name = ''
+      this.form.detail = ''
+      this.form.showAdditionalOptions = false
+      this.form.fileList = []
+      this.form.teammates = []
+      this.clearUploadList()
       // console.log(this.form.fileList)
-    });
+    })
+  },
+  created() {
+    // set componenent name
+    this.$root.$refs.form_component = this
   },
 
   // MODIFIED BY DENNIS WANG
   methods: {
     clearUploadList() {
-      const uploadList = document.querySelector('.el-upload-list');
+      const uploadList = document.querySelector('.el-upload-list')
       if (uploadList) {
-        uploadList.innerHTML = '';
+        uploadList.innerHTML = ''
       }
     },
 
     onSubmit() {
-      const currentDate = new Date();
+      const currentDate = new Date()
       // construct a formData to finalise all the information in the
       // form, used later to pass data to the request
       const formData = {
@@ -191,14 +191,14 @@ export default {
         submissionDate: currentDate,
         description: this.form.detail,
         fileList: this.form.fileList,
-        requestName: this.form.name,
-      };
-      if (this.form.showAdditionalOptions) {
-        formData.type = this.form.type;
-        formData.workType = this.form.workType;
+        requestName: this.form.name
       }
-      formData.teammates = this.form.teammates;
-      let param = {
+      if (this.form.showAdditionalOptions) {
+        formData.type = this.form.type
+        formData.workType = this.form.workType
+      }
+      formData.teammates = this.form.teammates
+      const param = {
         description: formData.description,
         studentId: this.getCurrentUserId(),
         subjectId: this.getCurrentSubjectId(),
@@ -209,75 +209,74 @@ export default {
         workType: formData.workType,
         teammates: formData.teammates,
         attachments: formData.fileList.map((item) => {
-          return { url: this.convertUrlWithoutPrefix(item.url) };
-        }),
-      }; // send the add request to the server to save the request
+          return { url: this.convertUrlWithoutPrefix(item.url) }
+        })
+      } // send the add request to the server to save the request
       // info in the DB
       addRequest(param).then((res) => {
-        console.log(res.data);
-        if (res.data.code == 0) {
-          this.$message(res.data.msg);
+        console.log(res.data)
+        if (res.data.code === 0) {
+          this.$message(res.data.msg)
           // after successfully saving the request, it should be shown on the
           // web page as well, so update the request table here
           EventBus.$emit('add-request', res.data.data)
-          EventBus.$emit("request-saved")
+          EventBus.$emit('request-saved')
           // this.$root.$refs.table_component.updateRequests();
         } else {
-          this.$message("Fail to submit!");
+          this.$message('Fail to submit!')
         }
-      });
-
+      })
     },
-    handleRequestTypeChange(){
-    this.form.region = ""
-    this.form.type = ""
-    this.showAdditionalOptions = false
+    handleRequestTypeChange() {
+      this.form.region = ''
+      this.form.type = ''
+      this.showAdditionalOptions = false
     },
 
     // MODIFIED BY DENNIS WANG
     onCancel() {
-      EventBus.$emit("close-form");
+      EventBus.$emit('close-form')
     },
     // WRITTEN BY DENNIS WANG
     // used to show the files on the form page, given access to
     // the file from the client side
     convertUrlWithPrefix(url) {
-      return attachmentBaseURL + url;
+      return attachmentBaseURL + url
     },
     // used to store the data in the server side as it doesn't
     // require extra address to access
     convertUrlWithoutPrefix(url) {
-      return url.substr(attachmentBaseURL.length, url.length);
+      return url.substr(attachmentBaseURL.length, url.length)
     },
     // handle files uploaded successfully
     handleSuccess(response, file, fileList) {
       this.form.fileList.push({
         uid: file.raw.uid,
-        url: this.convertUrlWithPrefix(response.data),
-      });
-      console.log(this.form.fileList);
-      this.$message.success("File uploaded successfully");
+        url: this.convertUrlWithPrefix(response.data)
+      })
+      console.log(this.form.fileList)
+      this.$message.success('File uploaded successfully')
     },
     handleError(err) {
       if (err && err.response && err.response.data) {
-        const errorMessage = err.response.data.error;
-        this.$message.error("File upload failed: " + errorMessage);
+        const errorMessage = err.response.data.error
+        this.$message.error('File upload failed: ' + errorMessage)
       } else {
-        this.$message.error("File upload failed");
+        this.$message.error('File upload failed')
       }
     },
     // WRITTEN BY DENNIS WANG
     handleRemove(file, files) {
       this.form.fileList = this.form.fileList.filter(
-        (item) => item.uid != file.uid
-      );
-      console.log(this.form.fileList);
+        (item) => item.uid !== file.uid
+      )
+      console.log(this.form.fileList)
     },
     addTeammate() {
-      this.form.teammates.push("");
+      this.form.teammates.push('')
     },
     removeTeammate(index) {
-      this.form.teammates.splice(index, 1);
+      this.form.teammates.splice(index, 1)
     },
     // get student id
     getCurrentUserId() {
@@ -287,10 +286,6 @@ export default {
     getCurrentSubjectId() {
       return this.$store.getters.subjectId
     }
-  },
-  created() {
-    // set componenent name
-    this.$root.$refs.form_component = this;
-  },
-};
+  }
+}
 </script>

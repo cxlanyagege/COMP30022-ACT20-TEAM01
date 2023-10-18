@@ -1,5 +1,5 @@
-<!-- The component code was written by Yawen Luo, Dennis Wang was modified the 
-     front-end and back-end interaction method code at a later stage. The following code is used 
+<!-- The component code was written by Yawen Luo, Dennis Wang was modified the
+     front-end and back-end interaction method code at a later stage. The following code is used
      to build the component request table elements. -->
 
 <template>
@@ -38,8 +38,7 @@
               type="info"
               size="small"
               @click="handleDetailClick(scope.row.idNo)"
-              >Detail</el-button
-            >
+            >Detail</el-button>
             <el-dialog
               v-model="dialogVisible"
               title="Request detail"
@@ -74,8 +73,7 @@
               type="danger"
               size="small"
               @click="handleDelete(scope.row.idNo)"
-              >Delete</el-button
-            >
+            >Delete</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -87,10 +85,10 @@
 import {
   getRequests,
   deleteRequest,
-  getRequest,
-} from "@/api/request";
-import { attachmentBaseURL, uploadURL } from "@/config/config";
-import { EventBus } from "@/utils/event-bus"
+  getRequest
+} from '@/api/request'
+import { attachmentBaseURL, uploadURL } from '@/config/config'
+import { EventBus } from '@/utils/event-bus'
 
 export default {
   data() {
@@ -100,73 +98,82 @@ export default {
       listLoading: false,
       dialogVisible: false,
       requestDetail: {
-        studentId: "",
-        detail: "",
-        region: "",
-        name: "",
-        type: "",
-        fileList: [],
+        studentId: '',
+        detail: '',
+        region: '',
+        name: '',
+        type: '',
+        fileList: []
       },
-      uploadURL: uploadURL,
-    };
+      uploadURL: uploadURL
+    }
   },
 
   computed: {
     combinedData() {
-      return [...this.waitingData, ...this.processedData];
-    },
+      return [...this.waitingData, ...this.processedData]
+    }
   },
 
   mounted() {
     this.updateRequests().then(() => {
       console.log(this.waitingData)
-      EventBus.$emit("copy-data-event", { waitingData: this.waitingData, processedData: this.processedData });
-    });
+      EventBus.$emit('copy-data-event', { waitingData: this.waitingData, processedData: this.processedData })
+    })
+  },
+  created() {
+    // set componenent name
+    // this.$root.$refs.table_component = this;
+    EventBus.$on('update-data', (data) => {
+      this.waitingData = data.waitingData
+      this.processedData = data.processedData
+      console.log(this.waitingData, this.processedData)
+    })
   },
 
   methods: {
     handleDelete(idNo) {
       // delete request based on requestid
       deleteRequest(idNo).then((res) => {
-        console.log(res.data);
-        this.updateRequests();
-      });
+        console.log(res.data)
+        this.updateRequests()
+      })
     },
     handleDetailClick(idNo) {
-      this.dialogVisible = true;
-      this.showRequestDetail(idNo);
+      this.dialogVisible = true
+      this.showRequestDetail(idNo)
     },
     showRequestDetail(requestId) {
       getRequest(requestId, null).then((res) => {
-        console.log(res.data);
-        this.requestDetail.studentId = res.data.data.studentId;
-        this.requestDetail.detail = res.data.data.description;
-        this.requestDetail.region = res.data.data.requestType;
-        this.requestDetail.name = res.data.data.requestName;
-        this.requestDetail.type = res.data.data.taskType;
+        console.log(res.data)
+        this.requestDetail.studentId = res.data.data.studentId
+        this.requestDetail.detail = res.data.data.description
+        this.requestDetail.region = res.data.data.requestType
+        this.requestDetail.name = res.data.data.requestName
+        this.requestDetail.type = res.data.data.taskType
         // this.requestDetail.teammates = res.data.data.teammates;
         this.requestDetail.fileList = res.data.data.attachments.map((item) => {
           return {
             uid: item.attachmentId,
-            url: this.convertUrlWithPrefix(item.url),
-          };
-        });
-      });
-      console.log(this.requestDetail);
+            url: this.convertUrlWithPrefix(item.url)
+          }
+        })
+      })
+      console.log(this.requestDetail)
     },
     convertUrlWithPrefix(url) {
-      return attachmentBaseURL + url;
+      return attachmentBaseURL + url
     },
     updateRequests() {
-      console.log("handle requests");
+      console.log('handle requests')
       const param1 = {
-        status: "WAITING",
-      };
-      const userId = this.$store.getters.id;
+        status: 'WAITING'
+      }
+      const userId = this.$store.getters.id
       const request1 = getRequests(userId, param1).then((res) => {
-        console.log(res.data);
+        console.log(res.data)
         if (res.data.data.length === 0) {
-          this.waitingData = [];
+          this.waitingData = []
         } else {
           const requestData = res.data.data.map((record) => {
             return {
@@ -175,24 +182,24 @@ export default {
               name: record.requestName,
               status: record.status,
               date: record.submissionDate,
-              action: "delete",
-            };
-          });
+              action: 'delete'
+            }
+          })
           requestData.sort((a, b) => {
-            const dateA = new Date(a.date);
-            const dateB = new Date(b.date);
-            return dateB - dateA;
-          });
-          this.waitingData = requestData;
+            const dateA = new Date(a.date)
+            const dateB = new Date(b.date)
+            return dateB - dateA
+          })
+          this.waitingData = requestData
         }
-      });
+      })
       const param2 = {
-        status: "OTHER",
-      };
+        status: 'OTHER'
+      }
       const request2 = getRequests(userId, param2).then((res) => {
-        console.log(res.data);
+        console.log(res.data)
         if (res.data.data.length === 0) {
-          this.processedData = [];
+          this.processedData = []
         } else {
           const requestData = res.data.data.map((record) => {
             return {
@@ -201,31 +208,22 @@ export default {
               name: record.requestName,
               status: record.status,
               date: record.submissionDate,
-              action: "delete",
-            };
-          });
+              action: 'delete'
+            }
+          })
           requestData.sort((a, b) => {
-            const dateA = new Date(a.date);
-            const dateB = new Date(b.date);
-            return dateB - dateA;
-          });
-          this.processedData = requestData;
+            const dateA = new Date(a.date)
+            const dateB = new Date(b.date)
+            return dateB - dateA
+          })
+          this.processedData = requestData
         }
-      });
+      })
 
-    return Promise.all([request1, request2]);
-    },
-  },
-  created() {
-    // set componenent name
-    // this.$root.$refs.table_component = this;
-    EventBus.$on("update-data", (data) => {
-      this.waitingData = data.waitingData;
-      this.processedData = data.processedData;
-      console.log(this.waitingData, this.processedData)
-    })
+      return Promise.all([request1, request2])
+    }
   }
-};
+}
 </script>
 
 <style>

@@ -6,7 +6,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
+          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -45,24 +45,22 @@
       width="60%"
       center
     >
-      <Setting/>
+      <Setting />
     </el-dialog>
   </div>
 </template>
 
-
-
 <script>
-import { mapGetters } from "vuex";
-import Breadcrumb from "@/components/Breadcrumb";
-import StudentProfile from "@/components/form/StudentProfile.vue";
-import Setting from "@/components/form/setting.vue";
+import { mapGetters } from 'vuex'
+import Breadcrumb from '@/components/Breadcrumb'
+import StudentProfile from '@/components/form/StudentProfile.vue'
+import Setting from '@/components/form/setting.vue'
 
 export default {
   components: {
     Breadcrumb,
     StudentProfile,
-    Setting,
+    Setting
   },
 
   data() {
@@ -70,29 +68,28 @@ export default {
       showProfileDialog: false,
       showSettingDialog: false,
       studentInfo: {
-        name: this.$store.state.user.name, 
+        name: this.$store.state.user.name,
         id: this.$store.state.user.id,
         email: this.$store.state.user.email,
-        aap: "Yes",
+        aap: 'Yes'
       }
     }
   },
 
   computed: {
-    ...mapGetters(["sidebar", "avatar"]),
+    ...mapGetters(['sidebar', 'avatar'])
   },
 
   methods: {
     toggleSideBar() {
-      this.$store.dispatch("app/toggleSideBar");
+      this.$store.dispatch('app/toggleSideBar')
     },
     openProfileDialog() {
-      this.showProfileDialog = true;
-    },
-  },
-};
+      this.showProfileDialog = true
+    }
+  }
+}
 </script>
-
 
 <style lang="scss" scoped>
 .custom-button {

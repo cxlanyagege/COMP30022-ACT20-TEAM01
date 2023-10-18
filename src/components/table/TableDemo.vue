@@ -75,11 +75,11 @@
       <el-table-column label="ACTION">
         <template slot-scope="scope">
           <el-button
+            v-if="scope.row.status === 'WAITING'"
             type="danger"
             size="mini"
-            @click="deleteRow(scope.row)"
-            v-if="scope.row.status === 'WAITING'"
             class="small-button"
+            @click="deleteRow(scope.row)"
           >
             DELETE
           </el-button>
@@ -90,51 +90,59 @@
 </template>
 
 <script>
-import { deleteRequest, getRequests } from '@/api/request';
-import { EventBus } from '@/utils/event-bus';
-import { attachmentBaseURL, uploadURL } from '@/config/config';
+import { deleteRequest, getRequests } from '@/api/request'
+import { EventBus } from '@/utils/event-bus'
+import { attachmentBaseURL, uploadURL } from '@/config/config'
 
 export default {
   data() {
     return {
       tableData: [],
       uploadURL: uploadURL
-    };
+    }
   },
   computed: {
     sortedTableData() {
       const waitingRows = this.tableData.filter(
-        (row) => row.status === "WAITING"
-      );
+        (row) => row.status === 'WAITING'
+      )
       waitingRows.sort((a, b) => {
-        const dateA = new Date(a.date);
-        const dateB = new Date(b.date);
-        return dateB - dateA;
-      });
+        const dateA = new Date(a.date)
+        const dateB = new Date(b.date)
+        return dateB - dateA
+      })
       const nonWaitingRows = this.tableData.filter(
-        (row) => row.status !== "WAITING"
-      );
+        (row) => row.status !== 'WAITING'
+      )
       nonWaitingRows.sort((a, b) => {
-        const dateA = new Date(a.date);
-        const dateB = new Date(b.date);
-        return dateB - dateA;
-      });
-      return waitingRows.concat(nonWaitingRows);
-    },
+        const dateA = new Date(a.date)
+        const dateB = new Date(b.date)
+        return dateB - dateA
+      })
+      return waitingRows.concat(nonWaitingRows)
+    }
   },
   mounted() {
     this.updateRequests().then(() => {
-      EventBus.$emit("copy-data-event", this.tableData);
-    });
+      EventBus.$emit('copy-data-event', this.tableData)
+    })
+  },
+  created() {
+    EventBus.$on('update-data', (data) => {
+      this.tableData = data
+    })
+    EventBus.$on('add-request', (data) => {
+      this.addNewRequest(data)
+    })
   },
   methods: {
     updateRequests() {
-      console.log("handle requests");
-      const userId = this.$store.getters.id;
+      console.log('handle requests')
+      const userId = this.$store.getters.id
       const request1 = getRequests(userId, null).then((res) => {
-        console.log(res.data);
+        console.log(res.data)
         if (res.data.data.length === 0) {
-          this.tableData = [];
+          this.tableData = []
         } else {
           const requestData = res.data.data.map((record) => {
             return {
@@ -147,61 +155,52 @@ export default {
               fileList: record.attachments.map((item) => {
                 return {
                   uid: item.attachmentId,
-                  url: this.convertUrlWithPrefix(item.url),
-                };
+                  url: this.convertUrlWithPrefix(item.url)
+                }
               }),
-              date: record.submissionDate,
+              date: record.submissionDate
               // action: "delete",
-            };
-          });
-          this.tableData = requestData;
+            }
+          })
+          this.tableData = requestData
         }
-      });
-    return Promise.all([request1]);
+      })
+      return Promise.all([request1])
     },
-
 
     deleteRow(row) {
       deleteRequest(row.idNo).then(() => {
-        const index = this.tableData.indexOf(row);
+        const index = this.tableData.indexOf(row)
         if (index !== -1) {
-          this.tableData.splice(index, 1);
+          this.tableData.splice(index, 1)
         }
       })
     },
 
     convertUrlWithPrefix(url) {
-      return attachmentBaseURL + url;
+      return attachmentBaseURL + url
     },
 
     addNewRequest(data) {
       const newRequest = {
-        idNo: data.requestId, 
+        idNo: data.requestId,
         type: data.requestType,
-        workType: data.workType, 
-        name: data.requestName, 
+        workType: data.workType,
+        name: data.requestName,
         status: data.status,
         detail: data.description,
         date: data.submissionDate,
         fileList: data.attachments.map((item) => {
           return {
             uid: item.attachmentId,
-            url: this.convertUrlWithPrefix(item.url),
-          };
+            url: this.convertUrlWithPrefix(item.url)
+          }
         })
-      };
-      this.tableData.unshift(newRequest);
-    },
-  },
-  created() {
-    EventBus.$on("update-data", (data) => {
-      this.tableData = data;
-    })
-    EventBus.$on("add-request", (data) => {
-      this.addNewRequest(data);
-    })
+      }
+      this.tableData.unshift(newRequest)
+    }
   }
-};
+}
 </script>
 
 <style>

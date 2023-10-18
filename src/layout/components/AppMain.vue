@@ -1,4 +1,4 @@
- <!-- The following code is the framework that comes with the scaffolding, modified and 
+ <!-- The following code is the framework that comes with the scaffolding, modified and
       edited by Yawen Luo to fit the student platform. The code main page to entry -->
 
 <template>
@@ -11,13 +11,13 @@
 
 <script>
 export default {
-  name: "AppMain",
+  name: 'AppMain',
   computed: {
     key() {
-      return this.$route.path;
-    },
-  },
-};
+      return this.$route.path
+    }
+  }
+}
 </script>
 
 <style scoped>

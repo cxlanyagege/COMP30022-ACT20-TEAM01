@@ -8,7 +8,7 @@ export default {
   mounted() {
     this.fixBugIniOS()
   },
-  
+
   methods: {
     fixBugIniOS() {
       const $subMenu = this.$refs.subMenu

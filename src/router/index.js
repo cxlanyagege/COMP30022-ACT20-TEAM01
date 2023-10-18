@@ -1,4 +1,4 @@
-/* The following code is the framework that comes with the scaffolding, modified and 
+/* The following code is the framework that comes with the scaffolding, modified and
 edited by Yawen Luo to fit the student platform. The code is the router in the paltfrom */
 
 import Vue from 'vue'
@@ -35,7 +35,6 @@ export const constantRoutes = [
   },
   { path: '*', redirect: '/404', hidden: true }
 ]
-
 
 const createRouter = () => new Router({
   scrollBehavior: () => ({ y: 0 }),
