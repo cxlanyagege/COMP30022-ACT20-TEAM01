@@ -186,7 +186,7 @@ export default {
         this.selectedRow.status = 'APPROVE'
         this.selectedRow.decision = 'Approved'
         // 关闭确认对话框
-        this.approvalConfirmationDialogVisible = false
+        this.approveDialogVisible = false
       }
     },
     handleRejectClick(row) {
