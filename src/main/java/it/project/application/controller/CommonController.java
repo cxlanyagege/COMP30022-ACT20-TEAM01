@@ -1,9 +1,11 @@
 /**
  * Class Name: CommonController
- * Description: Controller for handling uploading attachments
+ * 
+ * Description: Controller handling file upload
  * 
  * Author: Dennis Wang & He Shen
- * Date: 2023/10/19
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.controller;
@@ -42,7 +44,7 @@ public class CommonController {
         MultipartFile file = multipartRequest.getFile("file");
         String filename = file.getOriginalFilename();
         log.info("Upload filename={}", filename);
-        storageService.save(file, filename, localPath);
+        storageService.save(file, filename, localPath); // store the file to local path
         return Result.success("Upload successfully", accessPath + filename);
     }
 }

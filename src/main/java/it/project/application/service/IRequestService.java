@@ -1,9 +1,12 @@
 /**
  * Class Name: IRequestService
- * Description: Interface for Request Service
+ * 
+ * Description: Request service interface with an extra 
+ *              saveMain waiting to be implemented
  * 
  * Author: Dennis Wang
- * Date: 2023/9/23
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.service;

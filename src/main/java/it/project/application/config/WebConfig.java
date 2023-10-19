@@ -1,9 +1,11 @@
 /**
  * Class Name: WebConfig
- * Description: Configuration for uploading attachments to local
  * 
- * Author: Dennis Wang
- * Date: 2023/9/23
+ * Description: Website configuration
+ * 
+ * Author: Dennis Wang & He Shen
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.config;
@@ -23,13 +25,13 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${upload.localPath}")
     private String localPath;
 
-    // Help browser to locate the resource
+    // allow website to have access to the file preview
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler(accessPath + "**").addResourceLocations("file:" + localPath);
     }
 
-    // Add cross region profile (not needed in production)
+    // allow access from every port
     @Override
     public void addCorsMappings(CorsRegistry corsRegistry){
         corsRegistry.addMapping("/**")

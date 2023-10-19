@@ -1,9 +1,11 @@
 /**
  * Class Name: IEmailService
- * Description: Interface for Emailing Service
+ * 
+ * Description: Email service interface used to send email to users
  * 
  * Author: Dennis Wang
- * Date: 2023/10/19
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.service;

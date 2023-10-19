@@ -1,9 +1,13 @@
 /**
  * Class Name: Result
- * Description: Result indicator in attachment uploading
+ * 
+ * Description: Response package that is used to return 
+ *              several type of messages in JSON file 
+ *              back to the frontend
  * 
  * Author: Dennis Wang
- * Date: 2023/9/23
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.vo;

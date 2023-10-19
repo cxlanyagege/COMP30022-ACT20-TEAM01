@@ -1,9 +1,11 @@
 /**
  * Class Name: StorageServiceImpl
- * Description: Implementation for Storage Service
+ * 
+ * Description: Store files locally
  * 
  * Author: Dennis Wang
- * Date: 2023/9/23
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.service.Impl;
@@ -24,6 +26,7 @@ public class StorageServiceImpl implements IStorageService {
     public Boolean save(MultipartFile file, String fileName, String filePath) {
         String path = filePath + fileName;
         File targetFile = new File(path);
+        // if no exists folder
         if (!targetFile.getParentFile().exists()){
             targetFile.getParentFile().mkdirs();
         }

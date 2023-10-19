@@ -1,9 +1,12 @@
 /**
  * Class Name: RequestFrom
- * Description: Generic form for request data
+ * 
+ * Description: The class used to store the details of a request 
+ *              submitted in JSON file from client to server
  * 
  * Author: Dennis Wang & He Shen
- * Date: 2023/10/19
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.form;

@@ -1,3 +1,6 @@
+<!-- The component code was written by Yawen Luo. The following code is used 
+     to build the component request table elements. -->
+
 <template>
   <div class="app-container">
     <el-table
@@ -9,38 +12,43 @@
     >
       <el-table-column type="expand">
         <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand" label-width="150px">
+          <el-form
+            label-position="left"
+            inline
+            class="demo-table-expand"
+            label-width="150px"
+          >
             <el-form-item label="Submission Date">
               <span>{{ props.row.date }}</span>
             </el-form-item>
-            <br>
+            <br />
             <template v-if="props.row.workType != null">
               <el-form-item label="Request specific">
                 <span>{{ props.row.workType }}</span>
               </el-form-item>
             </template>
-            <br>
+            <br />
             <el-form-item label="Detail">
               <span>{{ props.row.detail }}</span>
             </el-form-item>
-            <br>
+            <br />
             <el-form-item label="File">
               <template v-if="props.row.fileList.length > 0">
                 <li v-for="file in props.row.fileList" :key="file.uid">
                   <a :href="file.url" target="_blank">
-                    <span style="color: rgb(0, 85, 255);">{{ file.url.substr(uploadURL.length, file.url.length) }}</span>
+                    <span style="color: rgb(0, 85, 255)">{{
+                      file.url.substr(uploadURL.length, file.url.length)
+                    }}</span>
                   </a>
                 </li>
               </template>
-              <template v-else>
-                No file uploaded
-              </template>
+              <template v-else> No file uploaded </template>
             </el-form-item>
-            <br>
+            <br />
             <el-form-item label="Addition">
               <span>{{ props.row.shopId }}</span>
             </el-form-item>
-            <br>
+            <br />
           </el-form>
         </template>
       </el-table-column>
@@ -159,7 +167,6 @@ export default {
                 }
               }),
               date: record.submissionDate
-              // action: "delete",
             }
           })
           this.tableData = requestData

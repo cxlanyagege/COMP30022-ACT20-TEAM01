@@ -1,9 +1,13 @@
 /**
  * Class Name: MybatisPlusConfig
- * Description: Configuration for JPA ORM on MybatisPlus
+ * 
+ * Description: MybatisPlus configuration when using pagination,
+ *              however it's not required in the current design 
+ *              as scrolling bar is used instead
  * 
  * Author: Dennis Wang & He Shen
- * Date: 2023/10/9
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.config;

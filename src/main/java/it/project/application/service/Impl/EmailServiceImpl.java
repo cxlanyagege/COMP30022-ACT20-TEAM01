@@ -1,9 +1,11 @@
 /**
  * Class Name: EmailServiceImpl
- * Description: Implementation for Emailing Service
+ * 
+ * Description: Is able to send simple text email to users
  * 
  * Author: Dennis Wang
- * Date: 2023/10/19
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.service.Impl;

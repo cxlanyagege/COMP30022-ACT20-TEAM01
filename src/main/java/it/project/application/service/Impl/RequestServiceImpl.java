@@ -1,9 +1,12 @@
 /**
  * Class Name: RequestServiceImpl
- * Description: Implementation for Request Service
+ * 
+ * Description: Used to save request detail into the 
+ *              database as well as related attachments
  * 
  * Author: Dennis Wang
- * Date: 2023/9/23
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.service.Impl;

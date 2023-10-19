@@ -1,9 +1,12 @@
 /**
  * Class Name: Attachment
- * Description: Pojo for Attachment
+ * 
+ * Description: Use to store info related to attachment 
+ *              that will be stored in database as well
  * 
  * Author: Dennis Wang & He Shen
- * Date: 2023/10/11
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.pojo;
@@ -15,7 +18,7 @@ import lombok.Data;
 @Data
 @TableName("Attachment")
 public class Attachment {
-
+    // related to database
     @TableId("attachment_id") // primary key
     private Integer attachmentId;
     private String url;

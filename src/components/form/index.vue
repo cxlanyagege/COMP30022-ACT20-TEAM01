@@ -163,7 +163,6 @@ export default {
       this.form.fileList = []
       this.form.teammates = []
       this.clearUploadList()
-      // console.log(this.form.fileList)
     })
   },
   created() {
@@ -221,7 +220,6 @@ export default {
           // web page as well, so update the request table here
           EventBus.$emit('add-request', res.data.data)
           EventBus.$emit('request-saved')
-          // this.$root.$refs.table_component.updateRequests();
         } else {
           this.$message('Fail to submit!')
         }

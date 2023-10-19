@@ -3,7 +3,7 @@
  * Description: Controller for handling student related requests
  * 
  * Author: He Shen & Dennis Wang
- * Date: 2023/10/19
+ * Date: 2023/10/20
  * 
  * Note: Not finalized since there is no StaffController
  */
@@ -14,7 +14,7 @@ import it.project.application.pojo.Student;
 import it.project.application.service.IStudentService;
 import it.project.application.util.JwtUtil;
 import it.project.application.vo.Result;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@Slf4j
 @RequestMapping("/api")
 public class StudentController {
 
@@ -63,13 +64,15 @@ public class StudentController {
         }
     }
 
+    // written by Dennis wang, used to update the student preferences on getting the email
+    // notification
     @PutMapping("/changeStudentPreference/{studentId}")
-    public Result updateStudentPreference(@RequestParam(defaultValue = "true") Boolean createRequest, @RequestParam(defaultValue = "true") Boolean deleteRequest,
-                       @RequestParam(defaultValue = "true") Boolean processRequest, @PathVariable int studentId) {
+    public Result updateStudentPreference(@RequestBody Student studentPreference, @PathVariable int studentId) {
+        // log.info("{}", studentPreference);
         Student student = studentService.getById(studentId);
-        student.setCreateRequest(createRequest);
-        student.setDeleteRequest(deleteRequest);
-        student.setProcessRequest(processRequest);
+        student.setCreateRequest(studentPreference.isCreateRequest());
+        student.setDeleteRequest(studentPreference.isDeleteRequest());
+        student.setProcessRequest(studentPreference.isProcessRequest());
         studentService.updateById(student);
         return Result.success(student);
     }

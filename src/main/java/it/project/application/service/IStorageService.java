@@ -1,9 +1,11 @@
 /**
  * Class Name: IStorageService
- * Description: Interface for Storage Service
+ * 
+ * Description: Storage service interface
  * 
  * Author: Dennis Wang
- * Date: 2023/9/23
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.service;

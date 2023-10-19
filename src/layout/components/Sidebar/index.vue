@@ -1,4 +1,5 @@
- <!-- 自己写的 -->
+<!-- The component code was written by Yawen Luo. The following code is used 
+     to build the sidebar elements. -->
 
 <template>
   <!-- MOFIDIED BY YAWEN LUO -->
@@ -88,7 +89,7 @@ export default {
 
   methods: {
     filterRequests(requestType) {
-      this.tableData = this.tempData.filter(item => {
+      this.tableData = this.tempData.filter((item) => {
         return item.type === requestType
       })
       EventBus.$emit('update-data', this.tableData)

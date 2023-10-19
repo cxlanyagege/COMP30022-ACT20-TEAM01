@@ -1,3 +1,6 @@
+<!-- The component code was written by Yawen Luo. The following code is used 
+     to build the component request table elements. -->
+
 <template>
   <div class="settings-page">
     <h3>Notification Settings</h3>
@@ -53,14 +56,15 @@ export default {
   // on receiving the emails
   methods: {
     updateSetting() {
-      const param = {
+      console.log(this.notificationSettings[0].isEnabled)
+      let param = {
         createRequest: this.notificationSettings[0].isEnabled,
         processRequest: this.notificationSettings[1].isEnabled,
         deleteRequest: this.notificationSettings[2].isEnabled
       }
       // can change the id to the id in student profile
       updateStudentPreference(1266288, param).then((res) => {
-        console.log(res)
+        console.log(res.data)
       })
     }
   }

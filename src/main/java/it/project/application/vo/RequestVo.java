@@ -1,9 +1,13 @@
 /**
  * Class Name: RequestVo
- * Description: Pojo for Request when callback
+ * 
+ * Description: Sometimes request info needs to be sent to 
+ *              the frontend, so this is created to store 
+ *              info required to send back to frontend
  * 
  * Author: Dennis Wang & He Shen
- * Date: 2023/10/19
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.vo;
@@ -21,7 +25,6 @@ public class RequestVo {
     // if returns a class...
     // springboot will automatically translate class into JSON
     private String description;
-    // private String subjectId;
     private Integer studentId;
     private Date submissionDate;
     private String status;

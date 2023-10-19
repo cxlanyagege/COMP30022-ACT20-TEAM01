@@ -1,9 +1,11 @@
 /**
  * Class Name: IAttachmentService
- * Description: Interface for Attachment Service
+ * 
+ * Description: Attachment service interface to be implemented
  * 
  * Author: Dennis Wang & He Shen
- * Date: 2023/10/19
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.service;

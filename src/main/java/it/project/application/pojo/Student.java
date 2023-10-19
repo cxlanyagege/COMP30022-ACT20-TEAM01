@@ -3,7 +3,7 @@
  * Description: Pojo for Student
  * 
  * Author: He Shen & Dennis Wang
- * Date: 2023/10/19
+ * Date: 2023/10/20
  */
 
 package it.project.application.pojo;
@@ -23,7 +23,7 @@ public class Student {
     private Long studentId;
     private String name;
     private String email;
-    private Boolean createRequest;
-    private Boolean deleteRequest;
-    private Boolean processRequest;
+    private boolean createRequest;
+    private boolean deleteRequest;
+    private boolean processRequest;
 }

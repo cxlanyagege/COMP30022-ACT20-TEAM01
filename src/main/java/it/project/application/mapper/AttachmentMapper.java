@@ -1,9 +1,12 @@
 /**
  * Class Name: SubjectMapper
- * Description: ORM Mapper for Attachments
+ * 
+ * Description: Attachment mapper created to connect to 
+ *              JDBC automatically from relevant service
  * 
  * Author: Dennis Wang
- * Date: 2023/9/23
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.mapper;

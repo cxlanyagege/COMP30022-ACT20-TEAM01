@@ -1,9 +1,12 @@
 /**
  * Class Name: Request
- * Description: Pojo for Request
+ * 
+ * Description: Use to store info related to a request 
+ *              that will be stored in database as well
  * 
  * Author: Dennis Wang & He Shen
- * Date: 2023/10/11
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.pojo;
@@ -17,7 +20,7 @@ import java.sql.Date;
 @Data
 @TableName("Request")
 public class Request {
-    // Database related
+    // class created to store information directly connected to database
     @TableId("request_id") // Specify the primary key field
     private Integer requestId;
     private String description;

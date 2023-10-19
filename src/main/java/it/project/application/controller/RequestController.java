@@ -1,9 +1,12 @@
 /**
  * Class Name: RequestController
- * Description: Controller for handling request manipulations
+ * 
+ * Description: controller for request, handle different actions 
+ *              such as add, delete, detail and change
  * 
  * Author: Dennis Wang & He Shen
- * Date: 2023/10/19
+ * 
+ * Date: 2023/10/20
  */
 
 package it.project.application.controller;
@@ -46,6 +49,7 @@ public class RequestController {
     @Autowired
     private IStudentService studentService;
 
+    // get the requests related to a student from the database
     @GetMapping("/getRequests/{studentId}")
     public Result getRequests(@PathVariable int studentId, @RequestParam(required = false) String status){
         log.info("{}", studentId);
@@ -78,18 +82,22 @@ public class RequestController {
         return Result.success(voList);
     }    
 
+    // get the detail of a specific request
     @GetMapping("/getRequestDetail/{requestId}")
     public Result getRequestDetail(@PathVariable int requestId){
         RequestVo requestVo = new RequestVo();
         Request request = requestService.getById(requestId);
         QueryWrapper query = new QueryWrapper();
         query.eq("request_id", request.getRequestId());
+
+        // get the attachments related to a request as well
         List<Attachment> attachments = attachmentService.list(query);
         BeanUtils.copyProperties(request, requestVo);
         requestVo.setAttachments(attachments);
         return Result.success(requestVo);
     }
 
+    // save the request into the database
     @PostMapping("/saveRequest")
     public Result saveRequest(@RequestBody RequestForm requestForm){
         log.info("{}", requestForm);
@@ -104,7 +112,7 @@ public class RequestController {
 
         // check the email preference for student who create the request
         Student student = studentService.getById(requestForm.getStudentId());
-        if (student.getCreateRequest()){ // if want to receive the email
+        if (student.isCreateRequest()){ // if want to receive the email
             sendConfirmationEmail(student.getEmail(), student.getName());
         }
 
@@ -115,11 +123,11 @@ public class RequestController {
                     query.eq("email", teammate);
                     Student teamMember = studentService.getOne(query);
                     if (teamMember != null){ // if the student with the input email exists
-                        if (teamMember.getCreateRequest()){ // send email if the preference say so
+                        if (teamMember.isCreateRequest()){ // send email if the preference say so
                             sendCreateEmail(teamMember, student.getName());
                         }
                     } else { // the email is either not in the database or typed in the wrong email
-                        sendProblemEmail(student, teamMember);
+                        sendProblemEmail(student, teammate);
                     }
                 }
             }
@@ -127,13 +135,14 @@ public class RequestController {
         return Result.success("Request submitted successfully!", requestVo);
     }
 
+    // delete a certain request from the database
     @DeleteMapping("/deleteRequest/{requestId}")
     public Result deleteRequest(@PathVariable int requestId){
         Request request = requestService.getById(requestId);
         Student student = studentService.getById(request.getStudentId());
 
         // send confirmation email to the student who created the request
-        if (student.getDeleteRequest()){
+        if (student.isDeleteRequest()){
             sendDeleteEmail(student);
         }
 
@@ -142,6 +151,7 @@ public class RequestController {
         return Result.success("Successfully deleted");
     }
 
+    // update the request status after the request has been approved
     @PutMapping("/updateRequest/{requestId}")
     public Result updateRequest(@PathVariable int requestId, @RequestParam String status){
         Request request = requestService.getById(requestId);
@@ -150,12 +160,13 @@ public class RequestController {
         Student student = studentService.getById(request.getStudentId());
 
         // send confirmation email to the student who created the request
-        if (student.getProcessRequest()){
+        if (student.isProcessRequest()){
             sendProcessEmail(student, request);
         }
         return Result.success(request);
     }
 
+    // confirmation email on submitting a request
     private void sendConfirmationEmail(String studentEmail, String name){
         String msg = String.format(
                 """
@@ -167,6 +178,7 @@ public class RequestController {
         emailService.sendSimpleMail(new Email(studentEmail, msg, "Request submitted successfully!"));
     }
 
+    // confirmation email to teammates if any
     private void sendCreateEmail(Student teammate, String requestSender){
         String msg = String.format(
                 """
@@ -178,6 +190,7 @@ public class RequestController {
         emailService.sendSimpleMail(new Email(teammate.getEmail(), msg, "Request submitted successfully!"));
     }
 
+    // if want to receive the email if delete a request
     private void sendDeleteEmail(Student student){
         String msg = String.format(
                 """
@@ -190,17 +203,20 @@ public class RequestController {
         emailService.sendSimpleMail(new Email(student.getEmail(), msg, "Request deleted successfully"));
     }
 
+    // email notification on request been processed
     private void sendProcessEmail(Student student, Request request){
         String msg = String.format(
                 """
                         Hello %s, \s
-                        Your recent request\s
+                        Your recent request id: %d, name: %s has been processed and now the status is %s.
+                        Log in to your LMS to see the details of the request\s
                         Thanks-The studentRequestHub Team""",
-                student.getName());
+                student.getName(), request.getRequestId(), request.getRequestName(), request.getStatus());
         emailService.sendSimpleMail(new Email(student.getEmail(), msg, "Request has been processed"));
     }
 
-    private void sendProblemEmail(Student sender, Student teammate){
+    // email to the original sender notifying the wrong input for the teammates'emails
+    private void sendProblemEmail(Student sender, String teammate){
         String msg = String.format(
                 """
                         Hello %s, \s
@@ -209,7 +225,7 @@ public class RequestController {
                         You may want to check the email above to see if it's correct or you can delete your current
                         request and submit the request again, this time, make sure you input the correct email address. \s
                         Thanks-The studentRequestHub Team""",
-                sender.getName(), teammate.getEmail());
+                sender.getName(), teammate);
         emailService.sendSimpleMail(new Email(sender.getEmail(), msg, "Email invalid!"));
     }
 }
