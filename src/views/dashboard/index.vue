@@ -71,7 +71,8 @@ export default {
         morespecific: 'Others'
       }],
       filterCondition: 'All',
-      filteredData: []
+      filteredData: [],
+      dialogVisible: false
     }
   },
   created() {
@@ -107,6 +108,7 @@ export default {
       }
     },
     handleFlagClick(row) {
+      this.dialogVisible = true
       if (!row.flagClicked) {
         // mark the clicked flag as clicked
         this.flagClicked = !this.flagClicked

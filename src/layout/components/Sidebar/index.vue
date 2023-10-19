@@ -39,6 +39,11 @@ import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
 
 export default {
+  data() {
+    return {
+      isCollapse: false,
+    }
+  },
   components: { SidebarItem, Logo },
   computed: {
     ...mapGetters([
