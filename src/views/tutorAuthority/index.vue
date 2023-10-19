@@ -41,7 +41,8 @@
 </template>
 
 <script>
-import { EventBus } from '@/views/requestAuthority/index.vue'
+// import Authority from '@/views/requestAuthority'
+import { EventBus } from '@/utils/EventBus'
 
 export default {
   methods: {

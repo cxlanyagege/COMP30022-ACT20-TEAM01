@@ -201,12 +201,6 @@ export default {
       }).catch(() => {
         // user cancel the button
       })
-    },
-    watch: {
-      tableData(newTableData) {
-        // 监听 tableData 的变化，更新表格数据
-        this.tableData = newTableData;
-      }
     }
   }
 }

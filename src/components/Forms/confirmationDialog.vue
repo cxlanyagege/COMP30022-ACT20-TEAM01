@@ -1,8 +1,7 @@
 <template>
   <el-dialog
     title="Approve Request"
-    :visible="dialogVisible" 
-    @update:visible="updateVisible"
+    :visible.sync="visible"
     width="50%"
   >
     <el-form ref="form" :model="form" label-width="180px">
@@ -33,26 +32,17 @@ export default {
     form: Object,
     requestType: String
   },
-  data() {
-    return {
-      dialogVisible: this.visible // 初始化为传递的 prop 值
-    }
-  },
   computed: {
     shouldShowDate() {
-      return this.requestType === 'Extension'  // Show the date input only if the request type is 'Extension'
+      return this.requestType === 'Extension';  // Show the date input only if the request type is 'Extension'
     }
   },
   methods: {
     handleCancel() {
-      this.dialogVisible = false
+      this.$emit('update:visible', false);
     },
     handleConfirm() {
-      this.$emit('confirm')
-    },
-    updateVisible(value) {
-      this.dialogVisible = value // 当父组件更新时，同步更新局部变量
-      this.$emit('update:visible', value) // 向父组件发送事件通知
+      this.$emit('confirm');
     }
   }
 }
