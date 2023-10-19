@@ -13,7 +13,7 @@ export default {
   components: {
     Table
   },
-  
+
   data() {
     return {
       tableData: []

@@ -1,4 +1,4 @@
-<!-- The component code was written by Yawen Luo. The following code is used 
+<!-- The component code was written by Yawen Luo. The following code is used
      to build the component request table elements. -->
 
 <template>
@@ -21,17 +21,17 @@
             <el-form-item label="Submission Date">
               <span>{{ props.row.date }}</span>
             </el-form-item>
-            <br />
+            <br>
             <template v-if="props.row.workType != null">
               <el-form-item label="Request specific">
                 <span>{{ props.row.workType }}</span>
               </el-form-item>
             </template>
-            <br />
+            <br>
             <el-form-item label="Detail">
               <span>{{ props.row.detail }}</span>
             </el-form-item>
-            <br />
+            <br>
             <el-form-item label="File">
               <template v-if="props.row.fileList.length > 0">
                 <li v-for="file in props.row.fileList" :key="file.uid">
@@ -44,11 +44,11 @@
               </template>
               <template v-else> No file uploaded </template>
             </el-form-item>
-            <br />
+            <br>
             <el-form-item label="Addition">
               <span>{{ props.row.shopId }}</span>
             </el-form-item>
-            <br />
+            <br>
           </el-form>
         </template>
       </el-table-column>

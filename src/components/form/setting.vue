@@ -1,4 +1,4 @@
-<!-- The component code was written by Yawen Luo. The following code is used 
+<!-- The component code was written by Yawen Luo. The following code is used
      to build the component request table elements. -->
 
 <template>
@@ -57,7 +57,7 @@ export default {
   methods: {
     updateSetting() {
       console.log(this.notificationSettings[0].isEnabled)
-      let param = {
+      const param = {
         createRequest: this.notificationSettings[0].isEnabled,
         processRequest: this.notificationSettings[1].isEnabled,
         deleteRequest: this.notificationSettings[2].isEnabled
