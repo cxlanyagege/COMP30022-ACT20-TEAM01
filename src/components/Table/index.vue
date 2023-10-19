@@ -181,7 +181,7 @@ export default {
     },
     handleApprove() {
       const { message, date } = this.approveForm
-      if (message && date) {
+      if (message) {
         // 更新状态和决定为'APPROVE'
         this.selectedRow.status = 'APPROVE'
         this.selectedRow.decision = 'Approved'
