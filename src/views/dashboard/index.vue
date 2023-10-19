@@ -97,6 +97,10 @@ export default {
     applyFilter(filterCondition) {
       // 处理筛选的逻辑
       this.filterCondition = filterCondition
+      // 筛选所选的 subID
+      const subID = this.selectedRowIndex
+      let filteredData = this.tableData.filter(item => item.subID === subID)
+
       if (filterCondition === 'Assignment') {
         this.filteredData = this.tableData.filter(item => item.reqType === 'Assignment')
       } else if (filterCondition === 'Test') {
@@ -104,7 +108,7 @@ export default {
       } else if (filterCondition === 'Exam') {
         this.filteredData = this.tableData.filter(item => item.reqType === 'Exam')
       } else if (filterCondition === 'Personal') {
-        this.filteredData = this.tableData.filter(item => item.taskType === 'Individual')
+        this.filteredData = this.tableData.filter(item => item.reqType === 'Personal')
       } else if (filterCondition === 'Others') {
         this.filteredData = this.tableData.filter(item => item.reqType === 'Others')
       } else {
