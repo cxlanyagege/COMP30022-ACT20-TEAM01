@@ -98,8 +98,8 @@ export default {
         this.filteredData = this.tableData.filter(item => item.reqType === 'Test')
       } else if (filterCondition === 'Exam') {
         this.filteredData = this.tableData.filter(item => item.reqType === 'Exam')
-      } else if (filterCondition === 'Individual') {
-        this.filteredData = this.tableData.filter(item => item.taskType === 'Individual')
+      } else if (filterCondition === 'Personal') {
+        this.filteredData = this.tableData.filter(item => item.reqType === 'Personal')
       } else if (filterCondition === 'Others') {
         this.filteredData = this.tableData.filter(item => item.reqType === 'Others')
       } else {
