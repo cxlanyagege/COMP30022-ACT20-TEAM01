@@ -4,6 +4,7 @@ import com.example.it.project.pojo.Student;
 import com.example.it.project.service.IStudentService;
 import com.example.it.project.util.JwtUtil;
 import com.example.it.project.vo.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@Slf4j
 @RequestMapping("/api")
 public class StudentController {
     @Autowired
@@ -51,13 +53,15 @@ public class StudentController {
         }
     }
 
+    // written by Dennis wang, used to update the student preferences on getting the email
+    // notification
     @PutMapping("/changeStudentPreference/{studentId}")
-    public Result updateStudentPreference(@RequestParam(defaultValue = "true") Boolean createRequest, @RequestParam(defaultValue = "true") Boolean deleteRequest,
-                       @RequestParam(defaultValue = "true") Boolean processRequest, @PathVariable int studentId) {
+    public Result updateStudentPreference(@RequestBody Student studentPreference, @PathVariable int studentId) {
+        // log.info("{}", studentPreference);
         Student student = studentService.getById(studentId);
-        student.setCreateRequest(createRequest);
-        student.setDeleteRequest(deleteRequest);
-        student.setProcessRequest(processRequest);
+        student.setCreateRequest(studentPreference.isCreateRequest());
+        student.setDeleteRequest(studentPreference.isDeleteRequest());
+        student.setProcessRequest(studentPreference.isProcessRequest());
         studentService.updateById(student);
         return Result.success(student);
     }

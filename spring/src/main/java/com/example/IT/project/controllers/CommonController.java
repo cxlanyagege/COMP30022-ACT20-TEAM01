@@ -1,3 +1,9 @@
+/**
+ * Author: Dennis Wang
+ * Last modified data: 2023-10-19
+ * Description: controller handling file upload
+ */
+
 package com.example.it.project.controllers;
 
 import com.example.it.project.service.IStorageService;
@@ -32,7 +38,7 @@ public class CommonController {
         MultipartFile file = multipartRequest.getFile("file");
         String filename = file.getOriginalFilename();
         log.info("Upload filename={}", filename);
-        storageService.save(file, filename, localPath);
+        storageService.save(file, filename, localPath); // store the file to local path
         return Result.success("Upload successfully", accessPath + filename);
     }
 }

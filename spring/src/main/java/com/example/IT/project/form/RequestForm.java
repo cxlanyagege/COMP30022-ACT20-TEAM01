@@ -1,3 +1,10 @@
+/**
+ * Author: Dennis Wang
+ * Last modified data: 2023-10-19
+ * Description: the class used to store the details of a request submitted
+ * in JSON file from client to server
+ */
+
 package com.example.it.project.form;
 
 import com.example.it.project.pojo.Attachment;

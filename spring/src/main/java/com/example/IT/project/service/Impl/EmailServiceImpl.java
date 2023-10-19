@@ -1,3 +1,9 @@
+/**
+ * Author: Dennis Wang
+ * Last modified data: 2023-10-19
+ * Description: is able to send simple text email to users
+ */
+
 package com.example.it.project.service.Impl;
 
 import com.example.it.project.service.IEmailService;

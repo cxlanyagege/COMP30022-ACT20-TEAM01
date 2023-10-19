@@ -1,3 +1,9 @@
+/**
+ * Author: Dennis Wang
+ * Last modified data: 2023-10-19
+ * Description: used to save request detail into the database as well as related attachments
+ */
+
 package com.example.it.project.service.Impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

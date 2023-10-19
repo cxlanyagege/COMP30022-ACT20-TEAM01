@@ -15,7 +15,7 @@ public class Student {
     private Long studentId;
     private String name;
     private String email;
-    private Boolean createRequest;
-    private Boolean deleteRequest;
-    private Boolean processRequest;
+    private boolean createRequest;
+    private boolean deleteRequest;
+    private boolean processRequest;
 }

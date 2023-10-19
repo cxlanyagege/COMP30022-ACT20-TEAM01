@@ -1,3 +1,9 @@
+/**
+ * Author: Dennis Wang
+ * Last modified data: 2023-10-19
+ * Description: store files locally
+ */
+
 package com.example.it.project.service.Impl;
 
 import com.example.it.project.service.IStorageService;
@@ -15,6 +21,7 @@ public class StorageServiceImpl implements IStorageService {
     public Boolean save(MultipartFile file, String fileName, String filePath) {
         String path = filePath + fileName;
         File targetFile = new File(path);
+        // if no exists folder
         if (!targetFile.getParentFile().exists()){
             targetFile.getParentFile().mkdirs();
         }

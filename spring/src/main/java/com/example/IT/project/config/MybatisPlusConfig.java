@@ -1,3 +1,11 @@
+/**
+ * Author: Dennis Wang
+ * Last modified data: 2023-10-19
+ * Description: MyBatisPlus configuration when using pagination,
+ * however it's not required in the current design as scrolling bar
+ * is used instead
+ */
+
 package com.example.it.project.config;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;

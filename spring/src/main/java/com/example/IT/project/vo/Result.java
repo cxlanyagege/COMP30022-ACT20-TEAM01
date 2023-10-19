@@ -1,3 +1,10 @@
+/**
+ * Author: Dennis Wang
+ * Last modified data: 2023-10-19
+ * Description: response package that is used to return several type of messages
+ * in JSON file back to the frontend
+ */
+
 package com.example.it.project.vo;
 
 public class Result<T> {
