@@ -3,6 +3,10 @@
 
     <breadcrumb class="breadcrumb-container" />
 
+    <el-button plain @click="openNotificationDialog" class="notification-button" style="padding: 8px; margin-top: 6px; margin-bottom: 6px; margin-left: 1060px">
+      <i class="el-icon-bell" style="font-size: 20px; color: #304156;"></i>
+    </el-button>
+
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -60,12 +64,17 @@ export default {
     },
     openSettingDialog() {
       this.showSettingDialog = true
+    },
+    openNotificationDialog() {
+      // 处理打开通知对话框的逻辑
+      // 可以在这里弹出通知设置对话框或执行其他操作
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
 .navbar {
   height: 50px;
   overflow: hidden;
@@ -76,13 +85,6 @@ export default {
   .breadcrumb-container {
     float: left;
     margin-left: 35px;
-  }
-
-  .search-container {
-    float: left;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 1030px;
   }
 
   .right-menu {
