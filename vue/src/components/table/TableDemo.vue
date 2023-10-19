@@ -1,3 +1,6 @@
+<!-- The component code was written by Yawen Luo. The following code is used 
+     to build the component request table elements. -->
+
 <template>
   <div class="app-container">
     <el-table
@@ -9,38 +12,43 @@
     >
       <el-table-column type="expand">
         <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand" label-width="150px">
+          <el-form
+            label-position="left"
+            inline
+            class="demo-table-expand"
+            label-width="150px"
+          >
             <el-form-item label="Submission Date">
               <span>{{ props.row.date }}</span>
             </el-form-item>
-            <br>
+            <br />
             <template v-if="props.row.workType != null">
               <el-form-item label="Request specific">
                 <span>{{ props.row.workType }}</span>
               </el-form-item>
             </template>
-            <br>
+            <br />
             <el-form-item label="Detail">
               <span>{{ props.row.detail }}</span>
             </el-form-item>
-            <br>
+            <br />
             <el-form-item label="File">
               <template v-if="props.row.fileList.length > 0">
                 <li v-for="file in props.row.fileList" :key="file.uid">
                   <a :href="file.url" target="_blank">
-                    <span style="color: rgb(0, 85, 255);">{{ file.url.substr(uploadURL.length, file.url.length) }}</span>
+                    <span style="color: rgb(0, 85, 255)">{{
+                      file.url.substr(uploadURL.length, file.url.length)
+                    }}</span>
                   </a>
                 </li>
               </template>
-              <template v-else>
-                No file uploaded
-              </template>
+              <template v-else> No file uploaded </template>
             </el-form-item>
-            <br>
+            <br />
             <el-form-item label="Addition">
               <span>{{ props.row.shopId }}</span>
             </el-form-item>
-            <br>
+            <br />
           </el-form>
         </template>
       </el-table-column>
@@ -90,15 +98,15 @@
 </template>
 
 <script>
-import { deleteRequest, getRequests } from '@/api/request';
-import { EventBus } from '@/utils/event-bus';
-import { attachmentBaseURL, uploadURL } from '@/config/config';
+import { deleteRequest, getRequests } from "@/api/request";
+import { EventBus } from "@/utils/event-bus";
+import { attachmentBaseURL, uploadURL } from "@/config/config";
 
 export default {
   data() {
     return {
       tableData: [],
-      uploadURL: uploadURL
+      uploadURL: uploadURL,
     };
   },
   computed: {
@@ -150,15 +158,13 @@ export default {
                 };
               }),
               date: record.submissionDate,
-              // action: "delete",
             };
           });
           this.tableData = requestData;
         }
       });
-    return Promise.all([request1]);
+      return Promise.all([request1]);
     },
-
 
     deleteRow(row) {
       deleteRequest(row.idNo).then(() => {
@@ -166,7 +172,7 @@ export default {
         if (index !== -1) {
           this.tableData.splice(index, 1);
         }
-      })
+      });
     },
 
     convertUrlWithPrefix(url) {
@@ -175,10 +181,10 @@ export default {
 
     addNewRequest(data) {
       const newRequest = {
-        idNo: data.requestId, 
+        idNo: data.requestId,
         type: data.requestType,
-        workType: data.workType, 
-        name: data.requestName, 
+        workType: data.workType,
+        name: data.requestName,
         status: data.status,
         detail: data.description,
         date: data.submissionDate,
@@ -187,7 +193,7 @@ export default {
             uid: item.attachmentId,
             url: this.convertUrlWithPrefix(item.url),
           };
-        })
+        }),
       };
       this.tableData.unshift(newRequest);
     },
@@ -195,11 +201,11 @@ export default {
   created() {
     EventBus.$on("update-data", (data) => {
       this.tableData = data;
-    })
+    });
     EventBus.$on("add-request", (data) => {
       this.addNewRequest(data);
-    })
-  }
+    });
+  },
 };
 </script>
 

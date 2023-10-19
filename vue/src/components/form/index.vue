@@ -100,16 +100,10 @@
 
 <script>
 import { addRequest } from "@/api/request";
-import listTable from "@/components/table/index.vue";
 import { attachmentBaseURL, uploadURL } from "@/config/config";
 import { EventBus } from "@/utils/event-bus"
-// import { FormInstance, FormRules } from 'element-plus'
 
 export default {
-  components: {
-    listTable,
-  },
-
   data() {
     return {
       labelPosition: "left",
@@ -171,7 +165,6 @@ export default {
       this.form.fileList = [];
       this.form.teammates = [];
       this.clearUploadList();
-      // console.log(this.form.fileList)
     });
   },
 
@@ -224,7 +217,6 @@ export default {
           // web page as well, so update the request table here
           EventBus.$emit('add-request', res.data.data)
           EventBus.$emit("request-saved")
-          // this.$root.$refs.table_component.updateRequests();
         } else {
           this.$message("Fail to submit!");
         }

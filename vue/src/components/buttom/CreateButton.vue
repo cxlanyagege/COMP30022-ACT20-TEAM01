@@ -47,9 +47,6 @@ export default {
     },
     submitForm() {
       this.formVisible = false;
-      // this.$nextTick(() => {
-      //   this.formVisible = false;
-      // });
     },
   },
 };

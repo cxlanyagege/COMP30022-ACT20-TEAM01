@@ -1,3 +1,7 @@
+<!-- The component code was written by Yawen Luo, Dennis Wang was modified the 
+     front-end and back-end interaction method code at a later stage. The following code is setting
+     compoent. -->
+
 <template>
   <div class="settings-page">
     <h3>Notification Settings</h3>

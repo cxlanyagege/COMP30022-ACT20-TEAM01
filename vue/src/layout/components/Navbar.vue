@@ -1,4 +1,5 @@
- <!-- 自己写的 -->
+<!-- The component code was written by Yawen Luo. The following code is used 
+     to build the navbar elements. -->
 
 <template>
   <div class="navbar">
@@ -45,7 +46,7 @@
       width="60%"
       center
     >
-      <Setting/>
+      <Setting />
     </el-dialog>
   </div>
 </template>
