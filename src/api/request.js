@@ -1,4 +1,4 @@
-// file written by Dennis, used to call api to make interaction with the 
+// file written by Dennis, used to call api to make interaction with the
 // backend
 import { deleteAction, getAction, postAction, putAction } from '@/utils/communication'
 
