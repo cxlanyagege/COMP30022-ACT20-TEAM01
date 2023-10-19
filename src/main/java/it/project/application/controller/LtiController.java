@@ -2,8 +2,8 @@
  * Class Name: LtiController
  * Description: Controller for handling Lti launch
  * 
- * Author: He Shen
- * Date: 2023/9/23
+ * Author: He Shen & Dennis Wang
+ * Date: 2023/10/19
  */
 
 package it.project.application.controller;
@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.project.application.service.StudentService;
-import it.project.application.service.SubjectService;
+import it.project.application.service.IStudentService;
+import it.project.application.service.ISubjectService;
+import it.project.application.pojo.Student;
+import it.project.application.pojo.Subject;
 import it.project.application.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -41,10 +43,10 @@ public class LtiController {
     private String sharedSecret;
 
     @Autowired
-    private StudentService studentService;
+    private IStudentService studentService;
 
     @Autowired
-    private SubjectService subjectService;
+    private ISubjectService subjectService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -109,12 +111,16 @@ public class LtiController {
             Long id = Long.valueOf(request.getParameter("custom_canvas_user_id"));
             String name = request.getParameter("lis_person_name_full");
             String email = request.getParameter("lis_person_contact_email_primary");
-            studentService.authenticate(id, name, email);
+            if (studentService.getById(id) == null){
+                studentService.save(new Student(id, name, email, true, true, true));
+            }
 
             // Store subject course information
             Long subjectId = Long.valueOf(request.getParameter("custom_canvas_course_id"));
             String subjectName = request.getParameter("context_label");
-            subjectService.store(subjectId, subjectName);
+            if (subjectService.getById(subjectId) == null){
+                subjectService.save(new Subject(subjectId, subjectName));
+            }
 
             // Generate jwt token
             String jwt = jwtUtil.generateToken(id, name, email, subjectId, subjectName);

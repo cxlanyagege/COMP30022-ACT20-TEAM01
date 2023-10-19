@@ -2,17 +2,18 @@
  * Class Name: StudentController
  * Description: Controller for handling student related requests
  * 
- * Author: He Shen
- * Date: 2023/10/9
+ * Author: He Shen & Dennis Wang
+ * Date: 2023/10/19
  * 
  * Note: Not finalized since there is no StaffController
  */
 
 package it.project.application.controller;
 
-import it.project.application.entity.Student;
-import it.project.application.service.StudentService;
+import it.project.application.pojo.Student;
+import it.project.application.service.IStudentService;
 import it.project.application.util.JwtUtil;
+import it.project.application.vo.Result;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ import java.util.Map;
 public class StudentController {
 
     @Autowired
-    private StudentService studentService;
+    private IStudentService studentService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -40,7 +41,7 @@ public class StudentController {
         Long studentId = Long.valueOf(studentIdStr);
 
         // Get student entity from student id
-        Student student = studentService.getUserInfo(studentId);
+        Student student = studentService.getById(studentId);
 
         // Response with matched student entity
         Map<String, Object> response = new HashMap<>();
@@ -60,6 +61,17 @@ public class StudentController {
             response.put("message", "User not found");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PutMapping("/changeStudentPreference/{studentId}")
+    public Result updateStudentPreference(@RequestParam(defaultValue = "true") Boolean createRequest, @RequestParam(defaultValue = "true") Boolean deleteRequest,
+                       @RequestParam(defaultValue = "true") Boolean processRequest, @PathVariable int studentId) {
+        Student student = studentService.getById(studentId);
+        student.setCreateRequest(createRequest);
+        student.setDeleteRequest(deleteRequest);
+        student.setProcessRequest(processRequest);
+        studentService.updateById(student);
+        return Result.success(student);
     }
 
 }

@@ -3,7 +3,7 @@
  * Description: Pojo for Request when callback
  * 
  * Author: Dennis Wang & He Shen
- * Date: 2023/10/11
+ * Date: 2023/10/19
  */
 
 package it.project.application.vo;
@@ -31,5 +31,5 @@ public class RequestVo {
     private String taskType;
     private String workType;
     private List<Attachment> attachments;
-
+    private List<String> teammates;
 }

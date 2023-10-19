@@ -2,8 +2,8 @@
  * Class Name: SubjectController
  * Description: Controller for handling subject informations
  * 
- * Author: He Shen
- * Date: 2023/9/23
+ * Author: He Shen & Dennis Wang
+ * Date: 2023/10/19
  */
 
 package it.project.application.controller;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.project.application.entity.Subject;
-import it.project.application.service.SubjectService;
+import it.project.application.pojo.Subject;
+import it.project.application.service.ISubjectService;
 import it.project.application.util.JwtUtil;
 
 @RestController
@@ -28,7 +28,7 @@ import it.project.application.util.JwtUtil;
 public class SubjectController {
 
     @Autowired
-    private SubjectService subjectService;
+    private ISubjectService subjectService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -40,7 +40,7 @@ public class SubjectController {
         Long subjectId = jwtUtil.extractSubjectId(token);
 
         // Get subject entity from subject id
-        Subject subject = subjectService.getSubjectInfo(subjectId);
+        Subject subject = subjectService.getById(subjectId);
 
         // Response with matched subject entity
         Map<String, Object> response = new HashMap<>();

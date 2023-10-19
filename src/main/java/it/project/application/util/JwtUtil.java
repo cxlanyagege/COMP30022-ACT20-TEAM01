@@ -2,8 +2,8 @@
  * Class Name: JwtUtil
  * Description: Utility for processing jwt
  * 
- * Author: He Shen
- * Date: 2023/8/16
+ * Author: He Shen & Dennis Wang
+ * Date: 2023/10/19
  */
 
 package it.project.application.util;
@@ -20,7 +20,7 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-    private String SECRET_KEY = "itproject_sid";
+    private final String SECRET_KEY = "itproject_sid";
 
     // Extract student id as string
     public String extractStudentId(String token) {
@@ -49,7 +49,7 @@ public class JwtUtil {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
-    // Generate claims from original datas
+    // Generate claims from original data
     // Student + Subject (including id, name, etc.)
     public String generateToken(Long id, String name, 
         String email, Long subjectId, String subjectName) {
