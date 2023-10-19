@@ -10,8 +10,8 @@
 ## Build & Run Instructions
 
 ### Prerequisites
-1. Install [Node.js](https://nodejs.org/en/download). Recommended version: 18.18.0+
-2. Install [Adoptium Temurin OpenJDK](https://adoptium.net/zh-CN/temurin/releases/). Recommended version: 17+
+1. Install [Node.js](https://nodejs.org/en/download). Recommended version: 20.x
+2. Install [Adoptium Temurin OpenJDK](https://adoptium.net/zh-CN/temurin/releases/). Recommended version: 17 LTS
 3. Install and setup [MySQL Server](https://dev.mysql.com/downloads/mysql/). Recommended version: 8.0.34+
 
 ### Clone
