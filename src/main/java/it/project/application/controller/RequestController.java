@@ -171,8 +171,10 @@ public class RequestController {
         String msg = String.format(
                 """
                         Hello %s, \s
+
                         You have successfully submitted a request.
                         Log in to your student request portal through LMS to check out the details of the request \s
+
                         Thanks-The studentRequestHub Team""",
                 name);
         emailService.sendSimpleMail(new Email(studentEmail, msg, "Request submitted successfully!"));
@@ -183,8 +185,10 @@ public class RequestController {
         String msg = String.format(
                 """
                         Hello %s, \s
+
                         Your team member %s has successfully submitted a request.
                         Log in to your student request portal through LMS to check out the details of the request \s
+
                         Thanks-The studentRequestHub Team""",
                 teammate.getName(), requestSender);
         emailService.sendSimpleMail(new Email(teammate.getEmail(), msg, "Request submitted successfully!"));
@@ -195,9 +199,11 @@ public class RequestController {
         String msg = String.format(
                 """
                         Hello %s, \s
+
                         You have successfully deleted a request.
                         If you wish to resubmit the request you can send another request form through the portal.
                         Apologies for the action that can't be undo \s
+
                         Thanks-The studentRequestHub Team""",
                 student.getName());
         emailService.sendSimpleMail(new Email(student.getEmail(), msg, "Request deleted successfully"));
@@ -208,8 +214,10 @@ public class RequestController {
         String msg = String.format(
                 """
                         Hello %s, \s
+
                         Your recent request id: %d, name: %s has been processed and now the status is %s.
                         Log in to your LMS to see the details of the request\s
+
                         Thanks-The studentRequestHub Team""",
                 student.getName(), request.getRequestId(), request.getRequestName(), request.getStatus());
         emailService.sendSimpleMail(new Email(student.getEmail(), msg, "Request has been processed"));
@@ -220,10 +228,12 @@ public class RequestController {
         String msg = String.format(
                 """
                         Hello %s, \s
+
                         One of your team members' email %s is not found in the database.
                         So he/she is unable to receive the notification on your request submitted recently.
                         You may want to check the email above to see if it's correct or you can delete your current
                         request and submit the request again, this time, make sure you input the correct email address. \s
+                        
                         Thanks-The studentRequestHub Team""",
                 sender.getName(), teammate);
         emailService.sendSimpleMail(new Email(sender.getEmail(), msg, "Email invalid!"));
