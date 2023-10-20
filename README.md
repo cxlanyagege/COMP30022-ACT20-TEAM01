@@ -33,16 +33,16 @@ Import template SQL schema into your database:
 ```
 cd ../sql
 mysql -u root -p
-CREATE DATABASE sc;
+CREATE DATABASE full;
 QUIT;
-mysql -u root -p sc < template.sql
+mysql -u root -p full < template.sql
 ```
 
 Your database configuration and desired attachment saved location may be different to what was defined in project file. 
 You may manually modify these line in `application.properties` in spring/src/main/resources:
 
 ```
-spring.datasource.url=jdbc:mysql://localhost:3306/sc
+spring.datasource.url=jdbc:mysql://localhost:3306/full
 spring.datasource.username=itproject
 spring.datasource.password=123456
 ...
