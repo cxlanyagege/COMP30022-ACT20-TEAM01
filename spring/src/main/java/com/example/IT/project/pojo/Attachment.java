@@ -8,9 +8,14 @@ package com.example.it.project.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName("Attachment")
 public class Attachment {
     // related to database

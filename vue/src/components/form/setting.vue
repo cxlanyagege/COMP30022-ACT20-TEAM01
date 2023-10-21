@@ -58,7 +58,6 @@ export default {
   // on receiving the emails
   methods: {
     updateSetting() {
-      console.log(this.notificationSettings[0].isEnabled)
       let param = {
         createRequest: this.notificationSettings[0].isEnabled,
         processRequest: this.notificationSettings[1].isEnabled,

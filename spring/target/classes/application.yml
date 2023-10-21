@@ -28,7 +28,7 @@ spring:
       debug: false                   # Enable debugging (set to true for troubleshooting)
 
 upload:
-  localPath: /Users/wangzeyu/Desktop/it-project/test_local_upload
+  localPath: /Users/wangzeyu/Desktop/it-project/test_local_upload/
   accessPath: /upload/
 
 lti:
