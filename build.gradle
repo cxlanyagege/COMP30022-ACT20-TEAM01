@@ -52,6 +52,10 @@ dependencies {
 
 	// SnakeYAML
 	implementation 'org.yaml:snakeyaml:2.2'
+
+	// JUnit Vintage Engine
+	testImplementation 'org.junit.vintage:junit-vintage-engine:5.10.0'
+
 }
 
 tasks.named('test') {
