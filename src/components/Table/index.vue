@@ -181,12 +181,12 @@ export default {
     },
     handleApprove() {
       const { message, date } = this.approveForm
-      if (message && date) {
+      if (message) {
         // 更新状态和决定为'APPROVE'
         this.selectedRow.status = 'APPROVE'
         this.selectedRow.decision = 'Approved'
         // 关闭确认对话框
-        this.approvalConfirmationDialogVisible = false
+        this.approveDialogVisible = false
       }
     },
     handleRejectClick(row) {
@@ -201,12 +201,6 @@ export default {
       }).catch(() => {
         // user cancel the button
       })
-    },
-    watch: {
-      tableData(newTableData) {
-        // 监听 tableData 的变化，更新表格数据
-        this.tableData = newTableData;
-      }
     }
   }
 }
