@@ -1,6 +1,6 @@
 /**
- * Author: Dennis Wang
- * Last modified data: 2023-10-21
+ * Author: Dennis Wang & He Shen
+ * Last modified data: 2023-11-10
  * Description: unit test on uploading file and successfully saved locally through common controller
  */
 
@@ -15,10 +15,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import static org.junit.Assert.*;
 
 public class CommonControllerTest extends AbstractTest{
@@ -32,11 +28,8 @@ public class CommonControllerTest extends AbstractTest{
     public void uploadFile() throws Exception{
         String uri = "/upload";
 
-        String filePath = "/Users/wangzeyu/Desktop/test_file1.png";
-
-        // Read the file content into a byte array
-        Path path = Paths.get(filePath);
-        byte[] fileContent = Files.readAllBytes(path);
+        // Mock the file content with a byte array or a string content
+        byte[] fileContent = "mock content of the file".getBytes();
 
         MockMultipartFile mockFile = new MockMultipartFile("file", "test_file1.png",
                 MediaType.IMAGE_PNG_VALUE, fileContent);

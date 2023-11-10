@@ -38,8 +38,3 @@ if ($LASTEXITCODE -ne 0) {
     Write-Host "Spring Boot build failed"
     exit 1
 }
-
-# Generate other properties files if needed
-if ($buildType -eq "prod") {
-    Copy-Item .\src\main\resources\production.properties .\build\libs\application.properties
-}

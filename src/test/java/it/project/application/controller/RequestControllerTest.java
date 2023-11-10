@@ -1,6 +1,6 @@
 /**
- * Author: Dennis Wang
- * Last modified data: 2023-10-21
+ * Author: Dennis Wang & He Shen
+ * Last modified data: 2023-11-10
  * Description: unit tests on request controller, delete, add, change and detail
  */
 
@@ -88,6 +88,34 @@ public class RequestControllerTest extends AbstractTest{
 
     @Test
     public void deleteRequest() throws Exception {
+
+        // Save a specified request given request id
+        RequestForm request = new RequestForm();
+        request.setStudentId(1266288);
+        request.setSubjectId("COMP10012");
+        request.setSubmissionDate(Date.valueOf("2023-10-20"));
+        request.setRequestId(-1535074302);
+        request.setRequestName("Testing request");
+        request.setRequestType("Exam");
+        request.setDescription("Testing description");
+        request.setTaskType("Individual");
+        request.setWorkType("Remark");
+        List<Attachment> attachments = new ArrayList<>();
+        attachments.add(new Attachment(null, "test1.png", null));
+        attachments.add(new Attachment(null, "test2.png", null));
+        request.setAttachments(attachments);
+        request.setTeammates(new ArrayList<>());
+
+        String inputJson = super.mapToJson(request);
+        MvcResult saveResult = mvc.perform(MockMvcRequestBuilders.post("/api/saveRequest")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(inputJson)
+                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+
+        int saveStatus = saveResult.getResponse().getStatus();
+        assertEquals(200, saveStatus);
+
+        // Once save succeed, then test deleting
         int requestId = -1535074302; // if further testing, need to change the requestId here
         String uri = "/api/deleteRequest/" + requestId;
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.delete(uri)

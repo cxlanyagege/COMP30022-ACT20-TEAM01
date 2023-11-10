@@ -56,6 +56,9 @@ dependencies {
 	// JUnit Vintage Engine
 	testImplementation 'org.junit.vintage:junit-vintage-engine:5.10.0'
 
+	// H2
+	testImplementation 'com.h2database:h2:2.2.224'
+
 }
 
 tasks.named('test') {

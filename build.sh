@@ -41,7 +41,3 @@ if [ $? -ne 0 ]; then
     echo "Spring Boot build failed"
     exit 1
 fi
-
-# Generate other properties files if needed
-if [ "$buildType" == "prod" ]; then
-cp ./src/main/resources/production.properties ./build/libs/application.properties
