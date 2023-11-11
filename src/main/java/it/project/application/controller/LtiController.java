@@ -107,10 +107,16 @@ public class LtiController {
         String incomingSignature = request.getParameter("oauth_signature");
         if (calculatedSignature.equals(incomingSignature)) {
 
+            // Log
+            Collections.list(request.getParameterNames())
+                .forEach(paramName -> 
+                    System.out.println(paramName + ": " + request.getParameter(paramName)));
+
+
             // Store user info from lti post into jwt token
             Long id = Long.valueOf(request.getParameter("custom_canvas_user_id"));
             String name = request.getParameter("lis_person_name_full");
-            String email = request.getParameter("lis_person_contact_email_primary");
+            String email = request.getParameter("custom_canvas_user_login_id");
             if (studentService.getById(id) == null){
                 studentService.save(new Student(id, name, email, true, true, true));
             }
