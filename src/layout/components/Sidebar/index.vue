@@ -141,7 +141,7 @@ export default {
 
 .logo {
   width: 30px;
-  height: auto;
+  height:  ;
   margin-right: 20px;
 }
 

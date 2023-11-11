@@ -21,7 +21,7 @@
 
 <style scoped>
 .custom-label-size .el-form-item__label {
-    font-size: 15px; 
+  font-size: 15px;
 }
 </style>
 
@@ -34,15 +34,16 @@ export default {
   },
   computed: {
     shouldShowDate() {
-      return this.requestType === 'Extension';  // Show the date input only if the request type is 'Extension'
+      // Show the date input only if the request type is 'Extension'
+      return this.requestType === 'Extension'
     }
   },
   methods: {
     handleCancel() {
-      this.$emit('update:visible', false);
+      this.$emit('update:visible', false)
     },
     handleConfirm() {
-      this.$emit('confirm');
+      this.$emit('confirm')
     }
   }
 }

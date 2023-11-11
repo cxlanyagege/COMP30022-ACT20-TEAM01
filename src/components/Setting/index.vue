@@ -32,6 +32,17 @@ export default {
     return {
       notificationSettings: [
         {
+          notificationType: "When the request is successfully create",
+          isEnabled: true,
+        },
+        {
+          notificationType: "When the request has been processed",
+          isEnabled: true,
+        },
+        { notificationType: "When the request is deleted", 
+          isEnabled: true,
+        },
+        {
           notificationType: "When there is a new request",
           isEnabled: true,
         },
