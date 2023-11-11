@@ -32,14 +32,13 @@ export default {
     return {
       notificationSettings: [
         {
-          notificationType: "When the request is successfully create",
+          notificationType: "When there is a new request",
           isEnabled: true,
         },
         {
-          notificationType: "When the request has been processed",
+          notificationType: "When other tutor has flagged an request",
           isEnabled: true,
         },
-        { notificationType: "When the request is deleted", isEnabled: true },
       ],
       notificationTime: ["08:00", "18:00"]
     };
