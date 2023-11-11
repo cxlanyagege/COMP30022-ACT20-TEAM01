@@ -114,46 +114,50 @@ public class LtiController {
 
             // LMS user role assignment
             String userRole = request.getParameter("roles");
-            if (userRole.substring(0, 10).equals("Instructor")) {
+            if (userRole.contains("Instructor")) {
                 // Administrator or subject coordinator
 
-            } else if (userRole.substring(userRole.length() - 17, userRole.length()).equals("TeachingAssistant")) {
+            } else if (userRole.contains("TeachingAssistant")) {
                 // Tutor or assistant
 
-            } else if (userRole.equals("Learner")){
+            } else if (userRole.contains("Learner")){
                 // Student
+
+                // Store user info from lti post into jwt token
+                Long id = Long.valueOf(request.getParameter("custom_canvas_user_id"));
+                String name = request.getParameter("lis_person_name_full");
+                String email = request.getParameter("custom_canvas_user_login_id");
+                if (studentService.getById(id) == null){
+                    studentService.save(new Student(id, name, email, true, true, true));
+                }
+
+                // Store subject course information
+                Long subjectId = Long.valueOf(request.getParameter("custom_canvas_course_id"));
+                String subjectName = request.getParameter("context_label");
+                if (subjectService.getById(subjectId) == null){
+                    subjectService.save(new Subject(subjectId, subjectName));
+                }
+
+                // Generate jwt token
+                String jwt = jwtUtil.generateToken(id, name, email, subjectId, subjectName);
+
+                // Launch StuRequestHub dashboard
+                try {
+                    response.sendRedirect("/#/login?jwt=" + jwt);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return "Redirect failed";
+                }
+                return "Signature matched, authorized complete";
 
             } else {
                 // Observer
 
             }
 
-            // Store user info from lti post into jwt token
-            Long id = Long.valueOf(request.getParameter("custom_canvas_user_id"));
-            String name = request.getParameter("lis_person_name_full");
-            String email = request.getParameter("custom_canvas_user_login_id");
-            if (studentService.getById(id) == null){
-                studentService.save(new Student(id, name, email, true, true, true));
-            }
+            // Role assignment failed
+            return "Signature matched, but role assignment failed";
 
-            // Store subject course information
-            Long subjectId = Long.valueOf(request.getParameter("custom_canvas_course_id"));
-            String subjectName = request.getParameter("context_label");
-            if (subjectService.getById(subjectId) == null){
-                subjectService.save(new Subject(subjectId, subjectName));
-            }
-
-            // Generate jwt token
-            String jwt = jwtUtil.generateToken(id, name, email, subjectId, subjectName);
-
-            // Launch StuRequestHub dashboard
-            try {
-                response.sendRedirect("/#/login?jwt=" + jwt);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "Redirect failed";
-            }
-            return "Signature matched, authorized complete";
         } else {
             return "Local signature: " + calculatedSignature + "\n" + 
                    "Remote signature: " + incomingSignature + "\n" +
