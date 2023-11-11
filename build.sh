@@ -1,17 +1,26 @@
 #!/bin/bash
 
-# Ask the user for build type
-echo -n "Please enter build type (stage or prod): "
-read buildType
+# Ask the user for deployment address
+echo -n "Please enter the deployment address: "
+read deployAddr
+
+# Define the path to the .env.production file
+envFilePath="./.env.production"
 
 # Decide npm build type based on user input
-if [ "$buildType" == "stage" ]; then
+if [ "$deployAddr" == "localhost" ]; then
     npm run build:stage
-elif [ "$buildType" == "prod" ]; then
-    npm run build:prod
 else
-    echo "Invalid build type entered. Please enter either 'stage' or 'prod'."
-    exit 1
+    # Backup original .env.production file
+    cp "$envFilePath" "$envFilePath.bak"
+
+    # Replace ADDRESS placeholder with the new one from $deployAddr
+    sed -i "s/ADDRESS/$deployAddr/g" "$envFilePath"
+
+    npm run build:prod
+
+    # Restore the original .env.production file
+    mv "$envFilePath.bak" "$envFilePath"
 fi
 
 # Check build status

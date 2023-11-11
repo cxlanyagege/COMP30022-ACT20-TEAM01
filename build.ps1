@@ -1,14 +1,27 @@
-# Ask the user for build type
-$buildType = Read-Host "Please enter build type (stage or prod)"
+# Ask the user for deployment address
+$deployAddr = Read-Host "Please enter the deployment address"
 
 # Decide npm build type based on user input
-if ($buildType -eq "stage") {
+if ($deployAddr -eq "localhost") {
     npm run build:stage
-} elseif ($buildType -eq "prod") {
-    npm run build:prod
 } else {
-    Write-Host "Invalid build type entered. Please enter either 'stage' or 'prod'."
-    exit 1
+    # Define the path to the .env.production file
+    $envFilePath = ".\.env.production"
+
+    # Read the contents of the .env.production file
+    $envFileContent = Get-Content $envFilePath
+
+    # Replace placeholder address with the new one from $deployAddr
+    $updatedEnvFileContent = $envFileContent -replace "ADDRESS", $deployAddr
+
+    # Write the updated content back to the .env.production file
+    $updatedEnvFileContent | Set-Content $envFilePath
+
+    npm run build:prod
+
+    # Restore the .env.production file by replacing the deploy address with "ADDRESS"
+    $restoredEnvFileContent = $updatedEnvFileContent -replace $deployAddr, "ADDRESS"
+    $restoredEnvFileContent | Set-Content $envFilePath
 }
 
 # Check build status
