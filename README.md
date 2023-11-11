@@ -4,9 +4,6 @@
 - **Activity Code**: ACT20
 - **Team Number**: TEAM01
 
-## Live Demo
-- [LTI Launch](https://act20team01.xyz:8081/lti/launch)
-
 ## Build & Run Instructions
 
 ### Prerequisites
@@ -25,32 +22,16 @@ git clone https://github.com/cxlanyagege/COMP30022-ACT20-TEAM01.git
 Install npm dependencies which are required for building vue:
 
 ```
-cd COMP30022-ACT20-TEAM01/vue
 npm install
 ```
 
 Import template SQL schema into your database:
 ```
-cd ../sql
 mysql -u root -p
-CREATE DATABASE full;
+CREATE DATABASE srhdb;
 QUIT;
-mysql -u root -p full < template.sql
+mysql -u root -p srhdb < database.sql
 ```
-
-Your database configuration and desired attachment saved location may be different to what was defined in project file. 
-You may manually modify these line in `application.properties` in spring/src/main/resources:
-
-```
-spring.datasource.url=jdbc:mysql://localhost:3306/full
-spring.datasource.username=itproject
-spring.datasource.password=123456
-...
-upload.localPath=C:\\Users\\cxlan\\AppData\\Local\\Temp\\
-upload.accessPath=/upload/
-```
-
-Or you can place your own `application.properties` with above new defining, along with `application-v1.0-alpha.jar` in spring/build/libs after build
 
 ### Build
 Navigate back to the root directory of the project:
@@ -80,3 +61,44 @@ java -jar spring/build/libs/application-v1.0-alpha.jar
 
 ### Connect
 For the connection using LTI1.1 standards, please refer to [How to connect to LMS](https://wxd.atlassian.net/wiki/spaces/~712020572c35dfb81c4ad48d0be3dc166f9960/pages/7438386/Deployment#Connect-to-LMS%3A)
+
+### `application.properties` Template
+Create your own `application.properties` following the template below, along with `application-vX.X.jar` in spring/build/libs after build
+```
+# Application server port
+server.port=8081
+
+# Database source link
+spring.datasource.url=jdbc:mysql://localhost:3306/srhdb
+
+# Database user name
+spring.datasource.username=root
+
+# Database user password
+spring.datasource.password=123456
+
+# Database driver
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# Attachment size restriction
+spring.servlet.multipart.max-request-size=5MB
+spring.servlet.multipart.max-file-size=5MB
+
+# Attachment save location
+upload.localPath=/
+upload.accessPath=/upload/
+
+# LTI config
+lti.consumerKey=sturequesthub_itproject_act20_team01
+lti.sharedSecret=f9Dh7sd1Gk8oP4nQz6jWc3aRb0xLm2Yv
+
+# Mail service
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=student.request.hub.demo@gmail.com
+spring.mail.password=xkvxvjiwtmegvhjm
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.protocol=smtp
+spring.mail.properties.debug=false
+```
