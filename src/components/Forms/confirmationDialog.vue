@@ -6,10 +6,10 @@
   >
     <el-form ref="form" :model="form" label-width="180px">
       <el-form-item label="Confirmation Message" class="custom-label-size">
-        <el-input v-model="form.message" placeholder="Enter confirmation message" ></el-input>
+        <el-input v-model="form.message" placeholder="Enter confirmation message" />
       </el-form-item>
-      <el-form-item label="Confirmation Time" class="custom-label-size" v-if="shouldShowDate">
-        <el-date-picker v-model="form.date" type="datetime" placeholder="Select date and time" ></el-date-picker>
+      <el-form-item v-if="shouldShowDate" label="Confirmation Time" class="custom-label-size">
+        <el-date-picker v-model="form.date" type="datetime" placeholder="Select date and time" />
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -29,8 +29,14 @@
 export default {
   props: {
     visible: Boolean,
-    form: Object,
-    requestType: String
+    form: {
+      type: Object,
+      default: () => ({})
+    },
+    requestType: {
+      type: String,
+      default: ''
+    }
   },
   computed: {
     shouldShowDate() {

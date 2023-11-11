@@ -1,4 +1,5 @@
-# IT Project: Teaching Support Platform for Applying Special Consideration
+# StuRequestHub
+IT Project: Teaching Support Platform for Applying Special Consideration
 
 ## Team Information
 - **Activity Code**: ACT20
@@ -62,7 +63,7 @@ java -jar spring/build/libs/application-v1.0-alpha.jar
 ### Connect
 For the connection using LTI1.1 standards, please refer to [How to connect to LMS](https://wxd.atlassian.net/wiki/spaces/~712020572c35dfb81c4ad48d0be3dc166f9960/pages/7438386/Deployment#Connect-to-LMS%3A)
 
-### `application.properties` Template
+## `application.properties` Template
 Create your own `application.properties` following the template below, along with `application-vX.X.jar` in spring/build/libs after build
 ```
 # Application server port
