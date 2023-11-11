@@ -112,6 +112,21 @@ public class LtiController {
                 .forEach(paramName -> 
                     System.out.println(paramName + ": " + request.getParameter(paramName)));
 
+            // LMS user role assignment
+            String userRole = request.getParameter("roles");
+            if (userRole.substring(0, 10).equals("Instructor")) {
+                // Administrator or subject coordinator
+
+            } else if (userRole.substring(userRole.length() - 17, userRole.length()).equals("TeachingAssistant")) {
+                // Tutor or assistant
+
+            } else if (userRole.equals("Learner")){
+                // Student
+
+            } else {
+                // Observer
+
+            }
 
             // Store user info from lti post into jwt token
             Long id = Long.valueOf(request.getParameter("custom_canvas_user_id"));
