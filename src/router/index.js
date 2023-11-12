@@ -56,27 +56,27 @@ export const constantRoutes = [
   },
 
   {
-    path: '/PER-Request',
+    path: '/Request Permission',
     component: Layout,
     children: [
       {
         path: 'index',
-        name: 'PER-Request',
+        name: 'Request Permission',
         component: () => import('@/views/requestAuthority/index'),
-        meta: { title: 'PER-Request', icon: 'el-icon-s-operation' }
+        meta: { title: 'Request Permission', icon: 'el-icon-s-operation' }
       }
     ]
   },
 
   {
-    path: '/PER-Tutor',
+    path: '/Tutor Authority',
     component: Layout,
     children: [
       {
         path: 'index',
-        name: 'PER-Tutor',
+        name: 'Tutor Authority',
         component: () => import('@/views/tutorAuthority/index'),
-        meta: { title: 'PER-Tutor', icon: 'el-icon-s-help' }
+        meta: { title: 'Tutor Authority', icon: 'el-icon-s-help' }
       }
     ]
   },

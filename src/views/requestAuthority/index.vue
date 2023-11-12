@@ -44,27 +44,18 @@
 </template>
 
 <script>
-import { EventBus } from '@/utils/EventBus'
 
 export default {
-  methods: {
-    handleSwitchChange(row, column) {
-      // 更新开关状态
-      row[column] = !row[column]
-      // 触发事件，传递状态信息
-      EventBus.$emit('switches-changed', this.tableData)
-    }
-  },
 
   data() {
     return {
       tableData: [
         {
           Assignment: true,
-          Quiz: true,
+          Quiz: false,
           Exam: true,
           Personal: true,
-          Others: true
+          Others: false
         }
       ],
       listLoading: false

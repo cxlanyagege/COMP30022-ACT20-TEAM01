@@ -21,7 +21,6 @@
             <el-col :span="4" style="width: 26%;">
               <el-checkbox
                 v-model="row.authority[0]"
-                :disabled="rowIndex !== 0 && !row.authority[0]"
                 checked="true"
                 label="Assignment"
                 :width="150"
@@ -31,7 +30,6 @@
             <el-col :span="4" style="width: 18%;">
               <el-checkbox
                 v-model="row.authority[1]"
-                :disabled="rowIndex !== 0 && !row.authority[1]"
                 checked="true"
                 label="Quiz"
                 @change="handleCheckboxChange(row, 1)"
@@ -40,7 +38,6 @@
             <el-col :span="4" style="width: 18%;">
               <el-checkbox
                 v-model="row.authority[2]"
-                :disabled="rowIndex !== 0 && !row.authority[2]"
                 checked="true"
                 label="Exam"
                 @change="handleCheckboxChange(row, 2)"
@@ -49,7 +46,6 @@
             <el-col :span="4" style="width: 20%;">
               <el-checkbox
                 v-model="row.authority[3]"
-                :disabled="rowIndex !== 0 && !row.authority[3]"
                 checked="true"
                 label="Personal"
                 @change="handleCheckboxChange(row, 3)"
@@ -58,7 +54,6 @@
             <el-col :span="4" style="width: 18%;">
               <el-checkbox
                 v-model="row.authority[4]"
-                :disabled="rowIndex !== 0 && !row.authority[4]"
                 checked="true"
                 label="Other"
                 @change="handleCheckboxChange(row, 4)"
@@ -72,34 +67,21 @@
   </div>
 </template>
 
-<style>
-  .el-table .success-row {
-    background: #f0f9eb
-  }
-</style>
 
 <script>
-
 export default {
   data() {
     return {
       tableData: [
         {
-          position: 'Coordinator',
-          name: 'William Smith',
-          email: 'williams@unimelb.edu.au',
-          authority: []
-        },
-
-        {
-          position: 'Lecturer',
+          position: 'Head Tutor',
           name: 'David Johnson',
           email: 'davidj2@unimelb.edu.au',
           authority: []
         },
 
         {
-          position: 'Head Tutor',
+          position: 'Tutor',
           name: 'James Wilson',
           email: 'jamesw@unimelb.edu.au',
           authority: []
@@ -117,12 +99,6 @@ export default {
     }
   },
   methods: {
-    tableRowClassName({ row, rowIndex }) {
-      if (rowIndex === 0) {
-        return 'success-row'
-      }
-      return ''
-    },
     handleCheckboxChange(row, index) {
       const isChecked = row.authority[index]
       // If it's the first row, update other rows
