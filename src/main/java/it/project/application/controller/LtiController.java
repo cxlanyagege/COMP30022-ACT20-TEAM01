@@ -124,7 +124,7 @@ public class LtiController {
                 // Student
 
                 // Store user info from lti post into jwt token
-                Long id = Long.valueOf(request.getParameter("custom_canvas_user_id"));
+                Integer id = Integer.valueOf(request.getParameter("custom_canvas_user_id"));
                 String name = request.getParameter("lis_person_name_full");
                 String email = request.getParameter("custom_canvas_user_login_id");
                 if (studentService.getById(id) == null){
@@ -132,10 +132,10 @@ public class LtiController {
                 }
 
                 // Store subject course information
-                Long subjectId = Long.valueOf(request.getParameter("custom_canvas_course_id"));
+                Integer subjectId = Integer.valueOf(request.getParameter("custom_canvas_course_id"));
                 String subjectName = request.getParameter("context_label");
                 if (subjectService.getById(subjectId) == null){
-                    subjectService.save(new Subject(subjectId, subjectName));
+                    subjectService.save(new Subject(subjectId, subjectName, true, true, true, true, true));
                 }
 
                 // Generate jwt token

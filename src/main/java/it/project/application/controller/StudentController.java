@@ -10,17 +10,25 @@
 
 package it.project.application.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import it.project.application.pojo.AAP;
+import it.project.application.pojo.Request;
 import it.project.application.pojo.Student;
+import it.project.application.service.IAAPService;
+import it.project.application.service.IRequestService;
 import it.project.application.service.IStudentService;
 import it.project.application.util.JwtUtil;
 import it.project.application.vo.Result;
+import it.project.application.vo.StudentVo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,6 +38,12 @@ public class StudentController {
 
     @Autowired
     private IStudentService studentService;
+
+    @Autowired
+    private IAAPService aapService;
+
+    @Autowired
+    private IRequestService requestService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -75,6 +89,30 @@ public class StudentController {
         student.setProcessRequest(studentPreference.isProcessRequest());
         studentService.updateById(student);
         return Result.success(student);
+    }
+
+    @GetMapping("/getStudentInfo/{studentId}")
+    public Result getStudentDetails(@PathVariable int studentId, @RequestParam(required = false) Integer subjectId){
+        // log.info("{}", subjectId);
+        StudentVo studentVo = new StudentVo();
+        Student student = studentService.getById(studentId);
+
+        // get AAP related to the student
+        QueryWrapper query = new QueryWrapper();
+        query.eq("student_id", studentId);
+        AAP aap = aapService.getOne(query);
+
+        if (subjectId != null){
+            query.eq("subject_id", subjectId);
+        }
+        // get request history related to the student, may need to change the
+        // Request to RequestVo to have access to the uploaded files as well
+        List<Request> requestHistory = requestService.list(query);
+
+        BeanUtils.copyProperties(student, studentVo);
+        studentVo.setAapAttachment(aap);
+        studentVo.setRequestHistory(requestHistory);
+        return Result.success(studentVo);
     }
 
 }

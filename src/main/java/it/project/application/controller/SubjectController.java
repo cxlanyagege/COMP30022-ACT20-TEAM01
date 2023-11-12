@@ -14,14 +14,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import it.project.application.pojo.Subject;
 import it.project.application.service.ISubjectService;
 import it.project.application.util.JwtUtil;
+import it.project.application.vo.Result;
 
 @RestController
 @RequestMapping("/api")
@@ -58,6 +56,24 @@ public class SubjectController {
             response.put("message", "Subject not found");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PutMapping("/updateApprovedRequests/{subjectId}")
+    public Result updateRequest(@PathVariable Integer subjectId, @RequestBody Subject updatedSubject){
+        Subject subject = subjectService.getById(subjectId);
+        subject.setAssignmentRequest(updatedSubject.isAssignmentRequest());
+        subject.setExamRequest(updatedSubject.isExamRequest());
+        subject.setQuizRequest(updatedSubject.isQuizRequest());
+        subject.setPersonalRequest(updatedSubject.isPersonalRequest());
+        subject.setOthersRequest(updatedSubject.isOthersRequest());
+        subjectService.updateById(subject);
+        return Result.success(subject);
+    }
+
+    @GetMapping("/getSubjectDetail/{subjectId}")
+    public Result getSubjectDetail(@PathVariable Integer subjectId){
+        Subject subject = subjectService.getById(subjectId);
+        return Result.success(subject);
     }
     
 }

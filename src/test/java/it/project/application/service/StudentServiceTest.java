@@ -35,7 +35,7 @@ class StudentServiceTest {
     @BeforeEach
     public void setup() {
         student = new Student();
-        student.setStudentId(1L);
+        student.setStudentId(1);
         student.setName("John Doe");
         student.setEmail("johndoe@student.unimelb.edu.au");
         student.setCreateRequest(true);

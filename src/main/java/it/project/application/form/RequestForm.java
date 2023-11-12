@@ -24,7 +24,7 @@ public class RequestForm {
     private String description;
     private Integer requestId;
     private Integer studentId;
-    private String subjectId;
+    private Integer subjectId;
     private Date submissionDate;
     private String requestType;
     private String requestName;

@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @TableName("Student")
 public class Student {
     @TableId("student_id")
-    private Long studentId;
+    private Integer studentId;
     private String name;
     private String email;
     private boolean createRequest;

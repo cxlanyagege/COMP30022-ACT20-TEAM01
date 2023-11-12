@@ -35,7 +35,7 @@ class SubjectServiceTest {
     @BeforeEach
     public void setup() {
         subject = new Subject();
-        subject.setSubjectId(1L);
+        subject.setSubjectId(1);
         subject.setSubjectName("Sample Subject");
     }
 

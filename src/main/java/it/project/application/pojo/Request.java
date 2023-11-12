@@ -27,7 +27,7 @@ public class Request {
     private String status;
     private Date submissionDate;
     private Integer studentId;
-    private String subjectId;
+    private Integer subjectId;
     private String requestType;
     private String taskType;
     private String workType;

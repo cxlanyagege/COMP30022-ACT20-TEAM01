@@ -51,7 +51,7 @@ class RequestServiceTest {
         request.setStatus("WAITING");
         request.setSubmissionDate(Date.valueOf("2023-09-01"));
         request.setStudentId(0);
-        request.setSubjectId("EXMP12345");
+        request.setSubjectId(1);
         request.setRequestType("Assignment");
         request.setTaskType("Individual");
         request.setWorkType("Extension");

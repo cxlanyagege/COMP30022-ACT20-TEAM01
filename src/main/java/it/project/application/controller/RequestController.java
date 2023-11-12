@@ -13,6 +13,7 @@ package it.project.application.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
+import it.project.application.form.ConfirmationForm;
 import it.project.application.form.RequestForm;
 import it.project.application.pojo.Attachment;
 import it.project.application.pojo.Request;
@@ -153,15 +154,15 @@ public class RequestController {
 
     // update the request status after the request has been approved
     @PutMapping("/updateRequest/{requestId}")
-    public Result updateRequest(@PathVariable int requestId, @RequestParam String status){
+    public Result updateRequest(@PathVariable int requestId, @RequestBody ConfirmationForm confirmationForm){
         Request request = requestService.getById(requestId);
-        request.setStatus(status);
+        request.setStatus(confirmationForm.getStatus());
         requestService.updateById(request); // update the status stored in the database
         Student student = studentService.getById(request.getStudentId());
 
         // send confirmation email to the student who created the request
         if (student.isProcessRequest()){
-            sendProcessEmail(student, request);
+            sendProcessEmail(student, request, confirmationForm.getMessage());
         }
         return Result.success(request);
     }
@@ -210,16 +211,17 @@ public class RequestController {
     }
 
     // email notification on request been processed
-    private void sendProcessEmail(Student student, Request request){
+    private void sendProcessEmail(Student student, Request request, String message){
         String msg = String.format(
                 """
                         Hello %s, \s
 
                         Your recent request id: %d, name: %s has been processed and now the status is %s.
+                        Here's your tutor's response: %s.
                         Log in to your LMS to see the details of the request\s
 
                         Thanks-The studentRequestHub Team""",
-                student.getName(), request.getRequestId(), request.getRequestName(), request.getStatus());
+                student.getName(), request.getRequestId(), request.getRequestName(), request.getStatus(), message);
         emailService.sendSimpleMail(new Email(student.getEmail(), msg, "Request has been processed"));
     }
 
