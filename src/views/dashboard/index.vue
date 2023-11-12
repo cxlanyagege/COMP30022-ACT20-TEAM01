@@ -58,7 +58,7 @@ export default {
         decision: 'Approved',
         morespecific: 'Remark'
       }, {
-        id: '1266704',
+        id: '1266708',
         subID: 'COMP20008',
         appDate: '01/01/2024',
         reqType: 'Others',
@@ -70,18 +70,45 @@ export default {
         flagClicked: false,
         decision: 'Approved',
         morespecific: 'Others'
-      }],
+      }, {
+        id: '1266709',
+        subID: 'COMP20008',
+        appDate: '01/01/2024',
+        reqType: 'Assignment',
+        taskType: 'N/A',
+        reqName: 'extention for A1',
+        reqDetail: 'Hi, I would like to apply for extention due to my illness',
+        files: 'N/A',
+        status: 'UNASSESSED',
+        flagClicked: false,
+        decision: 'Approved',
+        morespecific: 'Others'
+      }, {
+        id: '1266710',
+        subID: 'COMP30023',
+        appDate: '01/01/2024',
+        reqType: 'Assignment',
+        taskType: 'N/A',
+        reqName: 'extention for A1',
+        reqDetail: 'Hi, I would like to apply for an extention',
+        files: 'N/A',
+        status: 'UNASSESSED',
+        flagClicked: false,
+        decision: 'Approved',
+        morespecific: 'Others'}
+      ],
       filterCondition: 'All',
-      filteredData: []
+      filteredData: [],
+      selectedSubID: null
     }
   },
   computed: {
     // 使用计算属性来根据筛选条件过滤数据
     filteredData() {
       if (this.filterCondition === 'All') {
-        return this.tableData
+        return this.tableData.filter(item => item.subID === this.selectedSubID)
       } else {
-        return this.tableData.filter(item => item.reqType === this.filterCondition)
+        return this.tableData.filter(item => item.subID === this.selectedSubID && item.reqType === this.filterCondition)
       }
     }
   },
@@ -90,30 +117,29 @@ export default {
     this.applyFilter('All')
     // 监听 EventBus 上的 filter 事件
     EventBus.$on('filter', (subID) => {
-      this.filterRequests(subID)
+      this.selectedSubID = subID
+      this.applyFilter(this.filterCondition)
     })
   },
   methods: {
+    filterRequests(subID) {
+      this.selectedSubID = subID
+      this.applyFilter('All')
+    },
     applyFilter(filterCondition) {
       // 处理筛选的逻辑
-      this.filterCondition = filterCondition
+      this.filterCondition = 'All'
       // 筛选所选的 subID
-      const subID = this.selectedRowIndex
-      let filteredData = this.tableData.filter(item => item.subID === subID)
-
-      if (filterCondition === 'Assignment') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Assignment')
-      } else if (filterCondition === 'Test') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Test')
-      } else if (filterCondition === 'Exam') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Exam')
-      } else if (filterCondition === 'Personal') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Personal')
-      } else if (filterCondition === 'Others') {
-        this.filteredData = this.tableData.filter(item => item.reqType === 'Others')
-      } else {
+      if (this.selectedSubID === null || this.selectedSubID === 'All') {
         this.filteredData = this.tableData
-      }
+      } else {
+        if (filterCondition === 'All') {
+          this.filteredData = this.tableData.filter(item => item.subID === this.selectedSubID)
+        } else {
+          this.filteredData = this.tableData.filter(item => item.subID === this.selectedSubID && item.reqType === filterCondition)
+        }
+     
+      } 
     },
     handleFlagClick(row) {
       if (!row.flagClicked) {
@@ -123,13 +149,6 @@ export default {
         this.tableData = [row, ...this.tableData.filter(item => item !== row)]
         // refresh the data
         this.applyFilter(this.filterCondition)
-      }
-    },
-    filterRequests(subID) {
-      if (subID === null || subID === 'All') {
-        this.filteredData = this.tableData
-      } else {
-        this.filteredData = this.tableData.filter(item => item.subID === subID)
       }
     }
   }
