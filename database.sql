@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 8.1.0, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for macos13 (arm64)
 --
--- Host: localhost    Database: full
+-- Host: 127.0.0.1    Database: student_requests
 -- ------------------------------------------------------
--- Server version	8.1.0
+-- Server version	8.0.34
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -53,10 +53,7 @@ CREATE TABLE `AAP` (
   `description` mediumtext NOT NULL,
   `start_date` datetime DEFAULT NULL,
   `end_date` datetime NOT NULL,
-  `staff_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_AAP_Staff_member1_idx` (`staff_id`),
-  CONSTRAINT `fk_AAP_Staff_member1` FOREIGN KEY (`staff_id`) REFERENCES `Staff_member` (`staff_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -77,13 +74,13 @@ DROP TABLE IF EXISTS `AAP_attachment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `AAP_attachment` (
-  `aap_attachment_id` int NOT NULL AUTO_INCREMENT,
-  `url` varchar(100) NOT NULL,
-  `aap_id` int NOT NULL,
-  PRIMARY KEY (`aap_attachment_id`,`aap_id`),
-  KEY `fk_AAP_attachment_AAP1_idx` (`aap_id`),
-  CONSTRAINT `fk_AAP_attachment_AAP1` FOREIGN KEY (`aap_id`) REFERENCES `AAP` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `aap_id` int NOT NULL AUTO_INCREMENT,
+  `attachment_url` varchar(100) NOT NULL,
+  `student_id` int NOT NULL,
+  PRIMARY KEY (`aap_id`),
+  KEY `fk_AAP_attachment_Student1_idx` (`student_id`),
+  CONSTRAINT `fk_AAP_attachment_Student1` FOREIGN KEY (`student_id`) REFERENCES `Student` (`student_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,6 +89,7 @@ CREATE TABLE `AAP_attachment` (
 
 LOCK TABLES `AAP_attachment` WRITE;
 /*!40000 ALTER TABLE `AAP_attachment` DISABLE KEYS */;
+INSERT INTO `AAP_attachment` VALUES (1,'test1.png',1266288);
 /*!40000 ALTER TABLE `AAP_attachment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +116,7 @@ CREATE TABLE `Attachment` (
 
 LOCK TABLES `Attachment` WRITE;
 /*!40000 ALTER TABLE `Attachment` DISABLE KEYS */;
-INSERT INTO `Attachment` VALUES (-2142023679,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1783844866),(-2074914815,'/upload/WechatIMG888.jpg',1918062593),(-2020388862,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',2064863234),(-1903017982,'/upload/WechatIMG888.jpg',1553088514),(-1198276606,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',-1349271551),(-1031688190,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',-1245597694),(-762097662,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',-829206526),(-418656255,'/upload/temp.pdf',-485765118),(-280997887,'/upload/WechatIMG888.jpg',-624930814),(756158466,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',668078081),(760356865,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',261234689),(1182814210,'/upload/WechatIMG888.jpg',1065373697),(1217536001,'/upload/WechatIMG888.jpg',1095901186),(1347674114,'/upload/WechatIMG888.jpg',1121181698),(1385406466,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1104388098),(1477586946,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',898772994),(1687293954,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1494355969),(1694527490,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1472229377),(2144555009,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1918062593);
+INSERT INTO `Attachment` VALUES (-2142023679,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1783844866),(-2074914815,'/upload/WechatIMG888.jpg',1918062593),(-2020388862,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',2064863234),(-1903017982,'/upload/WechatIMG888.jpg',1553088514),(-1198276606,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',-1349271551),(-1031688190,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',-1245597694),(-762097662,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',-829206526),(-280997887,'/upload/WechatIMG888.jpg',-624930814),(756158466,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',668078081),(760356865,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',261234689),(1182814210,'/upload/WechatIMG888.jpg',1065373697),(1217536001,'/upload/WechatIMG888.jpg',1095901186),(1347674114,'/upload/WechatIMG888.jpg',1121181698),(1385406466,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1104388098),(1477586946,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',898772994),(1687293954,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1494355969),(1694527490,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1472229377),(2144555009,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1918062593);
 /*!40000 ALTER TABLE `Attachment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,9 +130,7 @@ DROP TABLE IF EXISTS `Group`;
 CREATE TABLE `Group` (
   `group_id` int NOT NULL,
   `subject_id` varchar(10) NOT NULL,
-  PRIMARY KEY (`group_id`),
-  KEY `fk_Group_Subject1_idx` (`subject_id`),
-  CONSTRAINT `fk_Group_Subject1` FOREIGN KEY (`subject_id`) REFERENCES `Subject` (`subject_id`) ON DELETE CASCADE
+  PRIMARY KEY (`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -156,11 +152,12 @@ DROP TABLE IF EXISTS `is responsible for`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `is responsible for` (
   `staff_id` int NOT NULL,
-  `subject_id` varchar(10) NOT NULL,
+  `subject_id` int NOT NULL,
+  `staff_role` varchar(20) NOT NULL,
   PRIMARY KEY (`staff_id`,`subject_id`),
   KEY `fk_is responsible for_Subject1_idx` (`subject_id`),
   CONSTRAINT `fk_is responsible for_Staff_member1` FOREIGN KEY (`staff_id`) REFERENCES `Staff_member` (`staff_id`),
-  CONSTRAINT `fk_is responsible for_Subject1` FOREIGN KEY (`subject_id`) REFERENCES `Subject` (`subject_id`)
+  CONSTRAINT `fk_is responsible for_Subject1` FOREIGN KEY (`subject_id`) REFERENCES `Subject` (`subject_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -186,7 +183,7 @@ CREATE TABLE `Request` (
   `status` varchar(10) NOT NULL,
   `submission_date` date NOT NULL,
   `student_id` int NOT NULL,
-  `subject_id` varchar(10) NOT NULL,
+  `subject_id` int NOT NULL,
   `request_type` varchar(20) NOT NULL,
   `request_name` varchar(45) DEFAULT NULL,
   `task_type` varchar(20) DEFAULT NULL,
@@ -205,7 +202,7 @@ CREATE TABLE `Request` (
 
 LOCK TABLES `Request` WRITE;
 /*!40000 ALTER TABLE `Request` DISABLE KEYS */;
-INSERT INTO `Request` VALUES (-1421869055,'he','WAITING','2023-09-19',1266288,'COMP10012','Others','hehe',NULL,NULL),(-1349378047,'oh','WAITING','2023-10-06',1266288,'COMP10012','Assignment','','individual','Extension'),(-1349271551,'hehehhhe','WAITING','2023-09-18',1266288,'COMP10012','Other','hello',NULL,NULL),(-1245597694,'testing','WAITING','2023-10-06',1266288,'COMP10012','Assignment','Extension','individual','Remark'),(-909389823,'Placeholder','REJECTED','2023-10-13',108998431,'7677778','Test','Test Remark','individual','Remark'),(-829206526,'extension','WAITING','2023-10-06',1266288,'COMP10012','Assignment','extension','individual',NULL),(-775942143,'This is 1 request','WAITING','2023-08-02',1266288,'COMP20024','Assignment','About assignment',NULL,NULL),(-624930814,'nihau','WAITING','2023-09-22',1266288,'COMP10012','Exam','nihau','individual',NULL),(-485765118,'This is other things','APPROVED','2023-10-13',108998431,'7677778','Others','Other Things',NULL,NULL),(-443822079,'Placeholder','WAITING','2023-10-13',108998431,'7677778','Assignment','Assignment Extension','individual','Extension'),(2,'ohnonono','APPROVED','2023-09-19',1266288,'COMP20024','Other','hehe',NULL,NULL),(261234689,'I want to extend my ass2','WAITING','2023-10-06',1266288,'COMP10012','Assignment','Assignment 2 extension','individual','Extension'),(668078081,'my destiny','WAITING','2023-09-22',1266288,'COMP10012','Personal','u are',NULL,NULL),(898772994,'hhhhhh','WAITING','2023-09-24',1266288,'COMP10012','Others','hhhhh',NULL,NULL),(1065373697,'olala','WAITING','2023-09-22',1266288,'COMP10012','Exam','ola','Group',NULL),(1095901186,'ok?','WAITING','2023-09-24',1266288,'COMP10012','Test','we won\'t do the test','Group',NULL),(1104388098,'I can fly','WAITING','2023-09-21',1266288,'COMP10012','Others','I believe',NULL,NULL),(1121181698,'ok?','WAITING','2023-10-05',1266288,'COMP10012','Exam','About exam ','individual',NULL),(1472229377,'test','WAITING','2023-10-06',1266288,'COMP10012','Test','haohaohoa','individual','Remark'),(1494355969,'I jump','WAITING','2023-09-22',1266288,'COMP10012','Assignment','you jump','individual',NULL),(1553088514,'ok','WAITING','2023-10-04',1266288,'COMP10012','Test','','individual',NULL),(1783844866,'remark','WAITING','2023-10-06',1266288,'COMP10012','Personal','remark',NULL,NULL),(1918062593,'hahhahhahahahaha','WAITING','2023-10-05',1266288,'COMP10012','Others','hahahahhaha',NULL,NULL),(2064863234,'mymym','WAITING','2023-10-06',1266288,'COMP10012','Others','mymymy',NULL,NULL);
+INSERT INTO `Request` VALUES (-1421869055,'he','WAITING','2023-09-19',1266288,111,'Others','hehe',NULL,NULL),(-1349378047,'oh','WAITING','2023-10-06',1266288,111,'Assignment','','individual','Extension'),(-1349271551,'hehehhhe','WAITING','2023-09-18',1266288,111,'Other','hello',NULL,NULL),(-1245597694,'testing','WAITING','2023-10-06',1266288,111,'Assignment','Extension','individual','Remark'),(-829206526,'extension','WAITING','2023-10-06',1266288,111,'Assignment','extension','individual',NULL),(-775942143,'This is 1 request','WAITING','2023-08-02',1266288,222,'Assignment','About assignment',NULL,NULL),(-624930814,'nihau','WAITING','2023-09-22',1266288,111,'Exam','nihau','individual',NULL),(2,'ohnonono','APPROVED','2023-09-19',1266288,222,'Other','hehe',NULL,NULL),(213913602,'I was doing good','WAITING','2023-10-19',1266288,111,'Exam','Remark the exam','Group','Remark'),(261234689,'I want to extend my ass2','WAITING','2023-10-06',1266288,111,'Assignment','Assignment 2 extension','individual','Extension'),(331476993,'This is a new test request','WAITING','2023-10-09',1266288,333,'Task','About task','individual','Remark'),(668078081,'my destiny','WAITING','2023-09-22',1266288,111,'Personal','u are',NULL,NULL),(898772994,'hhhhhh','WAITING','2023-09-24',1266288,111,'Others','hhhhh',NULL,NULL),(1065373697,'olala','WAITING','2023-09-22',1266288,111,'Exam','ola','Group',NULL),(1095901186,'ok?','WAITING','2023-09-24',1266288,111,'Test','we won\'t do the test','Group',NULL),(1104388098,'I can fly','WAITING','2023-09-21',1266288,111,'Others','I believe',NULL,NULL),(1121181698,'ok?','WAITING','2023-10-05',1266288,111,'Exam','About exam ','individual',NULL),(1472229377,'test','WAITING','2023-10-06',1266288,111,'Test','haohaohoa','individual','Remark'),(1494355969,'I jump','APPROVED','2023-09-22',1266288,111,'Assignment','you jump','individual',NULL),(1553088514,'ok','APPROVED','2023-10-04',1266288,111,'Test','','individual',NULL),(1783844866,'remark','REJECTED','2023-10-06',1266288,111,'Personal','remark',NULL,NULL),(1918062593,'hahhahhahahahaha','WAITING','2023-10-05',1266288,111,'Others','hahahahhaha',NULL,NULL),(2064863234,'mymym','WAITING','2023-10-06',1266288,111,'Others','mymymy',NULL,NULL);
 /*!40000 ALTER TABLE `Request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,8 +216,10 @@ DROP TABLE IF EXISTS `Staff_member`;
 CREATE TABLE `Staff_member` (
   `staff_id` int NOT NULL,
   `name` varchar(45) NOT NULL,
-  `role` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
+  `role` varchar(45) NOT NULL,
+  `new_request` tinyint NOT NULL,
+  `flagged_request` tinyint NOT NULL,
   PRIMARY KEY (`staff_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -231,6 +230,7 @@ CREATE TABLE `Staff_member` (
 
 LOCK TABLES `Staff_member` WRITE;
 /*!40000 ALTER TABLE `Staff_member` DISABLE KEYS */;
+INSERT INTO `Staff_member` VALUES (123456,'Tim Yu','staff1@staff.unimelb.edu.au','coordinator',1,1);
 /*!40000 ALTER TABLE `Staff_member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -245,9 +245,9 @@ CREATE TABLE `Student` (
   `student_id` int NOT NULL,
   `name` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
-  `create_request` tinyint(1) DEFAULT NULL,
-  `delete_request` tinyint(1) DEFAULT NULL,
-  `process_request` tinyint(1) DEFAULT NULL,
+  `create_request` tinyint NOT NULL,
+  `process_request` tinyint NOT NULL,
+  `delete_request` tinyint NOT NULL,
   PRIMARY KEY (`student_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -258,7 +258,7 @@ CREATE TABLE `Student` (
 
 LOCK TABLES `Student` WRITE;
 /*!40000 ALTER TABLE `Student` DISABLE KEYS */;
-INSERT INTO `Student` VALUES (1266288,'Denni Wang','test@student.edu.au',1,1,1),(108998431,'He Shen','heshen@student.unimelb.edu.au',1,1,1);
+INSERT INTO `Student` VALUES (1266288,'Dennis Wang','zewang4@student.unimelb.edu.au',1,1,1);
 /*!40000 ALTER TABLE `Student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -270,8 +270,13 @@ DROP TABLE IF EXISTS `Subject`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Subject` (
-  `subject_id` varchar(10) NOT NULL,
+  `subject_id` int NOT NULL,
   `subject_name` varchar(45) NOT NULL,
+  `assignment_request` tinyint NOT NULL,
+  `quiz_request` tinyint NOT NULL,
+  `exam_request` tinyint NOT NULL,
+  `personal_request` tinyint NOT NULL,
+  `others_request` tinyint NOT NULL,
   PRIMARY KEY (`subject_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -282,7 +287,7 @@ CREATE TABLE `Subject` (
 
 LOCK TABLES `Subject` WRITE;
 /*!40000 ALTER TABLE `Subject` DISABLE KEYS */;
-INSERT INTO `Subject` VALUES ('7677778','AU-COURSE-TEMPLATE'),('COMP10012','some subject'),('COMP20024','test subject 1'),('COMP30023','test subject');
+INSERT INTO `Subject` VALUES (111,'some subject',1,0,1,1,1),(222,'test subject 1',1,1,1,1,1),(333,'test subject',1,1,1,1,1);
 /*!40000 ALTER TABLE `Subject` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -295,4 +300,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-20 20:37:25
+-- Dump completed on 2023-11-13  0:16:12
