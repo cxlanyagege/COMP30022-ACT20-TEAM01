@@ -14,7 +14,6 @@ public class Staff {
     @TableId("staff_id")
     private Integer staffId;
     private String name;
-    private String role;
     private String email;
     private boolean newRequest;
     private boolean flaggedRequest;

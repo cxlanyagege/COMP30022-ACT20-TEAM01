@@ -236,7 +236,7 @@ export default {
       let param = {
         description: formData.description,
         studentId: formData.studentId,
-        subjectId: "COMP10012", // requires LMS connection
+        subjectId: 111, // requires LMS connection
         submissionDate: formData.submissionDate,
         requestType: formData.requestType,
         requestName: formData.requestName,
