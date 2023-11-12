@@ -88,7 +88,6 @@ public class RequestControllerTest extends AbstractTest{
 
     @Test
     public void deleteRequest() throws Exception {
-
         // Save a specified request given request id
         RequestForm request = new RequestForm();
         request.setStudentId(1266288);
@@ -105,13 +104,11 @@ public class RequestControllerTest extends AbstractTest{
         attachments.add(new Attachment(null, "test2.png", null));
         request.setAttachments(attachments);
         request.setTeammates(new ArrayList<>());
-
         String inputJson = super.mapToJson(request);
         MvcResult saveResult = mvc.perform(MockMvcRequestBuilders.post("/api/saveRequest")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(inputJson)
                 .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
-
         int saveStatus = saveResult.getResponse().getStatus();
         assertEquals(200, saveStatus);
 
@@ -120,14 +117,11 @@ public class RequestControllerTest extends AbstractTest{
         String uri = "/api/deleteRequest/" + requestId;
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.delete(uri)
                 .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
-
         int status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
         String content = mvcResult.getResponse().getContentAsString();
-
         Result result = super.mapFromJson(content, new TypeReference<>() {});
         assertEquals(0, result.getCode());
-
         assertEquals(result.getMsg(),"Successfully deleted");
     }
 

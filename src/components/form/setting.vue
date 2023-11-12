@@ -11,7 +11,7 @@
       />
       <el-table-column prop="isEnabled" label="Enable" width="120">
         <template slot-scope="scope">
-          <el-switch v-model="scope.row.isEnabled" @change="updateSetting()"></el-switch>
+          <el-switch v-model="scope.row.isEnabled" @change="updateSetting()" />
         </template>
       </el-table-column>
     </el-table>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { updateStudentPreference, getStudentDetail } from "@/api/request";
+import { updateStudentPreference, getStudentDetail } from '@/api/request'
 
 export default {
   data() {
@@ -51,14 +51,14 @@ export default {
       notificationTime: ['08:00', '18:00']
     }
   },
-  
+
   // written by Dennis, initialize the setting for each student
   created() {
     getStudentDetail(1266288).then((res) => {
       console.log(res.data)
-      this.notificationSettings[0].isEnabled = res.data.data.createRequest;
-      this.notificationSettings[1].isEnabled = res.data.data.processRequest;
-      this.notificationSettings[2].isEnabled = res.data.data.deleteRequest;
+      this.notificationSettings[0].isEnabled = res.data.data.createRequest
+      this.notificationSettings[1].isEnabled = res.data.data.processRequest
+      this.notificationSettings[2].isEnabled = res.data.data.deleteRequest
     })
   },
 

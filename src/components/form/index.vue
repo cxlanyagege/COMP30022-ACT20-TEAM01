@@ -16,12 +16,12 @@
           v-model="form.region"
           placeholder="Please select type"
         >
-        <el-option
+          <el-option
             v-for="item in requestTypes"
             :key="item.value"
             :label="item.label"
-            :value="item.value">
-          </el-option>
+            :value="item.value"
+          />
         </el-select>
       </el-form-item>
       <el-form-item
@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { addRequest, getSubjectDetail } from "@/api/request";
+import { addRequest, getSubjectDetail } from '@/api/request'
 import { attachmentBaseURL, uploadURL } from '@/config/config'
 import { EventBus } from '@/utils/event-bus'
 
@@ -167,41 +167,41 @@ export default {
       this.clearUploadList()
     })
   },
-  // written by Dennis Wang, initialise the request types through 
+  // written by Dennis Wang, initialise the request types through
   // getting the authorities from database
   created() {
     // set componenent name
     this.$root.$refs.form_component = this
 
-    getSubjectDetail(getCurrentSubjectID()).then((res) => {
-      if (res.data.data.assignmentRequest === true){
+    getSubjectDetail(this.$store.getters.subjectId).then((res) => {
+      if (res.data.data.assignmentRequest === true) {
         this.requestTypes.push({
           value: 'Assignment',
-          label: "Assignment"
+          label: 'Assignment'
         })
       }
-      if (res.data.data.examRequest === true){
+      if (res.data.data.examRequest === true) {
         this.requestTypes.push({
           value: 'Exam',
-          label: "Exam"
+          label: 'Exam'
         })
       }
-      if (res.data.data.quizRequest === true){
+      if (res.data.data.quizRequest === true) {
         this.requestTypes.push({
           value: 'Quiz',
-          label: "Quiz"
+          label: 'Quiz'
         })
       }
-      if (res.data.data.othersRequest === true){
+      if (res.data.data.othersRequest === true) {
         this.requestTypes.push({
           value: 'Others',
-          label: "Others"
+          label: 'Others'
         })
       }
-      if (res.data.data.personalRequest === true){
+      if (res.data.data.personalRequest === true) {
         this.requestTypes.push({
           value: 'Personal',
-          label: "Personal"
+          label: 'Personal'
         })
       }
     })
