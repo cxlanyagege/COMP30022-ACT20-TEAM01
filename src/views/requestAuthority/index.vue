@@ -14,7 +14,9 @@
     >
       <el-table-column prop="Assignment" label="Assignment" style="width: 26%">
         <template slot-scope="{ row }">
-          <el-switch v-model="row.Assignment" :active-value="true" :inactive-value="false" active-text="Yes" inactive-text="No" @change="handleSwitchChange(row, 'Assignment')"></el-switch>
+          <div class="switch-container">
+            <el-switch v-model="row.Assignment" :active-value="true" :inactive-value="false" active-text="Yes" inactive-text="No" @change="handleSwitchChange(row, 'Assignment')"></el-switch>
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="Quiz" label="Quiz" style="width: 18%">
@@ -42,15 +44,15 @@
 </template>
 
 <script>
-import { EventBus } from '@/views/tutorAuthority/index.vue'
+import { EventBus } from '@/utils/EventBus'
 
 export default {
   methods: {
-    handleSwitchChange(row, column, value) {
+    handleSwitchChange(row, column) {
       // 更新开关状态
-      row[column] = value
+      row[column] = !row[column]
       // 触发事件，传递状态信息
-      EventBus.$emit('assignment-switch-changed', value)
+      EventBus.$emit('switches-changed', this.tableData)
     }
   },
 
@@ -59,10 +61,10 @@ export default {
       tableData: [
         {
           Assignment: true,
-          Quiz: false,
+          Quiz: true,
           Exam: true,
           Personal: true,
-          Others: false
+          Others: true
         }
       ],
       listLoading: false
