@@ -19,11 +19,12 @@
           v-model="form.region"
           placeholder="Please select type"
         >
-          <el-option label="Assignment" value="Assignment" />
-          <el-option label="Test" value="Test" />
-          <el-option label="Exam" value="Exam" />
-          <el-option label="Personal" value="Personal" />
-          <el-option label="Others" value="Others" />
+          <el-option
+            v-for="item in requestTypes"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -99,13 +100,14 @@
 </template>
 
 <script>
-import { addRequest } from "@/api/request";
+import { addRequest, getSubjectDetail } from "@/api/request";
 import { attachmentBaseURL, uploadURL } from "@/config/config";
 import { EventBus } from "@/utils/event-bus"
 
 export default {
   data() {
     return {
+      requestTypes: [],
       labelPosition: "left",
       form: {
         studentId: "",
@@ -151,6 +153,43 @@ export default {
         this.form.showAdditionalOptions = false;
       }
     },
+  },
+
+  // written by Dennis Wang, initialise the request types through 
+  // getting the authorities from database
+  created() {
+    getSubjectDetail("COMP10012").then((res) => {
+      if (res.data.data.assignmentRequest === true){
+        this.requestTypes.push({
+          value: 'Assignment',
+          label: "Assignment"
+        })
+      }
+      if (res.data.data.examRequest === true){
+        this.requestTypes.push({
+          value: 'Exam',
+          label: "Exam"
+        })
+      }
+      if (res.data.data.quizRequest === true){
+        this.requestTypes.push({
+          value: 'Quiz',
+          label: "Quiz"
+        })
+      }
+      if (res.data.data.othersRequest === true){
+        this.requestTypes.push({
+          value: 'Others',
+          label: "Others"
+        })
+      }
+      if (res.data.data.personalRequest === true){
+        this.requestTypes.push({
+          value: 'Personal',
+          label: "Personal"
+        })
+      }
+    })
   },
 
   mounted() {

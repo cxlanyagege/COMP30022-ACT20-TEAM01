@@ -12,7 +12,7 @@
       ></el-table-column>
       <el-table-column prop="isEnabled" label="Enable" width="120">
         <template slot-scope="scope">
-          <el-switch v-model="scope.row.isEnabled" @change="updateSetting"></el-switch>
+          <el-switch v-model="scope.row.isEnabled" @change="updateSetting()"></el-switch>
         </template>
       </el-table-column>
     </el-table>
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { updateStudentPreference } from "@/api/entity";
+import { updateStudentPreference, getStudentDetail } from "@/api/request";
 
 export default {
   data() {
@@ -42,16 +42,26 @@ export default {
       notificationSettings: [
         {
           notificationType: "When the request is successfully create",
-          isEnabled: true,
+          isEnabled: undefined,
         },
         {
           notificationType: "When the request has been processed",
-          isEnabled: true,
+          isEnabled: undefined,
         },
-        { notificationType: "When the request is deleted", isEnabled: true },
+        { notificationType: "When the request is deleted", isEnabled: undefined },
       ],
       notificationTime: ["08:00", "18:00"],
     };
+  },
+
+  // written by Dennis, initialize the setting for each student
+  created() {
+    getStudentDetail(1266288).then((res) => {
+      console.log(res.data)
+      this.notificationSettings[0].isEnabled = res.data.data.createRequest;
+      this.notificationSettings[1].isEnabled = res.data.data.processRequest;
+      this.notificationSettings[2].isEnabled = res.data.data.deleteRequest;
+    })
   },
 
   // method written by Dennis, used to update the user preference
