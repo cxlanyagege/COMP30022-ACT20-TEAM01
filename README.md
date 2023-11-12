@@ -41,12 +41,23 @@ If you are using macOS or Linux, execute:
 ./build.sh
 ```
 
-Or if you are using Windows 7 or higher, execute:
+Or if you are using Windows 11, make sure you first go to `Settings` -> `System` -> `Developer Options`, turn on Developer Mode and the option which allows to run Powershell scripts without digital signature, then execute:
 
 ```
 .\build.ps1
 ```
-If the script fails to run, you may press `Windows + I`, go to `Settings` -> `System` -> `Developer Options`, turn on Developer Mode and the option which allows to run Powershell scripts without digital signature
+
+The script will ask you for deploy address. For example, if you want to deploy on your local environment, type `localhost`:
+
+```
+Please enter the deployment address: localhost
+```
+
+Or if you wish to deploy on your remote server, such as `121.41.46.143`, type:
+
+```
+Please enter the deployment address: 121.41.46.143
+```
 
 ### Run
 Execute the following command to run the application:
@@ -98,3 +109,7 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 spring.mail.properties.protocol=smtp
 spring.mail.properties.debug=false
 ```
+
+## FAQ
+### If I need to deploy on my remote server, do I need to setup MySQL database remotely?
+Yes, you may follow [Prerequisites](#prerequisites) and [Setup](#setup) to install and config Java and MySQL Server. Then try to run the application
