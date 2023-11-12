@@ -95,8 +95,8 @@ export default {
         status: 'UNASSESSED',
         flagClicked: false,
         decision: 'Approved',
-        morespecific: 'Others'}
-      ],
+        morespecific: 'Others'
+      }],
       filterCondition: 'All',
       filteredData: [],
       selectedSubID: null
@@ -138,8 +138,7 @@ export default {
         } else {
           this.filteredData = this.tableData.filter(item => item.subID === this.selectedSubID && item.reqType === filterCondition)
         }
-     
-      } 
+      }
     },
     handleFlagClick(row) {
       if (!row.flagClicked) {
