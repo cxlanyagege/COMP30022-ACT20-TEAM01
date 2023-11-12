@@ -10,7 +10,7 @@ IT Project: Teaching Support Platform for Applying Special Consideration
 ### Prerequisites
 1. Install [Node.js](https://nodejs.org/en/download). Recommended version: 20.x
 2. Install [Adoptium Temurin OpenJDK](https://adoptium.net/zh-CN/temurin/releases/). Recommended version: 17 LTS
-3. Install and setup [MySQL Server](https://dev.mysql.com/downloads/mysql/). Recommended version: 8.0.34+
+3. Install and setup [MySQL Server](https://dev.mysql.com/downloads/mysql/). Recommended version: 8.1 Innovation
 
 ### Clone
 Clone the repository to your local machine:
@@ -35,12 +35,6 @@ mysql -u root -p srhdb < database.sql
 ```
 
 ### Build
-Navigate back to the root directory of the project:
-
-```
-cd ..
-```
-
 If you are using macOS or Linux, execute:
 
 ```
@@ -52,19 +46,20 @@ Or if you are using Windows 7 or higher, execute:
 ```
 .\build.ps1
 ```
+If the script fails to run, you may press `Windows + I`, go to `Settings` -> `System` -> `Developer Options`, turn on Developer Mode and the option which allows to run Powershell scripts without digital signature
 
 ### Run
 Execute the following command to run the application:
 
 ```
-java -jar spring/build/libs/application-v1.0-alpha.jar
+java -jar build/libs/application-v2.0-rc.jar
 ```
 
 ### Connect
 For the connection using LTI1.1 standards, please refer to [How to connect to LMS](https://wxd.atlassian.net/wiki/spaces/~712020572c35dfb81c4ad48d0be3dc166f9960/pages/7438386/Deployment#Connect-to-LMS%3A)
 
 ## `application.properties` Template
-Create your own `application.properties` following the template below, along with `application-vX.X.jar` in spring/build/libs after build
+Create your own `application.properties` following the template below, along with `application-vX.X.jar` in build/libs after build
 ```
 # Application server port
 server.port=8081
