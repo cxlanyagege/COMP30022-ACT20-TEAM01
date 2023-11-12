@@ -1,14 +1,18 @@
 package it.project.application.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import it.project.application.pojo.Attachment;
+import it.project.application.pojo.Position;
 import it.project.application.pojo.Request;
 import it.project.application.pojo.Staff;
 import it.project.application.service.IAttachmentService;
+import it.project.application.service.IPositionService;
 import it.project.application.service.IRequestService;
 import it.project.application.service.IStaffService;
 import it.project.application.vo.RequestVo;
 import it.project.application.vo.Result;
+import it.project.application.vo.StaffPositionVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +34,9 @@ public class StaffController {
 
     @Autowired
     private IStaffService staffService;
+
+    @Autowired
+    private IPositionService positionService;
 
     // 应该是传进来一个staffid和一个subjectid，database里面搜索这个staff然后
     // 根据他在这个subject里面的role获取requests
@@ -66,5 +73,45 @@ public class StaffController {
         staff.setFlaggedRequest(staffPreference.isFlaggedRequest());
         staffService.updateById(staff);
         return Result.success(staff);
+    }
+
+    @GetMapping("/getStaffRoleInfo/{subjectId}")
+    public Result getStaffRoleInfo(@PathVariable int subjectId){
+        QueryWrapper query1 = new QueryWrapper();
+        query1.eq("subject_id", subjectId);
+        List<Position> positions = positionService.list(query1);
+
+        List voList = positions.stream().map(position -> {
+            StaffPositionVo staffPositionVo = new StaffPositionVo();
+            QueryWrapper query2 = new QueryWrapper();
+            query2.eq("staff_id", position.getStaffId());
+            Staff staff = staffService.getOne(query2);
+            BeanUtils.copyProperties(position, staffPositionVo);
+            staffPositionVo.setName(staff.getName());
+            staffPositionVo.setEmail(staff.getEmail());
+            return staffPositionVo;
+        }).collect(Collectors.toList());
+
+        return Result.success(voList);
+    }
+
+    @PutMapping("/updateStaffAuthority/{staffId}")
+    public Result updateStaffAuthority(@PathVariable int staffId, @RequestBody Position authorities){
+        QueryWrapper query = new QueryWrapper();
+        query.eq("subject_id", authorities.getSubjectId());
+        query.eq("staff_id", staffId);
+        Position position = positionService.getOne(query);
+
+        position.setAssignmentRequest(authorities.isAssignmentRequest());
+        position.setExamRequest(authorities.isExamRequest());
+        position.setOthersRequest(authorities.isOthersRequest());
+        position.setQuizRequest(authorities.isQuizRequest());
+        position.setPersonalRequest(authorities.isPersonalRequest());
+
+        UpdateWrapper update = new UpdateWrapper();
+        update.eq("subject_id", authorities.getSubjectId());
+        update.eq("staff_id", staffId);
+        positionService.update(position, update);
+        return Result.success(position);
     }
 }
