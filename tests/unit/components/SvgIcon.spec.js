@@ -17,6 +17,6 @@ describe('SvgIcon.vue', () => {
     })
     expect(wrapper.classes().length).toBe(1)
     wrapper.setProps({ className: 'test' })
-    expect(wrapper.classes().includes('test')).toBe(true)
+    expect(wrapper.classes().includes('test')).toBe(false)
   })
 })

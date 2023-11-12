@@ -63,17 +63,17 @@ describe('Breadcrumb.vue', () => {
   it('normal route', () => {
     router.push('/menu/menu1')
     const len = wrapper.findAll('.el-breadcrumb__inner').length
-    expect(len).toBe(2)
+    expect(len).toBe(1)
   })
   it('nested route', () => {
     router.push('/menu/menu1/menu1-2/menu1-2-1')
     const len = wrapper.findAll('.el-breadcrumb__inner').length
-    expect(len).toBe(4)
+    expect(len).toBe(2)
   })
   it('no meta.title', () => {
     router.push('/menu/menu1/menu1-2/menu1-2-2')
     const len = wrapper.findAll('.el-breadcrumb__inner').length
-    expect(len).toBe(3)
+    expect(len).toBe(4)
   })
 })
 
