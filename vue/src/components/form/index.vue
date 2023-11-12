@@ -158,7 +158,7 @@ export default {
   // written by Dennis Wang, initialise the request types through 
   // getting the authorities from database
   created() {
-    getSubjectDetail("COMP10012").then((res) => {
+    getSubjectDetail(111).then((res) => {
       if (res.data.data.assignmentRequest === true){
         this.requestTypes.push({
           value: 'Assignment',

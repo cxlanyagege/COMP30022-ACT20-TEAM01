@@ -12,6 +12,12 @@ import lombok.NoArgsConstructor;
 @TableName("Subject")
 public class Subject {
     @TableId("subject_id")
-    private Long subjectId;
+    private Integer subjectId;
     private String subjectName;
+    // private String subjectCode;
+    private boolean assignmentRequest;
+    private boolean examRequest;
+    private boolean quizRequest;
+    private boolean personalRequest;
+    private boolean othersRequest;
 }

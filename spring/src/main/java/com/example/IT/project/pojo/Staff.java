@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("Student")
-public class Student {
-    @TableId("student_id")
-    private Integer studentId;
+@TableName("Staff_member")
+public class Staff {
+    @TableId("staff_id")
+    private Integer staffId;
     private String name;
+    private String role;
     private String email;
-    private boolean createRequest;
-    private boolean deleteRequest;
-    private boolean processRequest;
+    private boolean newRequest;
+    private boolean flaggedRequest;
 }

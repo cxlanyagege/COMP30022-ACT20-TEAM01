@@ -43,8 +43,8 @@ public class JwtUtil {
 
     // Generate claims from original data
     // Student + Subject (including id, name, etc.)
-    public String generateToken(Long id, String name,
-                                String email, Long subjectId, String subjectName) {
+    public String generateToken(Integer id, String name,
+                                String email, Integer subjectId, String subjectName) {
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("name", name);
