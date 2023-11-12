@@ -102,22 +102,20 @@ export default {
       selectedSubID: null
     }
   },
-  computed: {
-    // 使用计算属性来根据筛选条件过滤数据
-    filteredData() {
-      if (this.filterCondition === 'All') {
-        return this.tableData.filter(item => item.subID === this.selectedSubID)
-      } else {
-        return this.tableData.filter(item => item.subID === this.selectedSubID && item.reqType === this.filterCondition)
-      }
-    }
-  },
   created() {
     // initialize the filtering to "All"
     this.applyFilter('All')
     // 监听 EventBus 上的 filter 事件
     EventBus.$on('filter', (subID) => {
-      this.selectedSubID = subID
+      if (this.selectedSubID === subID) {
+        // 如果点击的是当前已选中的 subID，则切换为初始未被筛选的全部请求
+        this.selectedSubID = null
+        this.applyFilter('All')
+      } else {
+        // 否则，切换显示当前 subID 的全部请求
+        this.selectedSubID = subID
+        this.applyFilter('All')
+      }
       this.applyFilter(this.filterCondition)
     })
   },
