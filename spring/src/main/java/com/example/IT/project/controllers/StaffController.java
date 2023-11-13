@@ -121,7 +121,7 @@ public class StaffController {
 
     @PutMapping("/changeStaffPreference/{staffId}")
     public Result updateStaffPreference(@RequestBody Staff staffPreference, @PathVariable int staffId) {
-        // log.info("{}", staffPreference);
+        log.info("{}", staffPreference);
         Staff staff = staffService.getById(staffId);
         staff.setNewRequest(staffPreference.isNewRequest());
         staff.setFlaggedRequest(staffPreference.isFlaggedRequest());
