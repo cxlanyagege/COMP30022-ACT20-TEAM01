@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `student_requests` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `student_requests`;
 -- MySQL dump 10.13  Distrib 8.0.34, for macos13 (arm64)
 --
 -- Host: 127.0.0.1    Database: student_requests
@@ -116,7 +118,7 @@ CREATE TABLE `Attachment` (
 
 LOCK TABLES `Attachment` WRITE;
 /*!40000 ALTER TABLE `Attachment` DISABLE KEYS */;
-INSERT INTO `Attachment` VALUES (-2142023679,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1783844866),(-2074914815,'/upload/WechatIMG888.jpg',1918062593),(-2020388862,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',2064863234),(-1903017982,'/upload/WechatIMG888.jpg',1553088514),(-1198276606,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',-1349271551),(-1031688190,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',-1245597694),(-762097662,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',-829206526),(-280997887,'/upload/WechatIMG888.jpg',-624930814),(756158466,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',668078081),(760356865,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',261234689),(1182814210,'/upload/WechatIMG888.jpg',1065373697),(1217536001,'/upload/WechatIMG888.jpg',1095901186),(1347674114,'/upload/WechatIMG888.jpg',1121181698),(1385406466,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1104388098),(1477586946,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',898772994),(1687293954,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1494355969),(1694527490,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1472229377),(2144555009,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1918062593);
+INSERT INTO `Attachment` VALUES (-2142023679,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1783844866),(-2074914815,'/upload/WechatIMG888.jpg',1918062593),(-2020388862,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',2064863234),(-1903017982,'/upload/WechatIMG888.jpg',1553088514),(-1291845631,'/upload/test_file1.png',-1321205759),(-1198276606,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',-1349271551),(-1031688190,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',-1245597694),(-762097662,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',-829206526),(-280997887,'/upload/WechatIMG888.jpg',-624930814),(756158466,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',668078081),(760356865,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',261234689),(1182814210,'/upload/WechatIMG888.jpg',1065373697),(1217536001,'/upload/WechatIMG888.jpg',1095901186),(1347674114,'/upload/WechatIMG888.jpg',1121181698),(1385406466,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1104388098),(1477586946,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',898772994),(1687293954,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1494355969),(1694527490,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1472229377),(2144555009,'/upload/Screen Shot 2023-09-14 at 10.32.24 pm.png',1918062593);
 /*!40000 ALTER TABLE `Attachment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,16 +146,21 @@ LOCK TABLES `Group` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `is responsible for`
+-- Table structure for table `is_responsible_for`
 --
 
-DROP TABLE IF EXISTS `is responsible for`;
+DROP TABLE IF EXISTS `is_responsible_for`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `is responsible for` (
+CREATE TABLE `is_responsible_for` (
   `staff_id` int NOT NULL,
   `subject_id` int NOT NULL,
   `staff_role` varchar(20) NOT NULL,
+  `assignment_request` tinyint NOT NULL,
+  `quiz_request` tinyint NOT NULL,
+  `exam_request` tinyint NOT NULL,
+  `personal_request` tinyint NOT NULL,
+  `others_request` tinyint NOT NULL,
   PRIMARY KEY (`staff_id`,`subject_id`),
   KEY `fk_is responsible for_Subject1_idx` (`subject_id`),
   CONSTRAINT `fk_is responsible for_Staff_member1` FOREIGN KEY (`staff_id`) REFERENCES `Staff_member` (`staff_id`),
@@ -162,12 +169,13 @@ CREATE TABLE `is responsible for` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `is responsible for`
+-- Dumping data for table `is_responsible_for`
 --
 
-LOCK TABLES `is responsible for` WRITE;
-/*!40000 ALTER TABLE `is responsible for` DISABLE KEYS */;
-/*!40000 ALTER TABLE `is responsible for` ENABLE KEYS */;
+LOCK TABLES `is_responsible_for` WRITE;
+/*!40000 ALTER TABLE `is_responsible_for` DISABLE KEYS */;
+INSERT INTO `is_responsible_for` VALUES (123455,111,'tutor',0,1,1,1,1),(123455,222,'tutor',1,1,1,1,1),(123456,111,'coordinator',0,0,1,1,1);
+/*!40000 ALTER TABLE `is_responsible_for` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -202,7 +210,7 @@ CREATE TABLE `Request` (
 
 LOCK TABLES `Request` WRITE;
 /*!40000 ALTER TABLE `Request` DISABLE KEYS */;
-INSERT INTO `Request` VALUES (-1421869055,'he','WAITING','2023-09-19',1266288,111,'Others','hehe',NULL,NULL),(-1349378047,'oh','WAITING','2023-10-06',1266288,111,'Assignment','','individual','Extension'),(-1349271551,'hehehhhe','WAITING','2023-09-18',1266288,111,'Other','hello',NULL,NULL),(-1245597694,'testing','WAITING','2023-10-06',1266288,111,'Assignment','Extension','individual','Remark'),(-829206526,'extension','WAITING','2023-10-06',1266288,111,'Assignment','extension','individual',NULL),(-775942143,'This is 1 request','WAITING','2023-08-02',1266288,222,'Assignment','About assignment',NULL,NULL),(-624930814,'nihau','WAITING','2023-09-22',1266288,111,'Exam','nihau','individual',NULL),(2,'ohnonono','APPROVED','2023-09-19',1266288,222,'Other','hehe',NULL,NULL),(213913602,'I was doing good','WAITING','2023-10-19',1266288,111,'Exam','Remark the exam','Group','Remark'),(261234689,'I want to extend my ass2','WAITING','2023-10-06',1266288,111,'Assignment','Assignment 2 extension','individual','Extension'),(331476993,'This is a new test request','WAITING','2023-10-09',1266288,333,'Task','About task','individual','Remark'),(668078081,'my destiny','WAITING','2023-09-22',1266288,111,'Personal','u are',NULL,NULL),(898772994,'hhhhhh','WAITING','2023-09-24',1266288,111,'Others','hhhhh',NULL,NULL),(1065373697,'olala','WAITING','2023-09-22',1266288,111,'Exam','ola','Group',NULL),(1095901186,'ok?','WAITING','2023-09-24',1266288,111,'Test','we won\'t do the test','Group',NULL),(1104388098,'I can fly','WAITING','2023-09-21',1266288,111,'Others','I believe',NULL,NULL),(1121181698,'ok?','WAITING','2023-10-05',1266288,111,'Exam','About exam ','individual',NULL),(1472229377,'test','WAITING','2023-10-06',1266288,111,'Test','haohaohoa','individual','Remark'),(1494355969,'I jump','APPROVED','2023-09-22',1266288,111,'Assignment','you jump','individual',NULL),(1553088514,'ok','APPROVED','2023-10-04',1266288,111,'Test','','individual',NULL),(1783844866,'remark','REJECTED','2023-10-06',1266288,111,'Personal','remark',NULL,NULL),(1918062593,'hahhahhahahahaha','WAITING','2023-10-05',1266288,111,'Others','hahahahhaha',NULL,NULL),(2064863234,'mymym','WAITING','2023-10-06',1266288,111,'Others','mymymy',NULL,NULL);
+INSERT INTO `Request` VALUES (-1421869055,'he','WAITING','2023-09-19',1266288,111,'Others','hehe',NULL,NULL),(-1349378047,'oh','WAITING','2023-10-06',1266288,111,'Assignment','','individual','Extension'),(-1349271551,'hehehhhe','WAITING','2023-09-18',1266288,111,'Other','hello',NULL,NULL),(-1321205759,'shit','WAITING','2023-11-13',1266288,111,'Personal','I don\'t like it project',NULL,NULL),(-1245597694,'testing','WAITING','2023-10-06',1266288,111,'Assignment','Extension','individual','Remark'),(-829206526,'extension','WAITING','2023-10-06',1266288,111,'Assignment','extension','individual',NULL),(-775942143,'This is 1 request','WAITING','2023-08-02',1266288,222,'Assignment','About assignment',NULL,NULL),(-624930814,'nihau','WAITING','2023-09-22',1266288,111,'Exam','nihau','individual',NULL),(-88076287,'lonely dance','WAITING','2023-11-13',1266288,111,'Quiz','lonely dance','individual','Remark'),(2,'ohnonono','APPROVED','2023-09-19',1266288,222,'Other','hehe',NULL,NULL),(213913602,'I was doing good','WAITING','2023-10-19',1266288,111,'Exam','Remark the exam','Group','Remark'),(261234689,'I want to extend my ass2','WAITING','2023-10-06',1266288,111,'Assignment','Assignment 2 extension','individual','Extension'),(331476993,'This is a new test request','WAITING','2023-10-09',1266288,333,'Quiz','About task','individual','Remark'),(668078081,'my destiny','WAITING','2023-09-22',1266288,111,'Personal','u are',NULL,NULL),(898772994,'hhhhhh','WAITING','2023-09-24',1266288,111,'Others','hhhhh',NULL,NULL),(1065373697,'olala','WAITING','2023-09-22',1266288,111,'Exam','ola','Group',NULL),(1095901186,'ok?','WAITING','2023-09-24',1266288,111,'Quiz','we won\'t do the test','Group',NULL),(1104388098,'I can fly','WAITING','2023-09-21',1266288,111,'Others','I believe',NULL,NULL),(1121181698,'ok?','WAITING','2023-10-05',1266288,111,'Exam','About exam ','individual',NULL),(1472229377,'test','WAITING','2023-10-06',1266288,111,'Quiz','haohaohoa','individual','Remark'),(1494355969,'I jump','APPROVED','2023-09-22',1266288,111,'Assignment','you jump','individual',NULL),(1553088514,'ok','APPROVED','2023-10-04',1266288,111,'Quiz','','individual',NULL),(1783844866,'remark','REJECTED','2023-10-06',1266288,111,'Personal','remark',NULL,NULL),(1918062593,'hahhahhahahahaha','WAITING','2023-10-05',1266288,111,'Others','hahahahhaha',NULL,NULL),(2064863234,'mymym','WAITING','2023-10-06',1266288,111,'Others','mymymy',NULL,NULL);
 /*!40000 ALTER TABLE `Request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +225,6 @@ CREATE TABLE `Staff_member` (
   `staff_id` int NOT NULL,
   `name` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
-  `role` varchar(45) NOT NULL,
   `new_request` tinyint NOT NULL,
   `flagged_request` tinyint NOT NULL,
   PRIMARY KEY (`staff_id`)
@@ -230,7 +237,7 @@ CREATE TABLE `Staff_member` (
 
 LOCK TABLES `Staff_member` WRITE;
 /*!40000 ALTER TABLE `Staff_member` DISABLE KEYS */;
-INSERT INTO `Staff_member` VALUES (123456,'Tim Yu','staff1@staff.unimelb.edu.au','coordinator',1,1);
+INSERT INTO `Staff_member` VALUES (123455,'Tom','zewang4@student.unimelb.edu.au',1,1),(123456,'Tim Yu','heshen@student.unimelb.edu.au',0,0);
 /*!40000 ALTER TABLE `Staff_member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -287,7 +294,7 @@ CREATE TABLE `Subject` (
 
 LOCK TABLES `Subject` WRITE;
 /*!40000 ALTER TABLE `Subject` DISABLE KEYS */;
-INSERT INTO `Subject` VALUES (111,'some subject',1,0,1,1,1),(222,'test subject 1',1,1,1,1,1),(333,'test subject',1,1,1,1,1);
+INSERT INTO `Subject` VALUES (111,'some subject',0,1,1,1,1),(222,'test subject 1',1,1,1,1,1),(333,'test subject',1,1,1,1,1);
 /*!40000 ALTER TABLE `Subject` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -300,4 +307,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-13  0:16:12
+-- Dump completed on 2023-11-13 17:35:02
