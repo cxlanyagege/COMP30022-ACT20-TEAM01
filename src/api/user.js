@@ -7,3 +7,11 @@ export function getInfo(token) {
     params: { token }
   })
 }
+
+export function getStaffInfo(token) {
+  return request({
+    url: '/api/getStaffUserInfo',
+    method: 'get',
+    params: { token }
+  })
+}

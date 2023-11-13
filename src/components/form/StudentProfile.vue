@@ -18,7 +18,7 @@
       </div>
       <div class="profile-item">
         <label>AAP Beneficiaries: </label>
-        <span>{{ studentInfo.aap === "Yes" ? "Yes" : "No" }}</span>
+        <span>{{ studentInfo.aap === "No" ? "Yes" : "No" }}</span>
       </div>
       <div class="profile-item">
         <label>AAP Documentation: </label>

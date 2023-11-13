@@ -1,4 +1,4 @@
-import { getInfo } from '@/api/user'
+import { getInfo, getStaffInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -50,6 +50,29 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
+        const { data } = response
+
+        if (!data) {
+          reject('Verification failed, please Login again.')
+        }
+
+        const { id, name, email, avatar } = data
+
+        commit('SET_ID', id)
+        commit('SET_NAME', name)
+        commit('SET_EMAIL', email)
+        commit('SET_AVATAR', avatar)
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  // get staff user info
+  getStaffInfo({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      getStaffInfo(state.token).then(response => {
         const { data } = response
 
         if (!data) {

@@ -10,15 +10,20 @@ import it.project.application.service.IAttachmentService;
 import it.project.application.service.IPositionService;
 import it.project.application.service.IRequestService;
 import it.project.application.service.IStaffService;
+import it.project.application.util.JwtUtil;
 import it.project.application.vo.RequestVo;
 import it.project.application.vo.Result;
 import it.project.application.vo.StaffPositionVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -37,6 +42,39 @@ public class StaffController {
 
     @Autowired
     private IPositionService positionService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @GetMapping("/getStaffUserInfo")
+    public ResponseEntity<Map<String, Object>> getUserInfo(@RequestParam String token) {
+
+        // Parse staff id from token
+        String staffIdStr = jwtUtil.extractStudentId(token);
+        Long staffId = Long.valueOf(staffIdStr);
+
+        // Get staff entity from staff id
+        Staff staff = staffService.getById(staffId);
+
+        // Response with matched staff entity
+        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
+        if (staff != null) {
+            data.put("id", staffId);
+            data.put("name", staff.getName());
+            data.put("email", staff.getEmail());
+            data.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+
+            response.put("code", 20000);
+            response.put("data", data);
+            
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            response.put("code", 5008);
+            response.put("message", "User not found");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+    }
 
     // 应该是传进来一个staffid和一个subjectid，database里面搜索这个staff然后
     // 根据他在这个subject里面的role获取requests

@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.project.application.service.IStaffService;
 import it.project.application.service.IStudentService;
 import it.project.application.service.ISubjectService;
 import it.project.application.pojo.Student;
+import it.project.application.pojo.Staff;
 import it.project.application.pojo.Subject;
 import it.project.application.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,6 +46,9 @@ public class LtiController {
 
     @Autowired
     private IStudentService studentService;
+
+    @Autowired
+    private IStaffService staffService;
 
     @Autowired
     private ISubjectService subjectService;
@@ -116,6 +121,33 @@ public class LtiController {
             String userRole = request.getParameter("roles");
             if (userRole.contains("Instructor")) {
                 // Administrator or subject coordinator
+
+                // Store user info from lti post into jwt token
+                Integer id = Integer.valueOf(request.getParameter("custom_canvas_user_id"));
+                String name = request.getParameter("lis_person_name_full");
+                String email = request.getParameter("custom_canvas_user_login_id");
+                if (staffService.getById(id) == null){
+                    staffService.save(new Staff(id, name, email, "coordinator", true, true));
+                }
+
+                // Store subject course information
+                Integer subjectId = Integer.valueOf(request.getParameter("custom_canvas_course_id"));
+                String subjectName = request.getParameter("context_label");
+                if (subjectService.getById(subjectId) == null){
+                    subjectService.save(new Subject(subjectId, subjectName, true, true, true, true, true));
+                }
+
+                // Generate jwt token
+                String jwt = jwtUtil.generateToken(id, name, email, subjectId, subjectName);
+
+                // Launch StuRequestHub dashboard
+                try {
+                    response.sendRedirect("/#/stafflogin?jwt=" + jwt);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return "Redirect failed";
+                }
+                return "Signature matched, authorized complete";
 
             } else if (userRole.contains("TeachingAssistant")) {
                 // Tutor or assistant

@@ -7,12 +7,19 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import Layout from '@/layout'
+import StaffLayout from '@/layout/staffindex.vue'
 
 // MODIFIED BY YAWEN LUO
 export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
+    hidden: true
+  },
+  
+  {
+    path: '/stafflogin',
+    component: () => import('@/views/login/staffindex'),
     hidden: true
   },
 
@@ -33,6 +40,46 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
+  
+  {
+    path: '/staff',
+    component: StaffLayout,
+    redirect: '/staff/staffdashboard',
+    children: [{
+      path: 'staffdashboard',
+      name: 'StaffDashboard',
+      component: () => import('@/views/dashboard/staffindex'),
+      meta: { title: 'StaffDashboard', icon: 'staffdashboard' }
+    }]
+  },
+
+  {
+    path: '/staff/PER-Request',
+    component: StaffLayout,
+    children: [
+      {
+        path: 'index',
+        name: 'Request Permission',
+        component: () => import('@/views/requestAuthority/index'),
+        meta: { title: 'Request Permission', icon: 'el-icon-s-operation' }
+      }
+    ]
+  },
+
+  {
+    path: '/staff/PER-Tutor',
+    component: StaffLayout,
+    children: [
+      {
+        path: 'index',
+        name: 'Tutor Authority',
+        component: () => import('@/views/tutorAuthority/index'),
+        meta: { title: 'Tutor Authority', icon: 'el-icon-s-help' }
+      }
+    ]
+  },
+
+  // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
 

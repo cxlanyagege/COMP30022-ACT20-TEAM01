@@ -8,7 +8,12 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login'] // no redirect whitelist
+const whiteList = ['/login', '/stafflogin'] // no redirect whitelist
+
+function isStaffUser() {
+  const currentPath = router.currentRoute.path;
+  return currentPath.includes('/staff');
+}
 
 router.beforeEach(async(to, from, next) => {
   // start progress bar
@@ -25,6 +30,10 @@ router.beforeEach(async(to, from, next) => {
       // if is logged in, redirect to the home page
       next({ path: '/' })
       NProgress.done()
+    } else if (to.path === '/stafflogin') {
+      // if is logged in, redirect to the home page
+      next({ path: '/staff' })
+      NProgress.done()
     } else {
       const hasGetUserInfo = store.getters.name
       if (hasGetUserInfo) {
@@ -32,7 +41,11 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // get user and subject info
-          await store.dispatch('user/getInfo')
+          if (isStaffUser()) {
+            await store.dispatch('user/getStaffInfo')
+          } else {
+            await store.dispatch('user/getInfo')
+          }
           await store.dispatch('subject/getSubjectInfo')
           next()
         } catch (error) {
