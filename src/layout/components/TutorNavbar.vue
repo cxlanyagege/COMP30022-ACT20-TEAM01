@@ -20,7 +20,7 @@
       :visible.sync="showSettingDialog"
       width="50%"
     >
-      <setting></setting>  <!-- 在弹窗中显示 Setting 组件 -->
+      <setting />  <!-- 在弹窗中显示 Setting 组件 -->
     </el-dialog>
   </div>
 </template>
@@ -28,13 +28,11 @@
 <script>
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
-import Hamburger from '@/components/Hamburger'
 import Setting from '@/components/TutorSetting'
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger,
     Setting
   },
   data() {

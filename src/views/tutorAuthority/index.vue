@@ -10,9 +10,9 @@
       highlight-current-row
       style="width: 100%"
     >
-      <el-table-column prop="position" label="Staff Position" :width="165"></el-table-column>
-      <el-table-column prop="name" label="Staff Name" :width="170"></el-table-column>
-      <el-table-column prop="email" label="Staff Email" :width="265"></el-table-column>
+      <el-table-column prop="position" label="Staff Position" :width="165" />
+      <el-table-column prop="name" label="Staff Name" :width="170" />
+      <el-table-column prop="email" label="Staff Email" :width="265" />
       <el-table-column prop="authority" label="Authority" :width="585">
         <template slot-scope="{ row }">
           <el-row>
@@ -48,7 +48,7 @@
             <el-col :span="4" style="width: 18%;">
               <el-checkbox
                 v-model="row.authority[4]"
-                :checked=true
+                :checked="true"
                 label="Other"
                 @change="handleCheckboxChange(row, 4)"
               >Other</el-checkbox>
@@ -94,22 +94,22 @@ export default {
   data() {
     return {
       tableData: [],
-      listLoading: false,
+      listLoading: false
     }
   },
-  created(){
+  created() {
     this.getRoleInfo()
   },
   methods: {
-    getRoleInfo(){
+    getRoleInfo() {
       getStaffRoleInfo(this.$store.getters.subjectId).then((res) => {
         this.tableData = res.data.data.map((record) => {
-          const autho = [];
-          autho.push(record.assignmentRequest);
-          autho.push(record.quizRequest);
-          autho.push(record.examRequest);
-          autho.push(record.personalRequest);
-          autho.push(record.otherRequest);
+          const autho = []
+          autho.push(record.assignmentRequest)
+          autho.push(record.quizRequest)
+          autho.push(record.examRequest)
+          autho.push(record.personalRequest)
+          autho.push(record.otherRequest)
           return {
             position: record.staffRole,
             name: record.name,
@@ -122,18 +122,18 @@ export default {
         })
       })
     },
-    updateStaffInfo(row){
-      this.hideConfirmation(row.staffId);
-      let param = {
+    updateStaffInfo(row) {
+      this.hideConfirmation(row.staffId)
+      const param = {
         assignmentRequest: row.authority[0],
         quizRequest: row.authority[1],
         examRequest: row.authority[2],
         personalRequest: row.authority[3],
         othersRequest: row.authority[4],
-        subjectId: row.subjectId,
+        subjectId: row.subjectId
       }
       updateStaffAuthority(row.staffId, param).then((res) => {
-        console.log(res.data);
+        console.log(res.data)
       })
     },
     handleCheckboxChange(row, index) {
@@ -160,14 +160,14 @@ export default {
       }
     },
     showConfirmation(staffId) {
-      const rowIndex = this.tableData.findIndex(row => row.staffId === staffId);
-      this.$set(this.tableData[rowIndex], 'confirmationVisible', true);
+      const rowIndex = this.tableData.findIndex(row => row.staffId === staffId)
+      this.$set(this.tableData[rowIndex], 'confirmationVisible', true)
     },
 
     hideConfirmation(staffId) {
-      const rowIndex = this.tableData.findIndex(row => row.staffId === staffId);
-      this.$set(this.tableData[rowIndex], 'confirmationVisible', false);
-    },
+      const rowIndex = this.tableData.findIndex(row => row.staffId === staffId)
+      this.$set(this.tableData[rowIndex], 'confirmationVisible', false)
+    }
 
   }
 }

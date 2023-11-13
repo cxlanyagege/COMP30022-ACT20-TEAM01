@@ -20,4 +20,4 @@ export const getStaffRoleInfo = (subjectId) => getAction('/api/getStaffRoleInfo/
 
 export const updateStaffAuthority = (staffId, param) => putAction('/api/updateStaffAuthority/' + staffId, param)
 
-export const getTutorRequests = (tutorId) => getAction("/api/getTutorRequests/" + tutorId, null);
+export const getTutorRequests = (tutorId) => getAction('/api/getTutorRequests/' + tutorId, null)

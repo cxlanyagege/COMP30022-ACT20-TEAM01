@@ -41,7 +41,7 @@ modified and edited by Lanruo Su, Xuan Zhang -->
               }"
               @click="filterRequests(requestType.subID)"
             >
-              <span class="dot" :style="{ backgroundColor: requestType.color }"></span>
+              <span class="dot" :style="{ backgroundColor: requestType.color }" />
               {{ requestType.subID }}
             </el-button>
           </div>
@@ -65,7 +65,7 @@ export default {
       isCollapse: false,
       requestTypes: [
         { subID: 111, color: 'rgb(96, 191, 255)' },
-        { subID: 222, color: 'rgb(46, 204, 113)' },
+        { subID: 222, color: 'rgb(46, 204, 113)' }
       ],
       selectedRowIndex: null
     }

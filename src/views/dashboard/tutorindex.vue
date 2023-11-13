@@ -1,7 +1,7 @@
 <template>
   <div>
     <Filterrequest @filter="applyFilter" /> <!-- 监听FilterComponent的filter事件 -->
-    <Table :tableData="filteredData" @flagClick="handleFlagClick" /> <!-- 监听TableComponent的flagClick事件 -->
+    <Table :table-data="filteredData" @flagClick="handleFlagClick" /> <!-- 监听TableComponent的flagClick事件 -->
   </div>
 </template>
 
@@ -10,7 +10,7 @@ import Filterrequest from '@/components/Filterrequest/index'
 import Table from '@/components/table/index'
 import { EventBus } from '@/utils/EventBus'
 import { getTutorRequests } from '@/api/api'
-import { attachmentBaseURL } from "@/config/config"
+import { attachmentBaseURL } from '@/config/config'
 
 export default {
   components: {
@@ -28,7 +28,7 @@ export default {
   created() {
     // initialize the filtering to "All"
     this.applyFilter('All')
-    this.getRequests();
+    this.getRequests()
     // 监听 EventBus 上的 filter 事件
     EventBus.$on('filter', (subID) => {
       if (this.selectedSubID === subID) {
@@ -44,11 +44,11 @@ export default {
     })
   },
   methods: {
-    getRequests(){
+    getRequests() {
       getTutorRequests(this.$store.getters.id).then((res) => {
         console.log(res.data)
         if (res.data.data.length === 0) {
-          this.tableData = [];
+          this.tableData = []
         } else {
           const requestData = res.data.data.map((record) => {
             return {
@@ -63,22 +63,22 @@ export default {
               files: record.attachments.map((item) => {
                 return {
                   uid: item.attachmentId,
-                  url: this.convertUrlWithPrefix(item.url),
-                };
+                  url: this.convertUrlWithPrefix(item.url)
+                }
               }),
-              status: record.status === "WAITING" ? "UNASSESSED" : record.status,
+              status: record.status === 'WAITING' ? 'UNASSESSED' : record.status,
               flagClicked: false,
-              morespecific: record.workType,
-            };
-          });
-          this.tableData = requestData;
+              morespecific: record.workType
+            }
+          })
+          this.tableData = requestData
         }
         console.log(this.tableData)
       })
     },
     // written by Dennis Wang
     convertUrlWithPrefix(url) {
-      return attachmentBaseURL + url;
+      return attachmentBaseURL + url
     },
     filterRequests(subID) {
       this.selectedSubID = subID
@@ -86,7 +86,7 @@ export default {
     },
     applyFilter(filterCondition) {
       // 处理筛选的逻辑
-      this.filterCondition = "All"
+      this.filterCondition = 'All'
       // 筛选所选的 subID
       if (this.selectedSubID === null || this.selectedSubID === 'All') {
         this.filteredData = this.tableData
