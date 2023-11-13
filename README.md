@@ -69,6 +69,14 @@ java -jar build/libs/application-v2.0-rc.jar
 ### Connect
 For the connection using LTI1.1 standards, please refer to [How to connect to LMS](https://wxd.atlassian.net/wiki/spaces/~712020572c35dfb81c4ad48d0be3dc166f9960/pages/7438386/Deployment#Connect-to-LMS%3A)
 
+| Key           | Value                                         |
+|---------------|-----------------------------------------------|
+| Name          | StuRequestHub                                 |
+| Consumer Key  | sturequesthub_itproject_act20_team01          |
+| Shared Secret | f9Dh7sd1Gk8oP4nQz6jWc3aRb0xLm2Yv             |
+
+- [LTI Registration XML](https://github.com/cxlanyagege/COMP30022-ACT20-TEAM01/blob/main/registration.xml)
+
 ## `application.properties` Template
 Create your own `application.properties` following the template below, along with `application-vX.X.jar` in build/libs after build
 ```
