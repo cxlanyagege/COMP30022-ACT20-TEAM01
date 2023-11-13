@@ -24,9 +24,6 @@
             <el-form-item label="Request Details">
               <span>{{ props.row.reqDetail }}</span>
             </el-form-item>
-            <el-form-item label="AAPs">
-              <span>{{ props.row.AAPs }}</span>
-            </el-form-item>
             <el-form-item label="Attached Files">
               <template v-if="props.row.files.length > 0">
                 <li v-for="file in props.row.files" :key="file.uid">

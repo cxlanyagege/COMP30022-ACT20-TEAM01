@@ -15,7 +15,6 @@ public class Staff {
     private Integer staffId;
     private String name;
     private String email;
-    private String role;
     private boolean newRequest;
     private boolean flaggedRequest;
 }

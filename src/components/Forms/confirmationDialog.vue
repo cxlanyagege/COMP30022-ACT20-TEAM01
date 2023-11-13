@@ -3,6 +3,7 @@
     title="Approve Request"
     :visible.sync="visible"
     width="50%"
+    :show-close="false"
   >
     <el-form ref="form" :model="form" label-width="180px">
       <el-form-item label="Confirmation Message" class="custom-label-size">

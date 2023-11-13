@@ -10,9 +10,9 @@
       highlight-current-row
       style="width: 100%"
     >
-      <el-table-column prop="position" label="Staff Position" :width="170" />
-      <el-table-column prop="name" label="Staff Name" :width="179" />
-      <el-table-column prop="email" label="Staff Email" :width="296" />
+      <el-table-column prop="position" label="Staff Position" :width="170"></el-table-column>
+      <el-table-column prop="name" label="Staff Name" :width="179"></el-table-column>
+      <el-table-column prop="email" label="Staff Email" :width="296"></el-table-column>
       <el-table-column prop="authority" label="Authority" :width="640">
         <template slot-scope="{ row }">
           <el-row>
@@ -48,7 +48,7 @@
             <el-col :span="4" style="width: 18%;">
               <el-checkbox
                 v-model="row.authority[4]"
-                :checked="true"
+                :checked=true
                 label="Other"
                 @change="handleCheckboxChange(row, 4)"
               >Other</el-checkbox>
@@ -56,6 +56,7 @@
           </el-row>
         </template>
       </el-table-column>
+
       <el-table-column label="ACTION">
         <template slot-scope="{ row }">
           <el-row>
@@ -63,14 +64,18 @@
               <el-button
                 type="primary"
                 size="small"
-                @click="confirmationVisible = true"
+                @click="showConfirmation(row.staffId)"
               >
                 SAVE
               </el-button>
-              <el-dialog title="Save changes?" :visible.sync="confirmationVisible">
+              <el-dialog
+                title="Save changes?"
+                :visible.sync="row.confirmationVisible"
+                @close="hideConfirmation(row.staffId)"
+              >
                 <span>Are you sure you want to save the changes?</span>
                 <span slot="footer" class="dialog-footer">
-                  <el-button @click="confirmationVisible = false">cancel</el-button>
+                  <el-button @click="hideConfirmation(row.staffId)">cancel</el-button>
                   <el-button type="primary" @click="updateStaffInfo(row)">confirm</el-button>
                 </span>
               </el-dialog>
@@ -90,47 +95,46 @@ export default {
     return {
       tableData: [],
       listLoading: false,
-      confirmationVisible: false
     }
   },
-  created() {
+  created(){
     this.getRoleInfo()
   },
   methods: {
-    getRoleInfo() {
+    getRoleInfo(){
       getStaffRoleInfo(this.$store.getters.subjectId).then((res) => {
-        console.log(res.data)
+        // console.log(res.data);
         this.tableData = res.data.data.map((record) => {
-          const autho = []
-          autho.push(record.assignmentRequest)
-          autho.push(record.quizRequest)
-          autho.push(record.examRequest)
-          autho.push(record.personalRequest)
-          autho.push(record.otherRequest)
+          const autho = [];
+          autho.push(record.assignmentRequest);
+          autho.push(record.quizRequest);
+          autho.push(record.examRequest);
+          autho.push(record.personalRequest);
+          autho.push(record.otherRequest);
           return {
             position: record.staffRole,
             name: record.name,
             email: record.email,
             staffId: record.staffId,
             subjectId: record.subjectId,
+            confirmationVisible: false,
             authority: autho
           }
         })
       })
     },
-    updateStaffInfo(row) {
-      this.confirmationVisible = false
-      const param = {
+    updateStaffInfo(row){
+      this.hideConfirmation(row.staffId);
+      let param = {
         assignmentRequest: row.authority[0],
         quizRequest: row.authority[1],
         examRequest: row.authority[2],
         personalRequest: row.authority[3],
         othersRequest: row.authority[4],
-        subjectId: row.subjectId
+        subjectId: row.subjectId,
       }
-      console.log(row)
       updateStaffAuthority(row.staffId, param).then((res) => {
-        console.log(res.data)
+        console.log(res.data);
       })
     },
     handleCheckboxChange(row, index) {
@@ -155,7 +159,17 @@ export default {
           }
         }
       }
-    }
+    },
+    showConfirmation(staffId) {
+      const rowIndex = this.tableData.findIndex(row => row.staffId === staffId);
+      this.$set(this.tableData[rowIndex], 'confirmationVisible', true);
+    },
+
+    hideConfirmation(staffId) {
+      const rowIndex = this.tableData.findIndex(row => row.staffId === staffId);
+      this.$set(this.tableData[rowIndex], 'confirmationVisible', false);
+    },
+
   }
 }
 </script>

@@ -127,7 +127,7 @@ public class LtiController {
                 String name = request.getParameter("lis_person_name_full");
                 String email = request.getParameter("custom_canvas_user_login_id");
                 if (staffService.getById(id) == null){
-                    staffService.save(new Staff(id, name, email, "coordinator", true, true));
+                    staffService.save(new Staff(id, name, email, true, true));
                 }
 
                 // Store subject course information
