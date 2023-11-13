@@ -121,3 +121,6 @@ spring.mail.properties.debug=false
 ## FAQ
 ### If I need to deploy on my remote server, do I need to setup MySQL database remotely?
 Yes, you may follow [Prerequisites](#prerequisites) and [Setup](#setup) to install and config Java and MySQL Server. Then try to run the application
+
+## Tips
+### There are so many hidden functionalities waiting for you to find, enjoy:)
