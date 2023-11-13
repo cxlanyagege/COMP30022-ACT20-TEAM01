@@ -55,26 +55,22 @@
         label="Subject ID"
         min-width="55"
         prop="subID"
-      >
-      </el-table-column>
+      />
       <el-table-column
         label="Request Type"
         min-width="60"
         prop="reqType"
-      >
-      </el-table-column>
+      />
       <el-table-column
         label="Request Name"
         min-width="70"
         prop="reqName"
-      >
-      </el-table-column>
+      />
       <el-table-column
         label="Application Date"
         min-width="60"
         prop="appDate"
-      >
-      </el-table-column>
+      />
       <el-table-column label="Status" prop="status" min-width="60">
         <template slot-scope="{ row }">
           <el-tag v-if="row.status === 'UNASSESSED'" type="warning">{{ row.status }}</el-tag>
@@ -104,18 +100,17 @@
             icon="el-icon-s-flag"
             circle
             @click="handleFlagClick(row)"
-          >
-          </el-button>
+          />
         </template>
       </el-table-column>
     </el-table>
     <el-dialog v-if="showProfileDialog" title="Student Profile" :visible.sync="showProfileDialog">
-      <student-profile :studentInfo="selectedStudentInfo"/>
+      <student-profile :student-info="selectedStudentInfo" />
     </el-dialog>
     <ConfirmationDialog
       :visible.sync="approveDialogVisible"
       :form.sync="approveForm"
-      :workType="selectedRow ? selectedRow.morespecific : ''"
+      :work-type="selectedRow ? selectedRow.morespecific : ''"
       @confirm="handleApprove()"
     />
   </div>
@@ -151,8 +146,8 @@
 <script>
 import StudentProfile from '@/components/Forms/studentProfile.vue'
 import ConfirmationDialog from '@/components/Forms/confirmationDialog.vue'
-import { uploadURL } from "@/config/config"
-import { getStudentDetail, updateRequest } from "@/api/api"
+import { uploadURL } from '@/config/config'
+import { getStudentDetail, updateRequest } from '@/api/api'
 
 export default {
   components: {
@@ -160,7 +155,10 @@ export default {
     ConfirmationDialog
   },
   props: {
-    tableData: Array
+    tableData: {
+      type: Array,
+      default: () => []
+    }
   },
   data() {
     return {
@@ -179,7 +177,7 @@ export default {
   methods: {
     showStudentProfile(row) {
       // console.log(row)
-      let param = {
+      const param = {
         subjectId: this.$store.getters.subjectId
       }
       getStudentDetail(row.studentId, param).then((res) => {
@@ -201,8 +199,8 @@ export default {
     },
     handleApprove() {
       // const { message, date } = this.approveForm
-      let param = {
-        status: "APPROVED",
+      const param = {
+        status: 'APPROVED',
         message: this.approveForm.message
       }
       updateRequest(this.selectedRow.requestId, param).then((res) => {
@@ -220,9 +218,9 @@ export default {
         type: 'warning'
       }).then(() => {
         // click confirm for reject
-        let param = {
-          status: "REJECTED",
-          message: "Request rejected"
+        const param = {
+          status: 'REJECTED',
+          message: 'Request rejected'
         }
         updateRequest(row.requestId, param).then((res) => {
           row.status = 'REJECTED'

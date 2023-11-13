@@ -1,4 +1,4 @@
-<!-- The component code was written by Yawen Luo in student interface, edited by Xuan Zhang. This code is used to display the 
+<!-- The component code was written by Yawen Luo in student interface, edited by Xuan Zhang. This code is used to display the
      form element component of the student's personal information -->
 
 <template>
@@ -24,8 +24,8 @@
         <label>AAP Documentation: </label>
         <template v-if="studentInfo.aapAttachment != null">
           <a :href="studentInfo.aapAttachment.attachmentUrl" target="_blank">
-            <span style="color: rgb(0, 85, 255)">{{ 
-              studentInfo.aapAttachment.attachmentUrl}}</span>
+            <span style="color: rgb(0, 85, 255)">{{
+              studentInfo.aapAttachment.attachmentUrl }}</span>
           </a>
         </template>
         <template v-else> NA </template>
@@ -33,22 +33,23 @@
       <div class="profile-item">
         <label>Student History: </label>
         <span>
-        <!-- Nested Text Button -->
-        <el-button type="text" @click="viewStudentHistory()">View History</el-button>
-        <el-dialog title="Student Request History" :visible.sync="dialogVisible" append-to-body>
-          <el-table 
-            :data="studentInfo.requestHistory" 
-            height="350"
-            stripe 
-            border>
-            <!-- More columns may be added-->
-            <el-table-column property="requestName" label="Request Name" width="200"></el-table-column>
-            <el-table-column property="description" label="Description" width="200"></el-table-column>
-            <el-table-column property="requestType" label="Request Type" width="200"></el-table-column>
-            <el-table-column property="taskType" label="Task Type" width="200"></el-table-column>
-            <el-table-column property="workType" label="More Specific" width="200"></el-table-column>
-          </el-table>
-        </el-dialog>
+          <!-- Nested Text Button -->
+          <el-button type="text" @click="viewStudentHistory()">View History</el-button>
+          <el-dialog title="Student Request History" :visible.sync="dialogVisible" append-to-body>
+            <el-table
+              :data="studentInfo.requestHistory"
+              height="350"
+              stripe
+              border
+            >
+              <!-- More columns may be added-->
+              <el-table-column property="requestName" label="Request Name" width="200" />
+              <el-table-column property="description" label="Description" width="200" />
+              <el-table-column property="requestType" label="Request Type" width="200" />
+              <el-table-column property="taskType" label="Task Type" width="200" />
+              <el-table-column property="workType" label="More Specific" width="200" />
+            </el-table>
+          </el-dialog>
         </span>
       </div>
     </div>
@@ -57,26 +58,26 @@
 
 <script>
 export default {
-  data(){
+  props: {
+    studentInfo: {
+      type: Object,
+      required: true
+    }
+  },
+  data() {
     return {
       dialogVisible: false
     }
   },
-  props: {
-    studentInfo: {
-      type: Object,
-      required: true,
-    },
-  },
   methods: {
     viewStudentHistory() {
-      this.dialogVisible = true;
+      this.dialogVisible = true
       // Handle the action when the "View History" button is clicked
       // You can navigate to the student history or show a modal, for example.
       // Example: this.$router.push(`/studentHistory/${this.studentInfo.id}`);
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>

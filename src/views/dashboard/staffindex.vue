@@ -1,15 +1,15 @@
 <template>
   <div>
     <Filterrequest @filter="applyFilter" /> <!-- 监听FilterComponent的filter事件 -->
-    <Table :tableData="filteredData" @flagClick="handleFlagClick" /> <!-- 监听TableComponent的flagClick事件 -->
+    <Table :table-data="filteredData" @flagClick="handleFlagClick" /> <!-- 监听TableComponent的flagClick事件 -->
   </div>
 </template>
 
 <script>
 import Filterrequest from '@/components/Filterrequest/index.vue'
 import Table from '@/components/table/index.vue'
-import { getSubjectRequests } from "@/api/api"
-import { attachmentBaseURL } from "@/config/config"
+import { getSubjectRequests } from '@/api/api'
+import { attachmentBaseURL } from '@/config/config'
 
 export default {
   components: {
@@ -23,14 +23,6 @@ export default {
       filteredTable: []
     }
   },
-  created() {
-    // initialize the filtering to "All"
-    this.applyFilter('All')
-  },
-  // written by Dennis Wang
-  mounted() {
-    this.getRequests();
-  },
   computed: {
     // 使用计算属性来根据筛选条件过滤数据
     filteredData() {
@@ -41,13 +33,21 @@ export default {
       }
     }
   },
+  created() {
+    // initialize the filtering to "All"
+    this.applyFilter('All')
+  },
+  // written by Dennis Wang
+  mounted() {
+    this.getRequests()
+  },
   methods: {
     // written by Dennis Wang, get all the requests
-    getRequests(){
-      console.log("Get all the requests related to the subject")
+    getRequests() {
+      console.log('Get all the requests related to the subject')
       getSubjectRequests(this.$store.getters.subjectId).then((res) => {
         if (res.data.data.length === 0) {
-          this.tableData = [];
+          this.tableData = []
         } else {
           const requestData = res.data.data.map((record) => {
             return {
@@ -62,21 +62,21 @@ export default {
               files: record.attachments.map((item) => {
                 return {
                   uid: item.attachmentId,
-                  url: this.convertUrlWithPrefix(item.url),
-                };
+                  url: this.convertUrlWithPrefix(item.url)
+                }
               }),
-              status: record.status === "WAITING" ? "UNASSESSED" : record.status,
+              status: record.status === 'WAITING' ? 'UNASSESSED' : record.status,
               flagClicked: false,
-              morespecific: record.workType,
-            };
-          });
-          this.tableData = requestData;
+              morespecific: record.workType
+            }
+          })
+          this.tableData = requestData
         }
       })
     },
     // written by Dennis Wang
     convertUrlWithPrefix(url) {
-      return attachmentBaseURL + url;
+      return attachmentBaseURL + url
     },
     applyFilter(filterCondition) {
       // 处理筛选的逻辑

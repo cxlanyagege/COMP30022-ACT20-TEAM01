@@ -15,27 +15,27 @@
       <el-table-column prop="Assignment" label="Assignment" style="width: 26%">
         <template slot-scope="{ row }">
           <!-- <el-switch v-model="row.Assignment" :active-value="true" :inactive-value="false" active-text="Yes" inactive-text="No" @change="handleSwitchChange(row, 'Assignment')"></el-switch> -->
-          <el-switch v-model="row.Assignment" :active-value="true" :inactive-value="false" active-text="Yes" inactive-text="No"></el-switch>
+          <el-switch v-model="row.Assignment" :active-value="true" :inactive-value="false" active-text="Yes" inactive-text="No" />
         </template>
       </el-table-column>
       <el-table-column prop="Quiz" label="Quiz" style="width: 18%">
         <template slot-scope="{ row }">
-          <el-switch v-model="row.Quiz" :active-value="true" :inactive-value="false" active-text="Yes" inactive-text="No"></el-switch>
+          <el-switch v-model="row.Quiz" :active-value="true" :inactive-value="false" active-text="Yes" inactive-text="No" />
         </template>
       </el-table-column>
       <el-table-column prop="Exam" label="Exam" style="width: 18%">
         <template slot-scope="{ row }">
-          <el-switch v-model="row.Exam" :active-value="true" :inactive-value="false" active-text="Yes" inactive-text="No"></el-switch>
+          <el-switch v-model="row.Exam" :active-value="true" :inactive-value="false" active-text="Yes" inactive-text="No" />
         </template>
       </el-table-column>
       <el-table-column prop="Personal" label="Personal" style="width: 20%">
         <template slot-scope="{ row }">
-          <el-switch v-model="row.Personal" :active-value="true" :inactive-value="false" active-text="Yes" inactive-text="No"></el-switch>
+          <el-switch v-model="row.Personal" :active-value="true" :inactive-value="false" active-text="Yes" inactive-text="No" />
         </template>
       </el-table-column>
       <el-table-column prop="Others" label="Others" style="width: 18%">
         <template slot-scope="{ row }">
-          <el-switch v-model="row.Others" :active-value="true" :inactive-value="false" active-text="Yes" inactive-text="No"></el-switch>
+          <el-switch v-model="row.Others" :active-value="true" :inactive-value="false" active-text="Yes" inactive-text="No" />
         </template>
       </el-table-column>
       <el-table-column label="ACTION">
@@ -78,29 +78,29 @@ export default {
         }
       ],
       listLoading: false,
-      confirmationVisible: false,
+      confirmationVisible: false
     }
   },
 
   // written by Dennis Wang, initialize the types of requests
   // that can be authorised to process
-  created(){
+  created() {
     getSubjectDetail(this.$store.getters.subjectId).then((res) => {
       console.log(res.data)
-      this.tableData[0].Assignment = res.data.data.assignmentRequest;
-      this.tableData[0].Quiz = res.data.data.quizRequest;
-      this.tableData[0].Exam = res.data.data.examRequest;
-      this.tableData[0].Personal = res.data.data.personalRequest;
-      this.tableData[0].Others = res.data.data.othersRequest;
+      this.tableData[0].Assignment = res.data.data.assignmentRequest
+      this.tableData[0].Quiz = res.data.data.quizRequest
+      this.tableData[0].Exam = res.data.data.examRequest
+      this.tableData[0].Personal = res.data.data.personalRequest
+      this.tableData[0].Others = res.data.data.othersRequest
     })
   },
 
   methods: {
     // written by Dennis Wang, update the type of requests this subject
     // can recieved by coordinator
-    updateAllowedRequests(){
-      this.confirmationVisible = false;
-      let param = {
+    updateAllowedRequests() {
+      this.confirmationVisible = false
+      const param = {
         assignmentRequest: this.tableData[0].Assignment,
         quizRequest: this.tableData[0].Quiz,
         examRequest: this.tableData[0].Exam,
@@ -108,10 +108,10 @@ export default {
         othersRequest: this.tableData[0].Others
       }
       updateSubjectApprovedRequests(this.$store.getters.subjectId, param).then((res) => {
-        console.log(res.data);
+        console.log(res.data)
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

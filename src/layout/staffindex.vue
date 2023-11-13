@@ -1,6 +1,6 @@
  <!-- The following code is the framework that comes with the scaffolding -->
 
- <template>
+<template>
   <div :class="classObj" class="app-wrapper">
     <div
       v-if="device === 'mobile' && sidebar.opened"

@@ -11,8 +11,8 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 const whiteList = ['/login', '/stafflogin'] // no redirect whitelist
 
 function isStaffUser() {
-  const currentPath = router.currentRoute.path;
-  return currentPath.includes('/staff');
+  const currentPath = router.currentRoute.path
+  return currentPath.includes('/staff')
 }
 
 router.beforeEach(async(to, from, next) => {

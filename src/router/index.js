@@ -16,7 +16,7 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
-  
+
   {
     path: '/stafflogin',
     component: () => import('@/views/login/staffindex'),
@@ -40,7 +40,7 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
-  
+
   {
     path: '/staff',
     component: StaffLayout,

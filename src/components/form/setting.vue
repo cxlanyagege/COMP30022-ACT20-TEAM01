@@ -54,7 +54,7 @@ export default {
 
   // written by Dennis, initialize the setting for each student
   created() {
-    getStudentDetail(1266288).then((res) => {
+    getStudentDetail(this.$store.getters.id).then((res) => {
       console.log(res.data)
       this.notificationSettings[0].isEnabled = res.data.data.createRequest
       this.notificationSettings[1].isEnabled = res.data.data.processRequest
@@ -72,7 +72,7 @@ export default {
         deleteRequest: this.notificationSettings[2].isEnabled
       }
       // can change the id to the id in student profile
-      updateStudentPreference(1266288, param).then((res) => {
+      updateStudentPreference(this.$store.getters.id, param).then((res) => {
         console.log(res.data)
       })
     }
