@@ -41,7 +41,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: rootpassword
           MYSQL_USER: test
           MYSQL_PASSWORD: password
-          MYSQL_DATABASE: testdb
+          MYSQL_DATABASE: student_requests
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=5
@@ -54,14 +54,10 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-
-    - name: Create database
-      run: |
-        mysql -h 127.0.0.1 -u test --password=password -e "CREATE DATABASE IF NOT EXISTS testdb;"
   
     - name: Import SQL file
       run: |
-        mysql -h 127.0.0.1 -u test --password=password testdb < database.sql
+        mysql -h 127.0.0.1 -u test --password=password < database.sql
 
     - name: Set execute permissions for gradlew
       run: chmod +x ./gradlew

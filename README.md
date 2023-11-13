@@ -27,11 +27,9 @@ npm install
 ```
 
 Import template SQL schema into your database:
+
 ```
-mysql -u root -p
-CREATE DATABASE srhdb;
-QUIT;
-mysql -u root -p srhdb < database.sql
+mysql -u root -p < database.sql
 ```
 
 ### Build
@@ -73,7 +71,7 @@ For the connection using LTI1.1 standards, please refer to [How to connect to LM
 |---------------|-----------------------------------------------|
 | Name          | StuRequestHub                                 |
 | Consumer Key  | sturequesthub_itproject_act20_team01          |
-| Shared Secret | f9Dh7sd1Gk8oP4nQz6jWc3aRb0xLm2Yv             |
+| Shared Secret | f9Dh7sd1Gk8oP4nQz6jWc3aRb0xLm2Yv              |
 
 - [LTI Registration XML](https://github.com/cxlanyagege/COMP30022-ACT20-TEAM01/blob/main/registration.xml)
 
@@ -84,7 +82,7 @@ Create your own `application.properties` following the template below, along wit
 server.port=8081
 
 # Database source link
-spring.datasource.url=jdbc:mysql://localhost:3306/srhdb
+spring.datasource.url=jdbc:mysql://localhost:3306/student_requests
 
 # Database user name
 spring.datasource.username=root
@@ -122,5 +120,6 @@ spring.mail.properties.debug=false
 ### If I need to deploy on my remote server, do I need to setup MySQL database remotely?
 Yes, you may follow [Prerequisites](#prerequisites) and [Setup](#setup) to install and config Java and MySQL Server. Then try to run the application
 
-## Tips
-### There are so many hidden functionalities waiting for you to find, enjoy:)
+## Limitation
+
+## There are so many hidden functionalities waiting for you to find, enjoy:)
