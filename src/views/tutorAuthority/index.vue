@@ -10,10 +10,10 @@
       highlight-current-row
       style="width: 100%"
     >
-      <el-table-column prop="position" label="Staff Position" :width="170"></el-table-column>
-      <el-table-column prop="name" label="Staff Name" :width="179"></el-table-column>
-      <el-table-column prop="email" label="Staff Email" :width="296"></el-table-column>
-      <el-table-column prop="authority" label="Authority" :width="640">
+      <el-table-column prop="position" label="Staff Position" :width="165"></el-table-column>
+      <el-table-column prop="name" label="Staff Name" :width="170"></el-table-column>
+      <el-table-column prop="email" label="Staff Email" :width="265"></el-table-column>
+      <el-table-column prop="authority" label="Authority" :width="585">
         <template slot-scope="{ row }">
           <el-row>
             <el-col :span="4" style="width: 26%;">
