@@ -29,7 +29,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-import Setting from '@/components/Setting'
+import Setting from '@/components/TutorSetting'
 
 export default {
   components: {

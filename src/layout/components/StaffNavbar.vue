@@ -30,7 +30,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
-import Setting from '@/components/Setting'
+import Setting from '@/components/StaffSetting'
 
 export default {
   components: {

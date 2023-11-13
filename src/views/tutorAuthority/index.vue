@@ -103,7 +103,6 @@ export default {
   methods: {
     getRoleInfo(){
       getStaffRoleInfo(this.$store.getters.subjectId).then((res) => {
-        // console.log(res.data);
         this.tableData = res.data.data.map((record) => {
           const autho = [];
           autho.push(record.assignmentRequest);
