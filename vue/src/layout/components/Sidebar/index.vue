@@ -51,7 +51,7 @@ export default {
     return {
       requestTypes: [
         { name: "Assignment", color: "rgb(52, 152, 219)" },
-        { name: "Test", color: "rgb(46, 204, 113)" },
+        { name: "Quiz", color: "rgb(46, 204, 113)" },
         { name: "Exam", color: "rgb(243, 156, 18)" },
         { name: "Personal", color: "rgb(231, 76, 60)" },
         { name: "Others", color: "rgb(155, 89, 182)" },

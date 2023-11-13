@@ -10,13 +10,8 @@ package com.example.it.project.controllers;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.it.project.form.ConfirmationForm;
 import com.example.it.project.form.RequestForm;
-import com.example.it.project.pojo.Attachment;
-import com.example.it.project.pojo.Request;
-import com.example.it.project.pojo.Student;
-import com.example.it.project.service.IAttachmentService;
-import com.example.it.project.service.IEmailService;
-import com.example.it.project.service.IRequestService;
-import com.example.it.project.service.IStudentService;
+import com.example.it.project.pojo.*;
+import com.example.it.project.service.*;
 import com.example.it.project.vo.Email;
 import com.example.it.project.vo.RequestVo;
 import com.example.it.project.vo.Result;
@@ -44,6 +39,15 @@ public class RequestController {
 
     @Autowired
     private IStudentService studentService;
+
+    @Autowired
+    private IStaffService staffService;
+
+    @Autowired
+    private IPositionService positionService;
+
+    @Autowired
+    private ISubjectService subjectService;
 
     // get the requests related to a student from the database
     @GetMapping("/getRequests/{studentId}")
@@ -126,6 +130,30 @@ public class RequestController {
                 }
             }
         }
+
+        // send email to staff if they want to receive emails if new request is made
+        QueryWrapper newQuery = new QueryWrapper();
+        newQuery.eq("subject_id", requestForm.getSubjectId());
+        List<Position> positions = positionService.list(newQuery); // get all the staff in this subject
+        Subject subject = subjectService.getById(requestForm.getSubjectId());
+        for (Position position: positions){
+            if (Objects.equals(requestForm.getRequestType(), "Assignment") && position.isAssignmentRequest()){
+                Staff staff = staffService.getById(position.getStaffId());
+                newCreatedEmail(staff, subject.getSubjectName());
+            } else if (Objects.equals(requestForm.getRequestType(), "Exam") && position.isExamRequest()){
+                Staff staff = staffService.getById(position.getStaffId());
+                newCreatedEmail(staff, subject.getSubjectName());
+            } else if (Objects.equals(requestForm.getRequestType(), "Quiz") && position.isQuizRequest()){
+                Staff staff = staffService.getById(position.getStaffId());
+                newCreatedEmail(staff, subject.getSubjectName());
+            } else if (Objects.equals(requestForm.getRequestType(), "Others") && position.isOthersRequest()){
+                Staff staff = staffService.getById(position.getStaffId());
+                newCreatedEmail(staff, subject.getSubjectName());
+            } else if (Objects.equals(requestForm.getRequestType(), "Personal") && position.isPersonalRequest()){
+                Staff staff = staffService.getById(position.getStaffId());
+                newCreatedEmail(staff, subject.getSubjectName());
+            }
+        }
         return Result.success("Request submitted successfully!", requestVo);
     }
 
@@ -186,6 +214,19 @@ public class RequestController {
                         Thanks-The studentRequestHub Team""",
                 teammate.getName(), requestSender);
         emailService.sendSimpleMail(new Email(teammate.getEmail(), msg, "Request submitted successfully!"));
+    }
+
+    private void newCreatedEmail(Staff staff, String subjectName){
+        String msg = String.format(
+                """
+                        Hello %s, \s
+
+                        A recent request about %s has been added into the cue.
+                        Log in to your request portal through LMS to check out the details of the request \s
+
+                        Thanks-The studentRequestHub Team""",
+                staff.getName(), subjectName);
+        emailService.sendSimpleMail(new Email(staff.getEmail(), msg, "New request has been made"));
     }
 
     // if want to receive the email if delete a request

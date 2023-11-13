@@ -18,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,6 +57,59 @@ public class StaffController {
             return requestVo;
         }).collect(Collectors.toList());
 
+        return Result.success(voList);
+    }
+
+    @GetMapping("/getTutorRequests/{tutorId}")
+    public Result getTutorRequests(@PathVariable int tutorId){
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("staff_id", tutorId);
+        List<Position> tutorPositions = positionService.list(queryWrapper);
+        List<Request> requests = new ArrayList<>();
+        queryWrapper.clear();
+
+        for (Position position: tutorPositions){
+            if (position.isAssignmentRequest()){
+                queryWrapper.eq("subject_id", position.getSubjectId());
+                queryWrapper.eq("request_type", "Assignment");
+                requests.addAll(requestService.list(queryWrapper));
+                queryWrapper.clear();
+            }
+            if (position.isExamRequest()){
+                queryWrapper.eq("subject_id", position.getSubjectId());
+                queryWrapper.eq("request_type", "Exam");
+                requests.addAll(requestService.list(queryWrapper));
+                queryWrapper.clear();
+            }
+            if (position.isQuizRequest()){
+                queryWrapper.eq("subject_id", position.getSubjectId());
+                queryWrapper.eq("request_type", "Quiz");
+                requests.addAll(requestService.list(queryWrapper));
+                queryWrapper.clear();
+            }
+            if (position.isOthersRequest()){
+                queryWrapper.eq("subject_id", position.getSubjectId());
+                queryWrapper.eq("request_type", "Others");
+                requests.addAll(requestService.list(queryWrapper));
+                queryWrapper.clear();
+            }
+            if (position.isPersonalRequest()){
+                queryWrapper.eq("subject_id", position.getSubjectId());
+                queryWrapper.eq("request_type", "Personal");
+                requests.addAll(requestService.list(queryWrapper));
+                queryWrapper.clear();
+            }
+        }
+
+        List voList = requests.stream().map(request -> {
+            RequestVo requestVo = new RequestVo();
+            QueryWrapper query = new QueryWrapper();
+            query.eq("request_id", request.getRequestId());
+            List<Attachment> attachments = attachmentService.list(query);
+            BeanUtils.copyProperties(request, requestVo);
+            requestVo.setAttachments(attachments);
+            return requestVo;
+        }).collect(Collectors.toList());
         return Result.success(voList);
     }
 

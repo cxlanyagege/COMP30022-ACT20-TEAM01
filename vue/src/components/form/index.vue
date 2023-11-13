@@ -29,7 +29,7 @@
       </el-form-item>
       <el-form-item
         v-if="
-          form.region === 'Test' ||
+          form.region === 'Quiz' ||
           form.region === 'Assignment' ||
           form.region === 'Exam'
         "
@@ -144,7 +144,7 @@ export default {
     "form.region"(newValue) {
       // update showAdditionOptions based on the region
       if (
-        newValue === "Test" ||
+        newValue === "Quiz" ||
         newValue === "Assignment" ||
         newValue === "Exam"
       ) {

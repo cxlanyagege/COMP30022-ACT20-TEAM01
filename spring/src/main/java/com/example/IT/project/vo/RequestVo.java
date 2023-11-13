@@ -26,6 +26,7 @@ public class RequestVo {
     private Integer requestId;
     private String taskType;
     private String workType;
+    private Integer subjectId;
     private List<Attachment> attachments;
     private List<String> teammates;
 }
