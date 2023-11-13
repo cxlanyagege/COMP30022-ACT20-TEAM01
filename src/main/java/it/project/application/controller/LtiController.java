@@ -152,6 +152,33 @@ public class LtiController {
             } else if (userRole.contains("TeachingAssistant")) {
                 // Tutor or assistant
 
+                // Store user info from lti post into jwt token
+                Integer id = Integer.valueOf(request.getParameter("custom_canvas_user_id"));
+                String name = request.getParameter("lis_person_name_full");
+                String email = request.getParameter("custom_canvas_user_login_id");
+                if (staffService.getById(id) == null){
+                    staffService.save(new Staff(id, name, email, true, true));
+                }
+
+                // Store subject course information
+                Integer subjectId = Integer.valueOf(request.getParameter("custom_canvas_course_id"));
+                String subjectName = request.getParameter("context_label");
+                if (subjectService.getById(subjectId) == null){
+                    subjectService.save(new Subject(subjectId, subjectName, true, true, true, true, true));
+                }
+
+                // Generate jwt token
+                String jwt = jwtUtil.generateToken(id, name, email, subjectId, subjectName);
+
+                // Launch StuRequestHub dashboard
+                try {
+                    response.sendRedirect("/#/tutorlogin?jwt=" + jwt);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return "Redirect failed";
+                }
+                return "Signature matched, authorized complete";
+
             } else if (userRole.contains("Learner")){
                 // Student
 

@@ -1,5 +1,7 @@
 export { default as Navbar } from './Navbar'
 export { default as StaffNavbar } from './StaffNavbar'
+export { default as TutorNavbar } from './TutorNavbar'
 export { default as Sidebar } from './Sidebar'
 export { default as StaffSidebar } from './StaffSidebar'
+export { default as TutorSidebar } from './TutorSidebar'
 export { default as AppMain } from './AppMain'

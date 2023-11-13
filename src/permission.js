@@ -8,11 +8,16 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login', '/stafflogin'] // no redirect whitelist
+const whiteList = ['/login', '/stafflogin', '/tutorlogin'] // no redirect whitelist
 
 function isStaffUser() {
   const currentPath = router.currentRoute.path
   return currentPath.includes('/staff')
+}
+
+function isTutorUser() {
+  const currentPath = router.currentRoute.path
+  return currentPath.includes('/tutor')
 }
 
 router.beforeEach(async(to, from, next) => {
@@ -42,6 +47,8 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user and subject info
           if (isStaffUser()) {
+            await store.dispatch('user/getStaffInfo')
+          } else if (isTutorUser()) {
             await store.dispatch('user/getStaffInfo')
           } else {
             await store.dispatch('user/getInfo')

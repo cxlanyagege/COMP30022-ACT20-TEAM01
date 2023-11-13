@@ -8,6 +8,7 @@ Vue.use(Router)
 
 import Layout from '@/layout'
 import StaffLayout from '@/layout/staffindex.vue'
+import TutorLayout from '@/layout/tutorindex.vue'
 
 // MODIFIED BY YAWEN LUO
 export const constantRoutes = [
@@ -20,6 +21,12 @@ export const constantRoutes = [
   {
     path: '/stafflogin',
     component: () => import('@/views/login/staffindex'),
+    hidden: true
+  },
+
+  {
+    path: '/tutorlogin',
+    component: () => import('@/views/login/tutorindex'),
     hidden: true
   },
 
@@ -78,6 +85,18 @@ export const constantRoutes = [
         meta: { title: 'Tutor Authority', icon: 'el-icon-s-help' }
       }
     ]
+  },
+
+  {
+    path: '/tutor',
+    component: TutorLayout,
+    redirect: '/tutor/tutordashboard',
+    children: [{
+      path: 'tutordashboard',
+      name: 'TutorDashboard',
+      component: () => import('@/views/dashboard/tutorindex'),
+      meta: { title: 'Tutor Dashboard', icon: 'dashboard' }
+    }]
   },
 
   // 404 page must be placed at the end !!!
