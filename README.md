@@ -128,11 +128,14 @@ If you are facing permission issues while running `build.sh`, try to run `chmod 
 
 If you are facing digital signing issues while running `build.ps1`, make sure you first go to `Settings` -> `System` -> `Developer Options`, turn on Developer Mode and the option which allows to run Powershell scripts without digital signature
 
-### If I need to deploy on my remote server, do I need to setup MySQL database remotely?
-Yes, you may follow [Prerequisites](#prerequisites) and [Setup](#setup) to install and config Java and MySQL Server. Then try to run the application
-
 ### Why I cannot see any requests in tutor's dashboard?
 Tutor's dashboard has filter constrains. You may notice that there are different course blocks you can choose on sidebar. Simply choose the course you want to see first, then the corresponding requests will appear on the right pannel
+
+### Saving requests / Approving requests are very slow
+This is a MySQL 8.x bug, it will impact sql performance somehow. Try newer versions if possible
+
+### If I need to deploy on my remote server, do I need to setup MySQL database remotely?
+Yes, you may follow [Prerequisites](#prerequisites) and [Setup](#setup) to install and config Java and MySQL Server. Then try to run the application
 
 ### What is the difference between `application-v2.1.jar` and `application-v2.1-plain.jar`?
 Spring Boot will build two production application forms by default:
