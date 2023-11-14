@@ -20,6 +20,12 @@ git clone https://github.com/cxlanyagege/COMP30022-ACT20-TEAM01.git
 ```
 
 ### Setup
+Change directory to our project:
+
+```
+cd COMP30022-ACT20-TEAM01
+```
+
 Install npm dependencies which are required for building vue:
 
 ```
@@ -39,7 +45,7 @@ If you are using macOS or Linux, execute:
 ./build.sh
 ```
 
-Or if you are using Windows 11, make sure you first go to `Settings` -> `System` -> `Developer Options`, turn on Developer Mode and the option which allows to run Powershell scripts without digital signature, then execute:
+Or if you are using Windows 10 / 11, execute:
 
 ```
 .\build.ps1
@@ -61,7 +67,7 @@ Please enter the deployment address: 121.41.46.143
 Execute the following command to run the application:
 
 ```
-java -jar build/libs/application-v2.0-rc.jar
+java -jar build/libs/application-v2.1.jar
 ```
 
 ### Connect
@@ -117,6 +123,11 @@ spring.mail.properties.debug=false
 ```
 
 ## FAQ
+### I cannot build the project by running `build.sh` or `build.ps1`
+If you are facing permission issues while running `build.sh`, try to run `chmod -R 755 .` in COMP30022-ACT20-TEAM01 directory
+
+If you are facing digital signing issues while running `build.ps1`, make sure you first go to `Settings` -> `System` -> `Developer Options`, turn on Developer Mode and the option which allows to run Powershell scripts without digital signature
+
 ### If I need to deploy on my remote server, do I need to setup MySQL database remotely?
 Yes, you may follow [Prerequisites](#prerequisites) and [Setup](#setup) to install and config Java and MySQL Server. Then try to run the application
 
