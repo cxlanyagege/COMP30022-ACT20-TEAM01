@@ -10,17 +10,6 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login', '/stafflogin', '/tutorlogin'] // no redirect whitelist
 
-function isStaffUser() {
-  const currentPath = router.currentRoute.path
-  return currentPath.includes('staff')
-}
-
-function isTutorUser() {
-  const currentPath = router.currentRoute.path
-  console.log(currentPath)
-  return currentPath.includes('tutor')
-}
-
 router.beforeEach(async(to, from, next) => {
   // start progress bar
   NProgress.start()
@@ -50,14 +39,7 @@ router.beforeEach(async(to, from, next) => {
         next()
       } else {
         try {
-          // get user and subject info
-          if (isStaffUser()) {
-            await store.dispatch('user/getStaffInfo')
-          } else if (isTutorUser()) {
-            await store.dispatch('user/getStaffInfo')
-          } else {
-            await store.dispatch('user/getInfo')
-          }
+          await store.dispatch('user/getInfo')
           await store.dispatch('subject/getSubjectInfo')
           next()
         } catch (error) {

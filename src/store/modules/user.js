@@ -64,30 +64,27 @@ const actions = {
         commit('SET_AVATAR', avatar)
         resolve(data)
       }).catch(error => {
-        reject(error)
-      })
-    })
-  },
-
-  // get staff user info
-  getStaffInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getStaffInfo(state.token).then(response => {
-        const { data } = response
-
-        if (!data) {
-          reject('Verification failed, please Login again.')
+        if (error.response && error.response.status === 404) {
+          getStaffInfo(state.token).then(staffResponse => {
+            const { data } = staffResponse;
+  
+            if (!data) {
+              reject('Verification failed, please Login again.');
+            }
+  
+            const { id, name, email, avatar } = data;
+  
+            commit('SET_ID', id);
+            commit('SET_NAME', name);
+            commit('SET_EMAIL', email);
+            commit('SET_AVATAR', avatar);
+            resolve(data);
+          }).catch(staffError => {
+            reject(staffError);
+          })
+        } else {
+          reject(error)
         }
-
-        const { id, name, email, avatar } = data
-
-        commit('SET_ID', id)
-        commit('SET_NAME', name)
-        commit('SET_EMAIL', email)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
       })
     })
   },

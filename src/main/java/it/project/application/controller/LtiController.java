@@ -117,11 +117,6 @@ public class LtiController {
         String incomingSignature = request.getParameter("oauth_signature");
         if (calculatedSignature.equals(incomingSignature)) {
 
-            // Log
-            Collections.list(request.getParameterNames())
-                .forEach(paramName -> 
-                    System.out.println(paramName + ": " + request.getParameter(paramName)));
-
             // LMS user role assignment
             String userRole = request.getParameter("roles");
             if (userRole.contains("Instructor")) {
