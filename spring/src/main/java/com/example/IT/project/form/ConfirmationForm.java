@@ -1,3 +1,10 @@
+/**
+ * Author: Dennis Wang
+ * Last modified data: 2023-11-12
+ * Description: the class used to store the confirmation details once
+ * staff has processed the request
+ */
+
 package com.example.it.project.form;
 
 import lombok.Data;

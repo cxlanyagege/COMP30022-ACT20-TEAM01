@@ -57,7 +57,7 @@ public class RequestControllerTest extends AbstractTest{
         String uri = "/api/saveRequest";
         RequestForm request = new RequestForm();
         request.setStudentId(1266288);
-        request.setSubjectId("COMP10012");
+        request.setSubjectId(111);
         request.setSubmissionDate(Date.valueOf("2023-10-20"));
         request.setRequestName("Testing request");
         request.setRequestType("Exam");

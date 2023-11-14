@@ -110,7 +110,8 @@ public class LTIController {
             Integer subjectId = Integer.valueOf(request.getParameter("custom_canvas_course_id"));
             String subjectName = request.getParameter("context_label");
             if (subjectService.getById(subjectId) == null){
-                subjectService.save(new Subject(subjectId, subjectName, true, true, true, true, true));
+                subjectService.save(new Subject(subjectId, subjectName, true,
+                        true, true, true, true));
             }
 
             // Generate jwt token

@@ -1,6 +1,6 @@
 /**
  * Author: Dennis Wang
- * Last modified data: 2023-10-19
+ * Last modified data: 2023-11-12
  * Description: controller for request, handle different actions such as
  * add, delete, detail and change
  */
@@ -131,27 +131,37 @@ public class RequestController {
             }
         }
 
-        // send email to staff if they want to receive emails if new request is made
+        // send email to staff if they want to receive email when new request is made
         QueryWrapper newQuery = new QueryWrapper();
         newQuery.eq("subject_id", requestForm.getSubjectId());
         List<Position> positions = positionService.list(newQuery); // get all the staff in this subject
         Subject subject = subjectService.getById(requestForm.getSubjectId());
-        for (Position position: positions){
+        for (Position position: positions){ // first check what type of requests each staff can receive
             if (Objects.equals(requestForm.getRequestType(), "Assignment") && position.isAssignmentRequest()){
                 Staff staff = staffService.getById(position.getStaffId());
-                newCreatedEmail(staff, subject.getSubjectName());
+                if (staff.isNewRequest()){ // then check whether the staff want to receive email on this
+                    newCreatedEmail(staff, subject.getSubjectName());
+                }
             } else if (Objects.equals(requestForm.getRequestType(), "Exam") && position.isExamRequest()){
                 Staff staff = staffService.getById(position.getStaffId());
-                newCreatedEmail(staff, subject.getSubjectName());
+                if (staff.isNewRequest()){ // then check whether the staff want to receive email on this
+                    newCreatedEmail(staff, subject.getSubjectName());
+                }
             } else if (Objects.equals(requestForm.getRequestType(), "Quiz") && position.isQuizRequest()){
                 Staff staff = staffService.getById(position.getStaffId());
-                newCreatedEmail(staff, subject.getSubjectName());
+                if (staff.isNewRequest()){ // then check whether the staff want to receive email on this
+                    newCreatedEmail(staff, subject.getSubjectName());
+                }
             } else if (Objects.equals(requestForm.getRequestType(), "Others") && position.isOthersRequest()){
                 Staff staff = staffService.getById(position.getStaffId());
-                newCreatedEmail(staff, subject.getSubjectName());
+                if (staff.isNewRequest()){ // then check whether the staff want to receive email on this
+                    newCreatedEmail(staff, subject.getSubjectName());
+                }
             } else if (Objects.equals(requestForm.getRequestType(), "Personal") && position.isPersonalRequest()){
                 Staff staff = staffService.getById(position.getStaffId());
-                newCreatedEmail(staff, subject.getSubjectName());
+                if (staff.isNewRequest()){ // then check whether the staff want to receive email on this
+                    newCreatedEmail(staff, subject.getSubjectName());
+                }
             }
         }
         return Result.success("Request submitted successfully!", requestVo);
@@ -188,6 +198,26 @@ public class RequestController {
         return Result.success(request);
     }
 
+    // if staff flag a request, then need to update it in database
+    @PutMapping("/updateFlagStatus/{requestId}")
+    public Result updateFlagStatus(@PathVariable int requestId){
+        Request request = requestService.getById(requestId);
+        request.setFlagged(!request.isFlagged()); // change the flag status
+        requestService.updateById(request);
+
+        QueryWrapper query = new QueryWrapper();
+        query.eq("subject_id", request.getSubjectId());
+        query.eq("staff_role", "coordinator");
+        Position coordinator = positionService.getOne(query); // only coordinator need to receive email on flagged request
+
+        Staff coordinatorInfo = staffService.getById(coordinator.getStaffId());
+        // send notification email if flagged
+        if (coordinatorInfo.isFlaggedRequest() && request.isFlagged()){
+            sendFlaggedEmail(request, coordinatorInfo);
+        }
+        return Result.success(request);
+    }
+
     // confirmation email on submitting a request
     private void sendConfirmationEmail(String studentEmail, String name){
         String msg = String.format(
@@ -214,6 +244,21 @@ public class RequestController {
                         Thanks-The studentRequestHub Team""",
                 teammate.getName(), requestSender);
         emailService.sendSimpleMail(new Email(teammate.getEmail(), msg, "Request submitted successfully!"));
+    }
+
+    private void sendFlaggedEmail(Request request, Staff coordinator){
+        String msg = String.format(
+                """
+                        Hello %s, \s
+
+                        One of the request in your subject has been flagged by one of the tutors.
+                        Request name: %s;
+                        Request detail: %s;
+                        Log in to your portal through LMS to check out the details of the request \s
+
+                        Thanks-The studentRequestHub Team""",
+                coordinator.getName(), request.getRequestName(), request.getDescription());
+        emailService.sendSimpleMail(new Email(coordinator.getEmail(), msg, "Request has been flagged"));
     }
 
     private void newCreatedEmail(Staff staff, String subjectName){

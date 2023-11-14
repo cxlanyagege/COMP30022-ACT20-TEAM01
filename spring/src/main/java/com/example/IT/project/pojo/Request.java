@@ -27,4 +27,5 @@ public class Request {
     private String taskType;
     private String workType;
     private String requestName;
+    private boolean flagged;
 }

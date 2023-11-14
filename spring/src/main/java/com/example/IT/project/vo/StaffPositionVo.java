@@ -1,3 +1,9 @@
+/**
+ * Author: Dennis Wang
+ * Last modified data: 2023-11-12
+ * Description: package class to store info that frontend required on staff
+ */
+
 package com.example.it.project.vo;
 
 import lombok.Data;

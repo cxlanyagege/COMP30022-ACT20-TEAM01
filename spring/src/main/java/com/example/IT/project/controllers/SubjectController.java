@@ -1,3 +1,9 @@
+/**
+ * Author: Dennis Wang @ He Shen
+ * Last modified data: 2023-11-12
+ * Description: controller for subject, handle changes to the subject table in database
+ */
+
 package com.example.it.project.controllers;
 
 import com.example.it.project.pojo.Subject;
@@ -48,6 +54,8 @@ public class SubjectController {
         }
     }
 
+    // called when coordinator configure what type of requests this subject can have, for instance,
+    // this subject has assignment but no quiz
     @PutMapping("/updateApprovedRequests/{subjectId}")
     public Result updateRequest(@PathVariable Integer subjectId, @RequestBody Subject updatedSubject){
         Subject subject = subjectService.getById(subjectId);
@@ -60,6 +68,7 @@ public class SubjectController {
         return Result.success(subject);
     }
 
+    // get the subject detail
     @GetMapping("/getSubjectDetail/{subjectId}")
     public Result getSubjectDetail(@PathVariable Integer subjectId){
         Subject subject = subjectService.getById(subjectId);

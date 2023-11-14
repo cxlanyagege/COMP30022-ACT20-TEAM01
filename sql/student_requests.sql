@@ -196,6 +196,7 @@ CREATE TABLE `Request` (
   `request_name` varchar(45) DEFAULT NULL,
   `task_type` varchar(20) DEFAULT NULL,
   `work_type` varchar(20) DEFAULT NULL,
+  `flagged` tinyint NOT NULL,
   PRIMARY KEY (`request_id`),
   KEY `fk_Request_Subject1_idx` (`subject_id`),
   KEY `fk_Request_Student1_idx` (`student_id`),
@@ -210,7 +211,7 @@ CREATE TABLE `Request` (
 
 LOCK TABLES `Request` WRITE;
 /*!40000 ALTER TABLE `Request` DISABLE KEYS */;
-INSERT INTO `Request` VALUES (-1421869055,'he','WAITING','2023-09-19',1266288,111,'Others','hehe',NULL,NULL),(-1349378047,'oh','WAITING','2023-10-06',1266288,111,'Assignment','','individual','Extension'),(-1349271551,'hehehhhe','WAITING','2023-09-18',1266288,111,'Other','hello',NULL,NULL),(-1321205759,'shit','WAITING','2023-11-13',1266288,111,'Personal','I don\'t like it project',NULL,NULL),(-1245597694,'testing','WAITING','2023-10-06',1266288,111,'Assignment','Extension','individual','Remark'),(-829206526,'extension','WAITING','2023-10-06',1266288,111,'Assignment','extension','individual',NULL),(-775942143,'This is 1 request','WAITING','2023-08-02',1266288,222,'Assignment','About assignment',NULL,NULL),(-624930814,'nihau','WAITING','2023-09-22',1266288,111,'Exam','nihau','individual',NULL),(-88076287,'lonely dance','WAITING','2023-11-13',1266288,111,'Quiz','lonely dance','individual','Remark'),(2,'ohnonono','APPROVED','2023-09-19',1266288,222,'Other','hehe',NULL,NULL),(213913602,'I was doing good','WAITING','2023-10-19',1266288,111,'Exam','Remark the exam','Group','Remark'),(261234689,'I want to extend my ass2','WAITING','2023-10-06',1266288,111,'Assignment','Assignment 2 extension','individual','Extension'),(331476993,'This is a new test request','WAITING','2023-10-09',1266288,333,'Quiz','About task','individual','Remark'),(668078081,'my destiny','WAITING','2023-09-22',1266288,111,'Personal','u are',NULL,NULL),(898772994,'hhhhhh','WAITING','2023-09-24',1266288,111,'Others','hhhhh',NULL,NULL),(1065373697,'olala','WAITING','2023-09-22',1266288,111,'Exam','ola','Group',NULL),(1095901186,'ok?','WAITING','2023-09-24',1266288,111,'Quiz','we won\'t do the test','Group',NULL),(1104388098,'I can fly','WAITING','2023-09-21',1266288,111,'Others','I believe',NULL,NULL),(1121181698,'ok?','WAITING','2023-10-05',1266288,111,'Exam','About exam ','individual',NULL),(1472229377,'test','WAITING','2023-10-06',1266288,111,'Quiz','haohaohoa','individual','Remark'),(1494355969,'I jump','APPROVED','2023-09-22',1266288,111,'Assignment','you jump','individual',NULL),(1553088514,'ok','APPROVED','2023-10-04',1266288,111,'Quiz','','individual',NULL),(1783844866,'remark','REJECTED','2023-10-06',1266288,111,'Personal','remark',NULL,NULL),(1918062593,'hahhahhahahahaha','WAITING','2023-10-05',1266288,111,'Others','hahahahhaha',NULL,NULL),(2064863234,'mymym','WAITING','2023-10-06',1266288,111,'Others','mymymy',NULL,NULL);
+INSERT INTO `Request` VALUES (-1421869055,'he','WAITING','2023-09-19',1266288,111,'Others','hehe',NULL,NULL,0),(-1349378047,'oh','WAITING','2023-10-06',1266288,111,'Assignment','','individual','Extension',0),(-1349271551,'hehehhhe','WAITING','2023-09-18',1266288,111,'Other','hello',NULL,NULL,0),(-1321205759,'shit','WAITING','2023-11-13',1266288,111,'Personal','I don\'t like it project',NULL,NULL,0),(-1245597694,'testing','WAITING','2023-10-06',1266288,111,'Assignment','Extension','individual','Remark',0),(-829206526,'extension','WAITING','2023-10-06',1266288,111,'Assignment','extension','individual',NULL,0),(-775942143,'This is 1 request','WAITING','2023-08-02',1266288,222,'Assignment','About assignment',NULL,NULL,0),(-624930814,'nihau','APPROVED','2023-09-22',1266288,111,'Exam','nihau','individual',NULL,0),(-88076287,'lonely dance','WAITING','2023-11-13',1266288,111,'Quiz','lonely dance','individual','Remark',0),(2,'ohnonono','APPROVED','2023-09-19',1266288,222,'Other','hehe',NULL,NULL,0),(213913602,'I was doing good','WAITING','2023-10-19',1266288,111,'Exam','Remark the exam','Group','Remark',0),(261234689,'I want to extend my ass2','WAITING','2023-10-06',1266288,111,'Assignment','Assignment 2 extension','individual','Extension',0),(331476993,'This is a new test request','WAITING','2023-10-09',1266288,333,'Quiz','About task','individual','Remark',0),(668078081,'my destiny','WAITING','2023-09-22',1266288,111,'Personal','u are',NULL,NULL,0),(898772994,'hhhhhh','WAITING','2023-09-24',1266288,111,'Others','hhhhh',NULL,NULL,0),(1065373697,'olala','WAITING','2023-09-22',1266288,111,'Exam','ola','Group',NULL,0),(1095901186,'ok?','WAITING','2023-09-24',1266288,111,'Quiz','we won\'t do the test','Group',NULL,0),(1104388098,'I can fly','WAITING','2023-09-21',1266288,111,'Others','I believe',NULL,NULL,0),(1121181698,'ok?','WAITING','2023-10-05',1266288,111,'Exam','About exam ','individual',NULL,0),(1472229377,'test','WAITING','2023-10-06',1266288,111,'Quiz','haohaohoa','individual','Remark',0),(1494355969,'I jump','APPROVED','2023-09-22',1266288,111,'Assignment','you jump','individual',NULL,0),(1553088514,'ok','APPROVED','2023-10-04',1266288,111,'Quiz','','individual',NULL,0),(1783844866,'remark','REJECTED','2023-10-06',1266288,111,'Personal','remark',NULL,NULL,0),(1918062593,'hahhahhahahahaha','WAITING','2023-10-05',1266288,111,'Others','hahahahhaha',NULL,NULL,0),(2064863234,'mymym','WAITING','2023-10-06',1266288,111,'Others','mymymy',NULL,NULL,0);
 /*!40000 ALTER TABLE `Request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -237,7 +238,7 @@ CREATE TABLE `Staff_member` (
 
 LOCK TABLES `Staff_member` WRITE;
 /*!40000 ALTER TABLE `Staff_member` DISABLE KEYS */;
-INSERT INTO `Staff_member` VALUES (123455,'Tom','zewang4@student.unimelb.edu.au',1,1),(123456,'Tim Yu','heshen@student.unimelb.edu.au',0,0);
+INSERT INTO `Staff_member` VALUES (123455,'Tom','zewang4@student.unimelb.edu.au',1,0),(123456,'Tim Yu','heshen@student.unimelb.edu.au',1,1);
 /*!40000 ALTER TABLE `Staff_member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,4 +308,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-13 17:35:02
+-- Dump completed on 2023-11-14 13:30:29
