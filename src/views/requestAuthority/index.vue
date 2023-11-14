@@ -1,4 +1,4 @@
-<!-- written by Lanruo Su -->
+<!-- written by Lanruo Su, modified by Dennis Wang -->
 <template>
   <div class="app-container">
     <!-- Request Authority Table -->
@@ -61,8 +61,7 @@
 </template>
 
 <script>
-// '@/views/tutorAuthority/index.vue'
-// import { EventBus } from '@/utils/EventBus'
+
 import { updateSubjectApprovedRequests, getSubjectDetail } from '@/api/api'
 
 export default {

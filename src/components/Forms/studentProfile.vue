@@ -72,9 +72,6 @@ export default {
   methods: {
     viewStudentHistory() {
       this.dialogVisible = true
-      // Handle the action when the "View History" button is clicked
-      // You can navigate to the student history or show a modal, for example.
-      // Example: this.$router.push(`/studentHistory/${this.studentInfo.id}`);
     }
   }
 }

@@ -2,7 +2,6 @@
 modified and edited by Lanruo Su, Xuan Zhang -->
 <template>
   <div>
-    <!-- 网站logo和名字 -->
     <div class="website-header">
       <img src="../../../../public/favicon.svg" alt="My Website Logo" class="logo">
       <span class="website-name">StuRequestHub</span>
@@ -63,6 +62,8 @@ export default {
   data() {
     return {
       isCollapse: false,
+      // here is used to get all the subjects this tutor is in
+      // need to update authomatically after connection with lms
       requestTypes: [
         { subID: 111, color: 'rgb(96, 191, 255)' },
         { subID: 222, color: 'rgb(46, 204, 113)' }

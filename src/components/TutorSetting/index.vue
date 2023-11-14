@@ -48,6 +48,7 @@ export default {
     })
   },
   methods: {
+    // written by Dennis, update the setting in the database by sending api
     updateSetting() {
       const param = {
         newRequest: this.notificationSettings[0].isEnabled

@@ -9,7 +9,7 @@
 import Filterrequest from '@/components/Filterrequest/index'
 import Table from '@/components/table/index'
 import { EventBus } from '@/utils/EventBus'
-import { getTutorRequests } from '@/api/api'
+import { getTutorRequests, updateFlagStatus } from '@/api/api'
 import { attachmentBaseURL } from '@/config/config'
 
 export default {
@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     getRequests() {
-      getTutorRequests(this.$store.getters.id).then((res) => {
+      getTutorRequests(this.$store.getters.subjectId).then((res) => {
         console.log(res.data)
         if (res.data.data.length === 0) {
           this.tableData = []
@@ -67,7 +67,7 @@ export default {
                 }
               }),
               status: record.status === 'WAITING' ? 'UNASSESSED' : record.status,
-              flagClicked: false,
+              flagClicked: record.flagged,
               morespecific: record.workType
             }
           })
@@ -101,12 +101,20 @@ export default {
     handleFlagClick(row) {
       if (!row.flagClicked) {
         // mark the clicked flag as clicked
-        this.flagClicked = !this.flagClicked
+        row.flagClicked = true
         // move the current row to the front
         this.tableData = [row, ...this.tableData.filter(item => item !== row)]
         // refresh the data
         this.applyFilter(this.filterCondition)
+      } else {
+        row.flagClicked = false
+        this.tableData = [...this.tableData.filter(item => item.flagClicked === true), ...this.tableData.filter(item => item.flagClicked === false)]
+        this.applyFilter(this.filterCondition)
       }
+
+      updateFlagStatus(row.requestId).then((res) => {
+        console.log(res.data)
+      })
     }
   }
 }

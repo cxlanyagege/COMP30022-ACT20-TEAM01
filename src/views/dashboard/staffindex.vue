@@ -8,7 +8,7 @@
 <script>
 import Filterrequest from '@/components/Filterrequest/index.vue'
 import Table from '@/components/table/index.vue'
-import { getSubjectRequests } from '@/api/api'
+import { getSubjectRequests, updateFlagStatus } from '@/api/api'
 import { attachmentBaseURL } from '@/config/config'
 
 export default {
@@ -53,7 +53,7 @@ export default {
             return {
               requestId: record.requestId,
               studentId: record.studentId,
-              subID: this.$store.getters.subjectId,
+              subID: record.subjectId,
               appDate: record.submissionDate,
               reqType: record.requestType,
               taskType: record.taskType,
@@ -66,7 +66,7 @@ export default {
                 }
               }),
               status: record.status === 'WAITING' ? 'UNASSESSED' : record.status,
-              flagClicked: false,
+              flagClicked: record.flagged,
               morespecific: record.workType
             }
           })
@@ -95,15 +95,23 @@ export default {
         this.filteredTable = this.tableData
       }
     },
+    // modified by Dennis Wang, update the flag status in the backend
     handleFlagClick(row) {
       if (!row.flagClicked) {
         // mark the clicked flag as clicked
-        this.flagClicked = !this.flagClicked
+        row.flagClicked = true
         // move the current row to the front
         this.tableData = [row, ...this.tableData.filter(item => item !== row)]
         // refresh the data
         this.applyFilter(this.filterCondition)
+      } else {
+        row.flagClicked = false
+        this.tableData = [...this.tableData.filter(item => item.flagClicked === true), ...this.tableData.filter(item => item.flagClicked === false)]
+        this.applyFilter(this.filterCondition)
       }
+      updateFlagStatus(row.requestId).then((res) => {
+        console.log(res.data)
+      })
     }
   }
 }

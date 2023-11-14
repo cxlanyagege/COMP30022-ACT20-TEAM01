@@ -1,3 +1,6 @@
+<!--File originally written by Yawen Luo, changes made by Dennis
+Wang, include but not limit to all the connection made with the backend-->
+
 <template>
   <div>
     <el-table
@@ -88,13 +91,22 @@
           </template>
         </template>
       </el-table-column>
-      <el-table-column label="Flag" prop="flag" min-width="30">
+      <el-table-column label="Flag" prop="flagClicked" min-width="30">
         <template slot-scope="{ row }">
+          <!--2 types of button for flag and cancel the flag-->
           <el-button
             v-if="!row.flagClicked"
             type="danger"
             :class="{ 'flag-button-clicked': row.flagClicked }"
             icon="el-icon-s-flag"
+            circle
+            @click="handleFlagClick(row)"
+          />
+          <el-button
+            v-if="row.flagClicked"
+            type="warning"
+            :class="{ 'flag-button-clicked': row.flagClicked }"
+            icon="el-icon-circle-close"
             circle
             @click="handleFlagClick(row)"
           />
@@ -166,7 +178,6 @@ export default {
       },
       showProfileDialog: false,
       selectedStudentInfo: null,
-      // selectedFileData: null,
       selectedRow: null,
       uploadURL: uploadURL
     }
@@ -175,12 +186,11 @@ export default {
     showStudentProfile(row) {
       // console.log(row)
       const param = {
-        subjectId: this.$store.getters.subjectId
+        subjectId: row.subID
       }
       getStudentDetail(row.studentId, param).then((res) => {
         // console.log(res.data)
         this.selectedStudentInfo = res.data.data
-        // this.selectedFileData = res.data.data.aapAttachment
         this.showProfileDialog = true
       })
     },
@@ -195,15 +205,12 @@ export default {
       this.approveDialogVisible = true
     },
     handleApprove() {
-      // const { message, date } = this.approveForm
       const param = {
         status: 'APPROVED',
         message: this.approveForm.message
       }
       updateRequest(this.selectedRow.requestId, param).then((res) => {
-        // 更新状态和决定为'APPROVE'
         this.selectedRow.status = 'APPROVED'
-        // 关闭确认对话框
         this.approveDialogVisible = false
       })
     },
