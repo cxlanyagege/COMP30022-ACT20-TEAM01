@@ -1,9 +1,9 @@
 /**
  * Class Name: IStudentService
- * Description: Interface for Student Service
+ * Description: Student service interface to be implemented
  * 
  * Author: He Shen & Dennis Wang
- * Date: 2023/10/19
+ * Date: 2023/11/12
  */
 
 package it.project.application.service;

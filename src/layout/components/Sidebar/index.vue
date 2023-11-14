@@ -87,6 +87,7 @@ export default {
     })
   },
 
+  // request filtering method written by Dennis Wang
   methods: {
     filterRequests(requestType) {
       this.tableData = this.tempData.filter((item) => {

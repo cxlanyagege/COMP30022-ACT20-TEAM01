@@ -1,9 +1,9 @@
 /**
  * Class Name: Student
- * Description: Pojo for Student
+ * Description: Use to store info related to student that will be stored in database
  * 
  * Author: He Shen & Dennis Wang
- * Date: 2023/10/20
+ * Date: 2023/11/12
  */
 
 package it.project.application.pojo;

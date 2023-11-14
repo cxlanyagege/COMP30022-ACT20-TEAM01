@@ -1,9 +1,9 @@
 /**
  * Class Name: StudentController
- * Description: Controller for handling student related requests
+ * Description: Controller for student, handle interactions from student interface
  * 
  * Author: He Shen & Dennis Wang
- * Date: 2023/10/20
+ * Date: 2023/11/12
  * 
  * Note: Not finalized since there is no StaffController
  */
@@ -78,8 +78,7 @@ public class StudentController {
         }
     }
 
-    // written by Dennis wang, used to update the student preferences on getting the email
-    // notification
+    // used to update the student preferences on getting the email notification
     @PutMapping("/changeStudentPreference/{studentId}")
     public Result updateStudentPreference(@RequestBody Student studentPreference, @PathVariable int studentId) {
         // log.info("{}", studentPreference);
@@ -91,6 +90,8 @@ public class StudentController {
         return Result.success(student);
     }
 
+    // this is called when staff click on the student id in the request detail and can see all the basic
+    // information related to this student as well as the AAP status and request histories etc.
     @GetMapping("/getStudentInfo/{studentId}")
     public Result getStudentDetails(@PathVariable int studentId, @RequestParam(required = false) Integer subjectId){
         // log.info("{}", subjectId);

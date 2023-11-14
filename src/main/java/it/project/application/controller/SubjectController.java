@@ -1,9 +1,9 @@
 /**
  * Class Name: SubjectController
- * Description: Controller for handling subject informations
+ * Description: Controller for subject, handle changes to the subject table in database
  * 
  * Author: He Shen & Dennis Wang
- * Date: 2023/10/19
+ * Date: 2023/11/12
  */
 
 package it.project.application.controller;
@@ -58,6 +58,8 @@ public class SubjectController {
         }
     }
 
+    // called when coordinator configure what type of requests this subject can have, for instance,
+    // this subject has assignment but no quiz
     @PutMapping("/updateApprovedRequests/{subjectId}")
     public Result updateRequest(@PathVariable Integer subjectId, @RequestBody Subject updatedSubject){
         Subject subject = subjectService.getById(subjectId);
@@ -70,6 +72,7 @@ public class SubjectController {
         return Result.success(subject);
     }
 
+    // get the subject detail
     @GetMapping("/getSubjectDetail/{subjectId}")
     public Result getSubjectDetail(@PathVariable Integer subjectId){
         Subject subject = subjectService.getById(subjectId);

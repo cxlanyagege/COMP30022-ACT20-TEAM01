@@ -1,4 +1,4 @@
-<!-- The component code was written by Yawen Luo, Dennis Wang was modified the
+<!-- The component code was written by Yawen Luo, Dennis Wang modified the
      front-end and back-end interaction method code at a later stage. The following code is used
      to build the component button elements of the sidebar. -->
 

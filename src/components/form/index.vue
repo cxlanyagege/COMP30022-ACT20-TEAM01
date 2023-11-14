@@ -1,4 +1,4 @@
-<!-- The component code was written by Yawen Luo, Dennis Wang was modified the
+<!-- The component code was written by Yawen Luo, Dennis Wang modified the
      front-end and back-end interaction method code at a later stage. The following code is used
      to create the request form compoent. -->
 
@@ -244,6 +244,7 @@ export default {
         taskType: formData.type,
         workType: formData.workType,
         teammates: formData.teammates,
+        flagged: false,
         attachments: formData.fileList.map((item) => {
           return { url: this.convertUrlWithoutPrefix(item.url) }
         })

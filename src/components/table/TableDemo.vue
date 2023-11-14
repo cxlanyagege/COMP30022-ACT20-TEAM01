@@ -1,5 +1,6 @@
-<!-- The component code was written by Yawen Luo. The following code is used
-     to build the component request table elements. -->
+<!-- The component code was written by Yawen Luo. Dennis Wang write
+  all the methods related to making api calls to the backend.
+  The following code is used to build the component request table elements. -->
 
 <template>
   <div class="app-container">

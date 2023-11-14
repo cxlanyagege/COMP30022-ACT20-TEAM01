@@ -1,9 +1,9 @@
 /**
  * Class Name: SubjectMapper
- * Description: ORM Mapper for Subject Entity
+ * Description: Subject mapper created to connect to JDBC automatically from relevant service
  * 
  * Author: He Shen & Dennis Wang
- * Date: 2023/10/19
+ * Date: 2023/11/12
  * 
  * Note: Find subject entity by subject id
  */

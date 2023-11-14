@@ -1,3 +1,9 @@
+/**
+ * Author: Dennis Wang
+ * Last modified data: 2023-11-12
+ * Description: use to store info related to staff that will be stored in database
+ */
+
 package it.project.application.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableId;

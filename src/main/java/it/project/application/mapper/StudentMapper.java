@@ -1,9 +1,9 @@
 /**
  * Class Name: StudentMapper
- * Description: ORM Mapper for Student Entity
+ * Description: Student mapper created to connect to JDBC automatically from relevant service
  * 
  * Author: He Shen & Dennis Wang
- * Date: 2023/10/19
+ * Date: 2023/11/12
  * 
  * Note: Find student entity by student id
  */

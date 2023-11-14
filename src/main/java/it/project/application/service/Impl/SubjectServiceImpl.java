@@ -1,9 +1,9 @@
 /**
  * Class Name: SubjectServiceImpl
- * Description: Implementation for Subject Service
+ * Description: Subject service do operations related to database
  * 
  * Author: He Shen & Dennis Wang
- * Date: 2023/10/19
+ * Date: 2023/11/12
  */
 
 package it.project.application.service.Impl;

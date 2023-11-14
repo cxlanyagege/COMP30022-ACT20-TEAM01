@@ -1,3 +1,10 @@
+/**
+ * Author: Dennis Wang
+ * Last modified data: 2023-11-12
+ * Description: controller for staff, handle any interactions
+ * from the staff webpage
+ */
+
 package it.project.application.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -77,8 +84,8 @@ public class StaffController {
         }
     }
 
-    // 应该是传进来一个staffid和一个subjectid，database里面搜索这个staff然后
-    // 根据他在这个subject里面的role获取requests
+    // this is used to render all the requests for coordinator, with the assumption that one
+    // subject has one coordinator, and one can only be coordinator for one subject
     @GetMapping("/getSubjectRequests/{subjectId}")
     public Result getSubjectRequests(@PathVariable Integer subjectId){
         QueryWrapper<Request> queryWrapper = new QueryWrapper<>();
@@ -98,6 +105,7 @@ public class StaffController {
         return Result.success(voList);
     }
 
+    // similarly, this is used to render all related requests for tutor, all the subjects tutor is in
     @GetMapping("/getTutorRequests/{tutorId}")
     public Result getTutorRequests(@PathVariable int tutorId){
         QueryWrapper queryWrapper = new QueryWrapper();
@@ -151,12 +159,14 @@ public class StaffController {
         return Result.success(voList);
     }
 
+    // get the staff info
     @GetMapping("/getStaffDetail/{staffId}")
     public Result getStaffDetail(@PathVariable int staffId){
         Staff staff = staffService.getById(staffId);
         return Result.success(staff);
     }
 
+    // update the staff preference on email setting, whether receive emails on new request, or flagged request
     @PutMapping("/changeStaffPreference/{staffId}")
     public Result updateStaffPreference(@RequestBody Staff staffPreference, @PathVariable int staffId) {
         // log.info("{}", staffPreference);
@@ -167,6 +177,8 @@ public class StaffController {
         return Result.success(staff);
     }
 
+    // get all the staff in a particular subject, so that coordinator can configure the tutor's authority
+    // on which type of the requests these tutors can see
     @GetMapping("/getStaffRoleInfo/{subjectId}")
     public Result getStaffRoleInfo(@PathVariable int subjectId){
         QueryWrapper query1 = new QueryWrapper();
@@ -187,6 +199,7 @@ public class StaffController {
         return Result.success(voList);
     }
 
+    // After the coordinator changes the authority of staff, need to update it in database
     @PutMapping("/updateStaffAuthority/{staffId}")
     public Result updateStaffAuthority(@PathVariable int staffId, @RequestBody Position authorities){
         QueryWrapper query = new QueryWrapper();

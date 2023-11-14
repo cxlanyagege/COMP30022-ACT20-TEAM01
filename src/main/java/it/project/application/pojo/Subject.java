@@ -1,9 +1,9 @@
 /**
  * Class Name: Subject
- * Description: Pojo for Subject
+ * Description: Use to store info related to subject that will be stored in database
  * 
  * Author: He Shen & Dennis Wang
- * Date: 2023/10/19
+ * Date: 2023/11/12
  */
 
 package it.project.application.pojo;

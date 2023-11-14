@@ -1,3 +1,9 @@
+/**
+ * Author: Dennis Wang
+ * Last modified data: 2023-11-12
+ * Description: position service do operations related to database
+ */
+
 package it.project.application.service.Impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

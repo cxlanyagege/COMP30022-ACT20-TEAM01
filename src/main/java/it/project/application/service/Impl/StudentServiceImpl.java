@@ -1,9 +1,9 @@
 /**
  * Class Name: StudentServiceImpl
- * Description: Implementation for Student Service
+ * Description: Student service do operations related to database
  * 
  * Author: He Shen & Dennis Wang
- * Date: 2023/10/19
+ * Date: 2023/11/12
  */
 
 package it.project.application.service.Impl;
