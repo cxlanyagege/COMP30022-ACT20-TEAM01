@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     getRequests() {
-      getTutorRequests(this.$store.getters.subjectId).then((res) => {
+      getTutorRequests(this.$store.getters.id).then((res) => {
         console.log(res.data)
         if (res.data.data.length === 0) {
           this.tableData = []

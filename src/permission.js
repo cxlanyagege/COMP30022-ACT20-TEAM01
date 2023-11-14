@@ -12,12 +12,13 @@ const whiteList = ['/login', '/stafflogin', '/tutorlogin'] // no redirect whitel
 
 function isStaffUser() {
   const currentPath = router.currentRoute.path
-  return currentPath.includes('/staff')
+  return currentPath.includes('staff')
 }
 
 function isTutorUser() {
   const currentPath = router.currentRoute.path
-  return currentPath.includes('/tutor')
+  console.log(currentPath)
+  return currentPath.includes('tutor')
 }
 
 router.beforeEach(async(to, from, next) => {
@@ -31,13 +32,17 @@ router.beforeEach(async(to, from, next) => {
   const hasToken = getToken()
 
   if (hasToken) {
-    if (to.path === '/login') {
-      // if is logged in, redirect to the home page
+    if (to.path.includes('/login')) {
+      // if student is logged in, redirect to the home page
       next({ path: '/' })
       NProgress.done()
-    } else if (to.path === '/stafflogin') {
-      // if is logged in, redirect to the home page
+    } else if (to.path.includes('/stafflogin')) {
+      // if staff is logged in, redirect to the home page
       next({ path: '/staff' })
+      NProgress.done()
+    } else if (to.path.includes('/tutorlogin')) {
+      // if tutor is logged in, redirect to the home page
+      next({ path: '/tutor' })
       NProgress.done()
     } else {
       const hasGetUserInfo = store.getters.name

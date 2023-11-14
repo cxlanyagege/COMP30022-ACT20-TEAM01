@@ -6,6 +6,8 @@ export const getSubjectRequests = (subjectId) => getAction('/api/getSubjectReque
 
 export const getSubjectDetail = (subjectId) => getAction('/api/getSubjectDetail/' + subjectId, null)
 
+export const getAllSubjects = (tutorId) => getAction('/api/getAllSubjects/' + tutorId, null)
+
 export const updateSubjectApprovedRequests = (subjectId, param) => putAction('/api/updateApprovedRequests/' + subjectId, param)
 
 export const updateStaffPreference = (staffId, param) => putAction('/api/changeStaffPreference/' + staffId, param)

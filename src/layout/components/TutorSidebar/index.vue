@@ -1,5 +1,5 @@
 <!-- The following code is the framework that comes with the scaffolding
-modified and edited by Lanruo Su, Xuan Zhang -->
+modified and edited by Lanruo Su, Xuan Zhang and He Shen -->
 <template>
   <div>
     <div class="website-header">
@@ -41,7 +41,7 @@ modified and edited by Lanruo Su, Xuan Zhang -->
               @click="filterRequests(requestType.subID)"
             >
               <span class="dot" :style="{ backgroundColor: requestType.color }" />
-              {{ requestType.subID }}
+              {{ requestType.subName }}
             </el-button>
           </div>
         </el-menu>
@@ -56,6 +56,14 @@ import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
 import { EventBus } from '@/utils/EventBus'
+import { getAllSubjects } from '@/api/api'
+
+function getRandomColor() {
+  const red = Math.floor(Math.random() * 256)
+  const green = Math.floor(Math.random() * 256)
+  const blue = Math.floor(Math.random() * 256)
+  return `rgb(${red}, ${green}, ${blue})`
+}
 
 export default {
   components: { SidebarItem, Logo },
@@ -64,10 +72,7 @@ export default {
       isCollapse: false,
       // here is used to get all the subjects this tutor is in
       // need to update authomatically after connection with lms
-      requestTypes: [
-        { subID: 111, color: 'rgb(96, 191, 255)' },
-        { subID: 222, color: 'rgb(46, 204, 113)' }
-      ],
+      requestTypes: [],
       selectedRowIndex: null
     }
   },
@@ -99,6 +104,17 @@ export default {
     EventBus.$on('copy-data-event', (data) => {
       this.tempData = data
       this.tableData = data
+    })
+
+    // Get all subjects by this tutor
+    getAllSubjects(this.$store.getters.id).then(response => {
+      this.requestTypes = response.data.data.map(subject => ({
+        subID: subject.subjectId,
+        subName: subject.subjectName,
+        color: getRandomColor()
+      }))
+    }).catch(error => {
+      console.error('There was an error fetching the subjects: ', error)
     })
   },
   methods: {

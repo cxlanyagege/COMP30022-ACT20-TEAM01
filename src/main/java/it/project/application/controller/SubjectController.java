@@ -3,12 +3,13 @@
  * Description: Controller for subject, handle changes to the subject table in database
  * 
  * Author: He Shen & Dennis Wang
- * Date: 2023/11/12
+ * Date: 2023/11/14
  */
 
 package it.project.application.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import it.project.application.pojo.Subject;
+import it.project.application.service.IPositionService;
 import it.project.application.service.ISubjectService;
 import it.project.application.util.JwtUtil;
 import it.project.application.vo.Result;
+
 
 @RestController
 @RequestMapping("/api")
@@ -27,6 +30,9 @@ public class SubjectController {
 
     @Autowired
     private ISubjectService subjectService;
+
+    @Autowired
+    private IPositionService positionService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -77,6 +83,19 @@ public class SubjectController {
     public Result getSubjectDetail(@PathVariable Integer subjectId){
         Subject subject = subjectService.getById(subjectId);
         return Result.success(subject);
+    }
+
+    // get all subjects from given tutor
+    @GetMapping("/getAllSubjects/{tutorId}")
+    public Result getAllSubjects(@PathVariable Integer tutorId) {
+        // Get all subject ids given tutor
+        List<Integer> subjectIds = positionService.getSubjectIdsByTutorId(tutorId);
+
+        // Get all subjects given subject ids
+        List<Subject> subjects = subjectService.listSubjectsByIds(subjectIds);
+
+        // Return subject names list with succeed
+        return Result.success(subjects);
     }
     
 }

@@ -10,6 +10,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import it.project.application.mapper.PositionMapper;
 import it.project.application.pojo.Position;
 import it.project.application.service.IPositionService;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,5 +22,9 @@ public class PositionServiceImpl extends ServiceImpl<PositionMapper, Position> i
         // Return matching record counts
         int count = this.baseMapper.existsByStaffIdAndSubjectId(staffId, subjectId);
         return count > 0;
+    }
+
+    public List<Integer> getSubjectIdsByTutorId(Integer tutorId) {
+        return this.baseMapper.findSubjectIdsByTutorId(tutorId);
     }
 }
