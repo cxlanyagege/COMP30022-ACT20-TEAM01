@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.project.application.service.IPositionService;
 import it.project.application.service.IStaffService;
 import it.project.application.service.IStudentService;
 import it.project.application.service.ISubjectService;
 import it.project.application.pojo.Student;
 import it.project.application.pojo.Staff;
 import it.project.application.pojo.Subject;
+import it.project.application.pojo.Position;
 import it.project.application.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -52,6 +54,9 @@ public class LtiController {
 
     @Autowired
     private ISubjectService subjectService;
+
+    @Autowired
+    private IPositionService positionService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -137,6 +142,11 @@ public class LtiController {
                     subjectService.save(new Subject(subjectId, subjectName, true, true, true, true, true));
                 }
 
+                // Store staff relations and permissions
+                if (!positionService.checkExistence(id, subjectId)) {
+                    positionService.save(new Position(id, subjectId, "coordinator", true, true, true, true, true));
+                }
+
                 // Generate jwt token
                 String jwt = jwtUtil.generateToken(id, name, email, subjectId, subjectName);
 
@@ -165,6 +175,11 @@ public class LtiController {
                 String subjectName = request.getParameter("context_label");
                 if (subjectService.getById(subjectId) == null){
                     subjectService.save(new Subject(subjectId, subjectName, true, true, true, true, true));
+                }
+
+                // Store staff relations and permissions
+                if (!positionService.checkExistence(id, subjectId)) {
+                    positionService.save(new Position(id, subjectId, "tutor", true, true, true, true, true));
                 }
 
                 // Generate jwt token

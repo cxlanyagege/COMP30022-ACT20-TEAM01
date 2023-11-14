@@ -1,6 +1,6 @@
 /**
- * Author: Dennis Wang
- * Last modified data: 2023-11-12
+ * Author: Dennis Wang & He Shen
+ * Last modified data: 2023-11-14
  * Description: position service interface to be implemented
  */
 
@@ -10,4 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import it.project.application.pojo.Position;
 
 public interface IPositionService extends IService<Position> {
+    public boolean checkExistence(Integer staffId, Integer subjectId);
 }
