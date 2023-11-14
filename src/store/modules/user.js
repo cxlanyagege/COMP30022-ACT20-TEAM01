@@ -66,21 +66,21 @@ const actions = {
       }).catch(error => {
         if (error.response && error.response.status === 404) {
           getStaffInfo(state.token).then(staffResponse => {
-            const { data } = staffResponse;
-  
+            const { data } = staffResponse
+
             if (!data) {
-              reject('Verification failed, please Login again.');
+              reject('Verification failed, please Login again.')
             }
-  
-            const { id, name, email, avatar } = data;
-  
-            commit('SET_ID', id);
-            commit('SET_NAME', name);
-            commit('SET_EMAIL', email);
-            commit('SET_AVATAR', avatar);
-            resolve(data);
+
+            const { id, name, email, avatar } = data
+
+            commit('SET_ID', id)
+            commit('SET_NAME', name)
+            commit('SET_EMAIL', email)
+            commit('SET_AVATAR', avatar)
+            resolve(data)
           }).catch(staffError => {
-            reject(staffError);
+            reject(staffError)
           })
         } else {
           reject(error)

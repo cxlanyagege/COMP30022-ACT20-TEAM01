@@ -120,6 +120,17 @@ spring.mail.properties.debug=false
 ### If I need to deploy on my remote server, do I need to setup MySQL database remotely?
 Yes, you may follow [Prerequisites](#prerequisites) and [Setup](#setup) to install and config Java and MySQL Server. Then try to run the application
 
+### Why I cannot see any requests in tutor's dashboard?
+Tutor's dashboard has filter constrains. You may notice that there are different course blocks you can choose on sidebar. Simply choose the course you want to see first, then the corresponding requests will appear on the right pannel
+
+### What is the difference between `application-v2.1.jar` and `application-v2.1-plain.jar`?
+Spring Boot will build two production application forms by default:
+
+The one without `plain` includes all dependencies, class files, resources, etc. It allows direct execution using `java -jar` commands, and its internal structure already includes embedded tomcat servers, dependency libraries, etc
+
+The one with `plain` is a structure closer to traditional jar files and does not include specific structures of Spring Boot, such as embedded servers. If you need to use it, you need to deploy it in an existing server environment, such as on a standalone Tomcat server. In other words, it usually only includes the application's classes and resources, and does not include the complete set of dependencies
+
 ## Limitation
+Due to some misleading guidance and solutions in the early stages of development, we can only use the LTI 1.1 standard to achieve basic interaction with LMS. Deeper integration, such as automatic changes to assignment due dates, rescoring, etc., requires administrators to provide separate tokens and use the LMS Restful API to achieve interaction. This is not in line with the original intention for onekey deployment of our product design philosophy, and it also violates some safety concepts. A better implementation solution is to use the LTI1.3 standard, which is a more advanced, complete, and secure modern standard solution for interacting with LMS. However, it has some special requirements for LMS terminals, with higher costs on migration
 
 ## There are so many hidden functionalities waiting for you to find, enjoy:)

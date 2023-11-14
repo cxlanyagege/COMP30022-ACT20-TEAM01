@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'it.project'
-version = 'v2.0-rc'
+version = 'v2.1'
 
 java {
 	sourceCompatibility = '17'
